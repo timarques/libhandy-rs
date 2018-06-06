@@ -1,5 +1,5 @@
 [package]
-name = "gspell"
+name = "libhandy"
 authors = ["Julian Sparber <julian@sparber.net>"]
 keywords = ["handy", "gtk-rs", "gnome"]
 version = "0.1.0"
