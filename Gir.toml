@@ -1,0 +1,21 @@
+[options]
+girs_dir = "gir-files"
+library = "Handy"
+version = "0.0"
+min_cfg_version = "1.8"
+target_path = "."
+work_mode = "normal"
+generate_safety_asserts = true
+deprecate_by_min_version = true
+# with this option enabled, versions for gir and gir-files saved only to one file to minimize noise
+single_version_file = true
+
+generate = ["Handy.Column",
+            "Handy.DialerButton",
+            "Handy.Dialer",
+            "Handy.DialerCycleButton",
+            "Handy.Leaflet",
+            "Handy.LeafletChildTransitionType",
+            "Handy.LeafletModeTransitionType",
+            "Handy.ArrowsDirection",
+            "Handy.Arrows"]
