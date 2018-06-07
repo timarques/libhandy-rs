@@ -15,13 +15,17 @@ use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
 use gobject_ffi;
+use gtk;
+use gtk_ffi;
 use std::boxed::Box as Box_;
 use std::mem;
 use std::mem::transmute;
 use std::ptr;
 
 glib_wrapper! {
-    pub struct Leaflet(Object<ffi::HdyLeaflet, ffi::HdyLeafletClass>);
+    pub struct Leaflet(Object<ffi::HdyLeaflet, ffi::HdyLeafletClass>): [
+        gtk::Widget => gtk_ffi::GtkWidget,
+    ];
 
     match fn {
         get_type => || ffi::hdy_leaflet_get_type(),
@@ -29,9 +33,12 @@ glib_wrapper! {
 }
 
 impl Leaflet {
-    //pub fn new() -> Leaflet {
-    //    unsafe { TODO: call ffi::hdy_leaflet_new() }
-    //}
+    pub fn new() -> Leaflet {
+        assert_initialized_main_thread!();
+        unsafe {
+            gtk::Widget::from_glib_none(ffi::hdy_leaflet_new()).downcast_unchecked()
+        }
+    }
 }
 
 impl Default for Leaflet {
@@ -57,7 +64,7 @@ pub trait LeafletExt {
 
     fn get_mode_transition_type(&self) -> LeafletModeTransitionType;
 
-    //fn get_visible_child(&self) -> /*Ignored*/Option<gtk::Widget>;
+    fn get_visible_child(&self) -> Option<gtk::Widget>;
 
     fn get_visible_child_name(&self) -> Option<String>;
 
@@ -73,7 +80,7 @@ pub trait LeafletExt {
 
     fn set_mode_transition_type(&self, transition: LeafletModeTransitionType);
 
-    //fn set_visible_child<P: IsA</*Ignored*/gtk::Widget>>(&self, visible_child: &P);
+    fn set_visible_child<P: IsA<gtk::Widget>>(&self, visible_child: &P);
 
     fn set_visible_child_name(&self, name: &str);
 
@@ -165,9 +172,11 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
         }
     }
 
-    //fn get_visible_child(&self) -> /*Ignored*/Option<gtk::Widget> {
-    //    unsafe { TODO: call ffi::hdy_leaflet_get_visible_child() }
-    //}
+    fn get_visible_child(&self) -> Option<gtk::Widget> {
+        unsafe {
+            from_glib_none(ffi::hdy_leaflet_get_visible_child(self.to_glib_none().0))
+        }
+    }
 
     fn get_visible_child_name(&self) -> Option<String> {
         unsafe {
@@ -209,9 +218,11 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
         }
     }
 
-    //fn set_visible_child<P: IsA</*Ignored*/gtk::Widget>>(&self, visible_child: &P) {
-    //    unsafe { TODO: call ffi::hdy_leaflet_set_visible_child() }
-    //}
+    fn set_visible_child<P: IsA<gtk::Widget>>(&self, visible_child: &P) {
+        unsafe {
+            ffi::hdy_leaflet_set_visible_child(self.to_glib_none().0, visible_child.to_glib_none().0);
+        }
+    }
 
     fn set_visible_child_name(&self, name: &str) {
         unsafe {

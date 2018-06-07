@@ -12,13 +12,18 @@ use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
 use gobject_ffi;
+use gtk;
+use gtk_ffi;
 use std::boxed::Box as Box_;
 use std::mem;
 use std::mem::transmute;
 use std::ptr;
 
 glib_wrapper! {
-    pub struct DialerCycleButton(Object<ffi::HdyDialerCycleButton, ffi::HdyDialerCycleButtonClass>): DialerButton;
+    pub struct DialerCycleButton(Object<ffi::HdyDialerCycleButton, ffi::HdyDialerCycleButtonClass>): [
+        DialerButton,
+        gtk::Widget => gtk_ffi::GtkWidget,
+    ];
 
     match fn {
         get_type => || ffi::hdy_dialer_cycle_button_get_type(),
@@ -26,9 +31,12 @@ glib_wrapper! {
 }
 
 impl DialerCycleButton {
-    //pub fn new(symbols: &str) -> DialerCycleButton {
-    //    unsafe { TODO: call ffi::hdy_dialer_cycle_button_new() }
-    //}
+    pub fn new(symbols: &str) -> DialerCycleButton {
+        assert_initialized_main_thread!();
+        unsafe {
+            gtk::Widget::from_glib_none(ffi::hdy_dialer_cycle_button_new(symbols.to_glib_none().0)).downcast_unchecked()
+        }
+    }
 }
 
 pub trait DialerCycleButtonExt {

@@ -10,6 +10,12 @@ deprecate_by_min_version = true
 # with this option enabled, versions for gir and gir-files saved only to one file to minimize noise
 single_version_file = true
 
+external_libraries = [
+   "GLib",
+   "GObject",
+   "Gtk",
+]
+
 generate = ["Handy.Column",
             "Handy.DialerButton",
             "Handy.Dialer",
@@ -18,4 +24,7 @@ generate = ["Handy.Column",
             "Handy.LeafletChildTransitionType",
             "Handy.LeafletModeTransitionType",
             "Handy.ArrowsDirection",
-            "Handy.Arrows"]
+            "Handy.Arrows"
+            ]
+
+manual = ["Gtk.Widget"]

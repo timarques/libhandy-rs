@@ -12,13 +12,17 @@ use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
 use gobject_ffi;
+use gtk;
+use gtk_ffi;
 use std::boxed::Box as Box_;
 use std::mem;
 use std::mem::transmute;
 use std::ptr;
 
 glib_wrapper! {
-    pub struct Arrows(Object<ffi::HdyArrows, ffi::HdyArrowsClass>);
+    pub struct Arrows(Object<ffi::HdyArrows, ffi::HdyArrowsClass>): [
+        gtk::Widget => gtk_ffi::GtkWidget,
+    ];
 
     match fn {
         get_type => || ffi::hdy_arrows_get_type(),
@@ -26,9 +30,12 @@ glib_wrapper! {
 }
 
 impl Arrows {
-    //pub fn new() -> Arrows {
-    //    unsafe { TODO: call ffi::hdy_arrows_new() }
-    //}
+    pub fn new() -> Arrows {
+        assert_initialized_main_thread!();
+        unsafe {
+            gtk::Widget::from_glib_none(ffi::hdy_arrows_new()).downcast_unchecked()
+        }
+    }
 }
 
 impl Default for Arrows {

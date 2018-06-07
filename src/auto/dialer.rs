@@ -11,6 +11,8 @@ use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
 use gobject_ffi;
+use gtk;
+use gtk_ffi;
 use libc;
 use std::boxed::Box as Box_;
 use std::mem;
@@ -18,7 +20,9 @@ use std::mem::transmute;
 use std::ptr;
 
 glib_wrapper! {
-    pub struct Dialer(Object<ffi::HdyDialer, ffi::HdyDialerClass>);
+    pub struct Dialer(Object<ffi::HdyDialer, ffi::HdyDialerClass>): [
+        gtk::Widget => gtk_ffi::GtkWidget,
+    ];
 
     match fn {
         get_type => || ffi::hdy_dialer_get_type(),
@@ -26,9 +30,12 @@ glib_wrapper! {
 }
 
 impl Dialer {
-    //pub fn new() -> Dialer {
-    //    unsafe { TODO: call ffi::hdy_dialer_new() }
-    //}
+    pub fn new() -> Dialer {
+        assert_initialized_main_thread!();
+        unsafe {
+            gtk::Widget::from_glib_none(ffi::hdy_dialer_new()).downcast_unchecked()
+        }
+    }
 }
 
 impl Default for Dialer {
