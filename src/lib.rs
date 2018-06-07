@@ -20,8 +20,31 @@ extern crate gtk;
 extern crate lazy_static;
 extern crate libc;
 
-#[macro_use]
-mod rt;
+/// Asserts that this is the main thread and `gtk::init` has been called.
+macro_rules! assert_initialized_main_thread {
+    () => {
+        if !::gtk::is_initialized_main_thread() {
+            if ::gtk::is_initialized() {
+                panic!("Libhandy may only be used from the main thread.");
+            } else {
+                panic!("Gtk has to be initialized before using libhandy.");
+            }
+        }
+    };
+}
+
+macro_rules! skip_assert_initialized {
+    () => {};
+}
+
+macro_rules! callback_guard {
+    () => {
+        let _guard = ::glib::CallbackGuard::new();
+        if cfg!(debug_assertions) {
+            assert_initialized_main_thread!();
+        }
+    };
+}
 
 pub use glib::Error;
 #[cfg_attr(feature = "cargo-clippy", allow(too_many_arguments))]
@@ -29,5 +52,4 @@ pub use glib::Error;
 mod auto;
 /*mod manual;*/
 pub use auto::*;
-pub use rt::*;
 /* pub use manual::*; */
