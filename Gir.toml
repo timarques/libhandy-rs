@@ -20,6 +20,7 @@ generate = ["Handy.Column",
             "Handy.DialerButton",
             "Handy.Dialer",
             "Handy.DialerCycleButton",
+            "Handy.Fold",
             "Handy.Leaflet",
             "Handy.LeafletChildTransitionType",
             "Handy.LeafletModeTransitionType",
@@ -27,4 +28,6 @@ generate = ["Handy.Column",
             "Handy.Arrows"
             ]
 
-manual = ["Gtk.Widget"]
+manual = ["Gtk.Widget",
+          "Gtk.Orientation"
+         ]
