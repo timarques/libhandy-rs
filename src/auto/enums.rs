@@ -76,6 +76,63 @@ impl SetValue for ArrowsDirection {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
+pub enum Fold {
+    Unfolded,
+    Folded,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[doc(hidden)]
+impl ToGlib for Fold {
+    type GlibType = ffi::HdyFold;
+
+    fn to_glib(&self) -> ffi::HdyFold {
+        match *self {
+            Fold::Unfolded => ffi::HDY_FOLD_UNFOLDED,
+            Fold::Folded => ffi::HDY_FOLD_FOLDED,
+            Fold::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::HdyFold> for Fold {
+    fn from_glib(value: ffi::HdyFold) -> Self {
+        skip_assert_initialized!();
+        match value {
+            0 => Fold::Unfolded,
+            1 => Fold::Folded,
+            value => Fold::__Unknown(value),
+        }
+    }
+}
+
+impl StaticType for Fold {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::hdy_fold_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for Fold {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for Fold {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for Fold {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub enum LeafletChildTransitionType {
     None,
     Crossfade,

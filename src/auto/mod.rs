@@ -28,6 +28,7 @@ pub use self::leaflet::LeafletExt;
 
 mod enums;
 pub use self::enums::ArrowsDirection;
+pub use self::enums::Fold;
 pub use self::enums::LeafletChildTransitionType;
 pub use self::enums::LeafletModeTransitionType;
 

@@ -2,6 +2,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use Fold;
 use LeafletChildTransitionType;
 use LeafletModeTransitionType;
 use ffi;
@@ -54,9 +55,9 @@ pub trait LeafletExt {
 
     fn get_child_transition_type(&self) -> LeafletChildTransitionType;
 
-    //fn get_fold(&self) -> /*Ignored*/Fold;
+    fn get_fold(&self) -> Fold;
 
-    //fn get_homogeneous(&self, fold: /*Ignored*/Fold, orientation: /*Ignored*/gtk::Orientation) -> bool;
+    fn get_homogeneous(&self, fold: Fold, orientation: gtk::Orientation) -> bool;
 
     fn get_interpolate_size(&self) -> bool;
 
@@ -72,7 +73,7 @@ pub trait LeafletExt {
 
     fn set_child_transition_type(&self, transition: LeafletChildTransitionType);
 
-    //fn set_homogeneous(&self, fold: /*Ignored*/Fold, orientation: /*Ignored*/gtk::Orientation, homogeneous: bool);
+    fn set_homogeneous(&self, fold: Fold, orientation: gtk::Orientation, homogeneous: bool);
 
     fn set_interpolate_size(&self, interpolate_size: bool);
 
@@ -146,13 +147,17 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
         }
     }
 
-    //fn get_fold(&self) -> /*Ignored*/Fold {
-    //    unsafe { TODO: call ffi::hdy_leaflet_get_fold() }
-    //}
+    fn get_fold(&self) -> Fold {
+        unsafe {
+            from_glib(ffi::hdy_leaflet_get_fold(self.to_glib_none().0))
+        }
+    }
 
-    //fn get_homogeneous(&self, fold: /*Ignored*/Fold, orientation: /*Ignored*/gtk::Orientation) -> bool {
-    //    unsafe { TODO: call ffi::hdy_leaflet_get_homogeneous() }
-    //}
+    fn get_homogeneous(&self, fold: Fold, orientation: gtk::Orientation) -> bool {
+        unsafe {
+            from_glib(ffi::hdy_leaflet_get_homogeneous(self.to_glib_none().0, fold.to_glib(), orientation.to_glib()))
+        }
+    }
 
     fn get_interpolate_size(&self) -> bool {
         unsafe {
@@ -196,9 +201,11 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
         }
     }
 
-    //fn set_homogeneous(&self, fold: /*Ignored*/Fold, orientation: /*Ignored*/gtk::Orientation, homogeneous: bool) {
-    //    unsafe { TODO: call ffi::hdy_leaflet_set_homogeneous() }
-    //}
+    fn set_homogeneous(&self, fold: Fold, orientation: gtk::Orientation, homogeneous: bool) {
+        unsafe {
+            ffi::hdy_leaflet_set_homogeneous(self.to_glib_none().0, fold.to_glib(), orientation.to_glib(), homogeneous.to_glib());
+        }
+    }
 
     fn set_interpolate_size(&self, interpolate_size: bool) {
         unsafe {
