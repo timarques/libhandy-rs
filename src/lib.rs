@@ -8,7 +8,7 @@
 extern crate glib_sys as glib_ffi;
 extern crate gobject_sys as gobject_ffi;
 extern crate gtk_sys as gtk_ffi;
-extern crate libhandy_sys as ffi;
+extern crate handy_sys as ffi;
 #[macro_use]
 extern crate glib;
 extern crate bitflags;
@@ -35,15 +35,6 @@ macro_rules! assert_initialized_main_thread {
 
 macro_rules! skip_assert_initialized {
     () => {};
-}
-
-macro_rules! callback_guard {
-    () => {
-        let _guard = ::glib::CallbackGuard::new();
-        if cfg!(debug_assertions) {
-            assert_initialized_main_thread!();
-        }
-    };
 }
 
 pub use glib::Error;

@@ -400,91 +400,78 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
 
 unsafe extern "C" fn notify_child_transition_duration_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_child_transition_running_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_child_transition_type_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_fold_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_hhomogeneous_folded_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_hhomogeneous_unfolded_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_interpolate_size_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_mode_transition_duration_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_mode_transition_type_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_vhomogeneous_folded_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_vhomogeneous_unfolded_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_visible_child_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_visible_child_name_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
 }

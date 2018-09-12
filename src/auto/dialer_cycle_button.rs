@@ -115,21 +115,18 @@ impl<O: IsA<DialerCycleButton> + IsA<glib::object::Object>> DialerCycleButtonExt
 
 unsafe extern "C" fn cycle_end_trampoline<P>(this: *mut ffi::HdyDialerCycleButton, f: glib_ffi::gpointer)
 where P: IsA<DialerCycleButton> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerCycleButton::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn cycle_start_trampoline<P>(this: *mut ffi::HdyDialerCycleButton, f: glib_ffi::gpointer)
 where P: IsA<DialerCycleButton> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerCycleButton::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_cycle_timeout_trampoline<P>(this: *mut ffi::HdyDialerCycleButton, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<DialerCycleButton> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerCycleButton::from_glib_borrow(this).downcast_unchecked())
 }

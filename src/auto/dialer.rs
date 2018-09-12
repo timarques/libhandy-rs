@@ -4,6 +4,8 @@
 
 use ffi;
 use glib;
+use glib::StaticType;
+use glib::Value;
 use glib::object::Downcast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
@@ -55,13 +57,25 @@ pub trait DialerExt {
 
     fn set_show_action_buttons(&self, show: bool);
 
+    fn get_property_column_spacing(&self) -> u32;
+
+    fn set_property_column_spacing(&self, column_spacing: u32);
+
+    fn get_property_row_spacing(&self) -> u32;
+
+    fn set_property_row_spacing(&self, row_spacing: u32);
+
     fn connect_deleted<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_submitted<F: Fn(&Self, &str) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_symbol_clicked<F: Fn(&Self, glib::Char) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    fn connect_property_column_spacing_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
     fn connect_property_number_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    fn connect_property_row_spacing_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_show_action_buttons_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
@@ -97,6 +111,34 @@ impl<O: IsA<Dialer> + IsA<glib::object::Object>> DialerExt for O {
         }
     }
 
+    fn get_property_column_spacing(&self) -> u32 {
+        unsafe {
+            let mut value = Value::from_type(<u32 as StaticType>::static_type());
+            gobject_ffi::g_object_get_property(self.to_glib_none().0, "column-spacing".to_glib_none().0, value.to_glib_none_mut().0);
+            value.get().unwrap()
+        }
+    }
+
+    fn set_property_column_spacing(&self, column_spacing: u32) {
+        unsafe {
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "column-spacing".to_glib_none().0, Value::from(&column_spacing).to_glib_none().0);
+        }
+    }
+
+    fn get_property_row_spacing(&self) -> u32 {
+        unsafe {
+            let mut value = Value::from_type(<u32 as StaticType>::static_type());
+            gobject_ffi::g_object_get_property(self.to_glib_none().0, "row-spacing".to_glib_none().0, value.to_glib_none_mut().0);
+            value.get().unwrap()
+        }
+    }
+
+    fn set_property_row_spacing(&self, row_spacing: u32) {
+        unsafe {
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "row-spacing".to_glib_none().0, Value::from(&row_spacing).to_glib_none().0);
+        }
+    }
+
     fn connect_deleted<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
@@ -121,11 +163,27 @@ impl<O: IsA<Dialer> + IsA<glib::object::Object>> DialerExt for O {
         }
     }
 
+    fn connect_property_column_spacing_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe {
+            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
+            connect(self.to_glib_none().0, "notify::column-spacing",
+                transmute(notify_column_spacing_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+        }
+    }
+
     fn connect_property_number_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
             connect(self.to_glib_none().0, "notify::number",
                 transmute(notify_number_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+        }
+    }
+
+    fn connect_property_row_spacing_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe {
+            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
+            connect(self.to_glib_none().0, "notify::row-spacing",
+                transmute(notify_row_spacing_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
 
@@ -140,35 +198,42 @@ impl<O: IsA<Dialer> + IsA<glib::object::Object>> DialerExt for O {
 
 unsafe extern "C" fn deleted_trampoline<P>(this: *mut ffi::HdyDialer, f: glib_ffi::gpointer)
 where P: IsA<Dialer> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Dialer::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn submitted_trampoline<P>(this: *mut ffi::HdyDialer, number: *mut libc::c_char, f: glib_ffi::gpointer)
 where P: IsA<Dialer> {
-    callback_guard!();
     let f: &&(Fn(&P, &str) + 'static) = transmute(f);
     f(&Dialer::from_glib_borrow(this).downcast_unchecked(), &String::from_glib_none(number))
 }
 
 unsafe extern "C" fn symbol_clicked_trampoline<P>(this: *mut ffi::HdyDialer, button: libc::c_char, f: glib_ffi::gpointer)
 where P: IsA<Dialer> {
-    callback_guard!();
     let f: &&(Fn(&P, glib::Char) + 'static) = transmute(f);
     f(&Dialer::from_glib_borrow(this).downcast_unchecked(), from_glib(button))
 }
 
+unsafe extern "C" fn notify_column_spacing_trampoline<P>(this: *mut ffi::HdyDialer, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+where P: IsA<Dialer> {
+    let f: &&(Fn(&P) + 'static) = transmute(f);
+    f(&Dialer::from_glib_borrow(this).downcast_unchecked())
+}
+
 unsafe extern "C" fn notify_number_trampoline<P>(this: *mut ffi::HdyDialer, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Dialer> {
-    callback_guard!();
+    let f: &&(Fn(&P) + 'static) = transmute(f);
+    f(&Dialer::from_glib_borrow(this).downcast_unchecked())
+}
+
+unsafe extern "C" fn notify_row_spacing_trampoline<P>(this: *mut ffi::HdyDialer, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+where P: IsA<Dialer> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Dialer::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_show_action_buttons_trampoline<P>(this: *mut ffi::HdyDialer, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Dialer> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Dialer::from_glib_borrow(this).downcast_unchecked())
 }

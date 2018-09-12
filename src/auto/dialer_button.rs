@@ -98,14 +98,12 @@ impl<O: IsA<DialerButton> + IsA<glib::object::Object>> DialerButtonExt for O {
 
 unsafe extern "C" fn notify_digit_trampoline<P>(this: *mut ffi::HdyDialerButton, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<DialerButton> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerButton::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_letters_trampoline<P>(this: *mut ffi::HdyDialerButton, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<DialerButton> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerButton::from_glib_borrow(this).downcast_unchecked())
 }

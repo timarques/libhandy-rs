@@ -136,21 +136,18 @@ impl<O: IsA<Arrows> + IsA<glib::object::Object>> ArrowsExt for O {
 
 unsafe extern "C" fn notify_count_trampoline<P>(this: *mut ffi::HdyArrows, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Arrows> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Arrows::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_direction_trampoline<P>(this: *mut ffi::HdyArrows, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Arrows> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Arrows::from_glib_borrow(this).downcast_unchecked())
 }
 
 unsafe extern "C" fn notify_duration_trampoline<P>(this: *mut ffi::HdyArrows, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Arrows> {
-    callback_guard!();
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Arrows::from_glib_borrow(this).downcast_unchecked())
 }
