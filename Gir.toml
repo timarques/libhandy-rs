@@ -21,9 +21,11 @@ generate = ["Handy.Column",
             "Handy.Dialer",
             "Handy.DialerCycleButton",
             "Handy.Fold",
+            "Handy.HeaderGroup",
             "Handy.Leaflet",
             "Handy.LeafletChildTransitionType",
             "Handy.LeafletModeTransitionType",
+            "Handy.TitleBar",
             "Handy.ArrowsDirection",
             "Handy.Arrows"
             ]
