@@ -2,13 +2,10 @@
 // See the COPYRIGHT file at the top-level directory of this distribution.
 // Licensed under the MIT license, see the LICENSE file or <http://opensource.org/licenses/MIT>
 
-// lib.rs imports these under aliases
-extern crate glib;
-extern crate gdk;
-
-use self::glib::translate::*;
-// Re-alias from gtk_sys -> gtk -> gtk_ffi
-use gtk as gtk_ffi;
+use gdk;
+use glib;
+use glib::translate::*;
+use gtk_ffi;
 use libc::{c_int, c_uint};
 use std::cell::Cell;
 use std::env;

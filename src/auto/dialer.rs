@@ -51,13 +51,9 @@ pub trait DialerExt {
 
     fn get_number(&self) -> Option<String>;
 
-    //fn get_relief(&self) -> /*Ignored*/gtk::ReliefStyle;
-
     fn get_show_action_buttons(&self) -> bool;
 
     fn set_number(&self, number: &str);
-
-    //fn set_relief(&self, relief: /*Ignored*/gtk::ReliefStyle);
 
     fn set_show_action_buttons(&self, show: bool);
 
@@ -79,8 +75,6 @@ pub trait DialerExt {
 
     fn connect_property_number_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    fn connect_property_relief_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
     fn connect_property_row_spacing_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_show_action_buttons_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -99,10 +93,6 @@ impl<O: IsA<Dialer> + IsA<glib::object::Object>> DialerExt for O {
         }
     }
 
-    //fn get_relief(&self) -> /*Ignored*/gtk::ReliefStyle {
-    //    unsafe { TODO: call ffi::hdy_dialer_get_relief() }
-    //}
-
     fn get_show_action_buttons(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_dialer_get_show_action_buttons(self.to_glib_none().0))
@@ -114,10 +104,6 @@ impl<O: IsA<Dialer> + IsA<glib::object::Object>> DialerExt for O {
             ffi::hdy_dialer_set_number(self.to_glib_none().0, number.to_glib_none().0);
         }
     }
-
-    //fn set_relief(&self, relief: /*Ignored*/gtk::ReliefStyle) {
-    //    unsafe { TODO: call ffi::hdy_dialer_set_relief() }
-    //}
 
     fn set_show_action_buttons(&self, show: bool) {
         unsafe {
@@ -193,14 +179,6 @@ impl<O: IsA<Dialer> + IsA<glib::object::Object>> DialerExt for O {
         }
     }
 
-    fn connect_property_relief_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::relief",
-                transmute(notify_relief_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
-        }
-    }
-
     fn connect_property_row_spacing_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
@@ -243,12 +221,6 @@ where P: IsA<Dialer> {
 }
 
 unsafe extern "C" fn notify_number_trampoline<P>(this: *mut ffi::HdyDialer, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Dialer> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&Dialer::from_glib_borrow(this).downcast_unchecked())
-}
-
-unsafe extern "C" fn notify_relief_trampoline<P>(this: *mut ffi::HdyDialer, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Dialer> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Dialer::from_glib_borrow(this).downcast_unchecked())

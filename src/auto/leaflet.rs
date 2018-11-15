@@ -85,8 +85,6 @@ pub trait LeafletExt {
 
     fn set_visible_child_name(&self, name: &str);
 
-    fn get_property_folded(&self) -> bool;
-
     fn get_property_hhomogeneous_folded(&self) -> bool;
 
     fn set_property_hhomogeneous_folded(&self, hhomogeneous_folded: bool);
@@ -110,8 +108,6 @@ pub trait LeafletExt {
     fn connect_property_child_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_fold_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_hhomogeneous_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -241,14 +237,6 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
         }
     }
 
-    fn get_property_folded(&self) -> bool {
-        unsafe {
-            let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_ffi::g_object_get_property(self.to_glib_none().0, "folded".to_glib_none().0, value.to_glib_none_mut().0);
-            value.get().unwrap()
-        }
-    }
-
     fn get_property_hhomogeneous_folded(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
@@ -334,14 +322,6 @@ impl<O: IsA<Leaflet> + IsA<glib::object::Object>> LeafletExt for O {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
             connect(self.to_glib_none().0, "notify::fold",
                 transmute(notify_fold_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
-        }
-    }
-
-    fn connect_property_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::folded",
-                transmute(notify_folded_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
 
@@ -437,12 +417,6 @@ where P: IsA<Leaflet> {
 }
 
 unsafe extern "C" fn notify_fold_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
-}
-
-unsafe extern "C" fn notify_folded_trampoline<P>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Leaflet> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Leaflet::from_glib_borrow(this).downcast_unchecked())
