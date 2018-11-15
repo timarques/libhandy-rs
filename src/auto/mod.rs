@@ -22,9 +22,17 @@ mod dialer_cycle_button;
 pub use self::dialer_cycle_button::DialerCycleButton;
 pub use self::dialer_cycle_button::DialerCycleButtonExt;
 
+mod header_group;
+pub use self::header_group::HeaderGroup;
+pub use self::header_group::HeaderGroupExt;
+
 mod leaflet;
 pub use self::leaflet::Leaflet;
 pub use self::leaflet::LeafletExt;
+
+mod title_bar;
+pub use self::title_bar::TitleBar;
+pub use self::title_bar::TitleBarExt;
 
 mod enums;
 pub use self::enums::ArrowsDirection;
@@ -39,5 +47,7 @@ pub mod traits {
     pub use super::DialerExt;
     pub use super::DialerButtonExt;
     pub use super::DialerCycleButtonExt;
+    pub use super::HeaderGroupExt;
     pub use super::LeafletExt;
+    pub use super::TitleBarExt;
 }

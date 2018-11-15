@@ -1,31 +1,46 @@
-[package]
-name = "libhandy"
-authors = ["Julian Sparber <julian@sparber.net>"]
-keywords = ["handy", "gtk-rs", "gnome"]
-version = "0.2.0"
-description = "Rust bindings for the libhandy"
-exclude = [
-    "gir-files/*",
-]
+[build-dependencies]
+pkg-config = "0.3.7"
 
 [dependencies]
-libc = "0.2.43"
 bitflags = "1.0.4"
-lazy_static = "1.1.0"
-send-cell = { version = "0.1.4", optional = true }
-futures-core = { version = "0.2.1", optional = true }
 failure = "0.1.2"
-notify-rust = "3.4.2"
-glib-sys = "0.7.0"
+gdk = "0.9.0"
+gdk-sys = "0.7.0"
+gio = "0.5.0"
+gio-sys = "0.7.0"
 glib = "0.6.0"
+glib-sys = "0.7.0"
+gobject-sys = "0.7.0"
 gtk = "0.5.0"
 gtk-sys = "0.7.0"
-gobject-sys = "0.7.0"
-gio = "0.5.0"
-gdk = "0.9.0"
-gio-sys = "0.7.0"
-gdk-sys = "0.7.0"
+lazy_static = "1.1.0"
+libc = "0.2"
+notify-rust = "3.4.2"
+
+[dependencies.futures-core]
+optional = true
+version = "0.2.1"
 
 [dependencies.handy-sys]
-version = "0.2.0"
 git = "https://gitlab.gnome.org/jsparber/libhandy-sys-rs"
+version = "0.2.0"
+
+[dependencies.send-cell]
+optional = true
+version = "0.1.4"
+
+[dev-dependencies]
+shell-words = "0.1.0"
+tempdir = "0.3"
+
+[features]
+dox = []
+
+[package]
+authors = ["Julian Sparber <julian@sparber.net>"]
+build = "build.rs"
+description = "Rust bindings for the libhandy"
+exclude = ["gir-files/*"]
+keywords = ["handy", "gtk-rs", "gnome"]
+name = "libhandy"
+version = "0.2.0"
