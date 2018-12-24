@@ -30,12 +30,12 @@ glib_wrapper! {
 }
 
 impl DialerButton {
-    pub fn new<'a, P: Into<Option<&'a str>>>(digit: i32, letters: P) -> DialerButton {
+    pub fn new<'a, P: Into<Option<&'a str>>>(symbols: P) -> DialerButton {
         assert_initialized_main_thread!();
-        let letters = letters.into();
-        let letters = letters.to_glib_none();
+        let symbols = symbols.into();
+        let symbols = symbols.to_glib_none();
         unsafe {
-            gtk::Widget::from_glib_none(ffi::hdy_dialer_button_new(digit, letters.0)).downcast_unchecked()
+            gtk::Widget::from_glib_none(ffi::hdy_dialer_button_new(symbols.0)).downcast_unchecked()
         }
     }
 }
@@ -43,15 +43,13 @@ impl DialerButton {
 pub trait DialerButtonExt {
     fn get_digit(&self) -> i32;
 
-    fn get_letters(&self) -> Option<String>;
+    fn get_symbols(&self) -> Option<String>;
 
-    fn set_property_digit(&self, digit: i32);
-
-    fn set_property_letters(&self, letters: Option<&str>);
+    fn set_property_symbols(&self, symbols: Option<&str>);
 
     fn connect_property_digit_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    fn connect_property_letters_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_symbols_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<DialerButton> + IsA<glib::object::Object>> DialerButtonExt for O {
@@ -61,21 +59,15 @@ impl<O: IsA<DialerButton> + IsA<glib::object::Object>> DialerButtonExt for O {
         }
     }
 
-    fn get_letters(&self) -> Option<String> {
+    fn get_symbols(&self) -> Option<String> {
         unsafe {
-            from_glib_none(ffi::hdy_dialer_button_get_letters(self.to_glib_none().0))
+            from_glib_none(ffi::hdy_dialer_button_get_symbols(self.to_glib_none().0))
         }
     }
 
-    fn set_property_digit(&self, digit: i32) {
+    fn set_property_symbols(&self, symbols: Option<&str>) {
         unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0, "digit".to_glib_none().0, Value::from(&digit).to_glib_none().0);
-        }
-    }
-
-    fn set_property_letters(&self, letters: Option<&str>) {
-        unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0, "letters".to_glib_none().0, Value::from(letters).to_glib_none().0);
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "symbols".to_glib_none().0, Value::from(symbols).to_glib_none().0);
         }
     }
 
@@ -87,11 +79,11 @@ impl<O: IsA<DialerButton> + IsA<glib::object::Object>> DialerButtonExt for O {
         }
     }
 
-    fn connect_property_letters_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+    fn connect_property_symbols_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::letters",
-                transmute(notify_letters_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+            connect(self.to_glib_none().0, "notify::symbols",
+                transmute(notify_symbols_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
 }
@@ -102,7 +94,7 @@ where P: IsA<DialerButton> {
     f(&DialerButton::from_glib_borrow(this).downcast_unchecked())
 }
 
-unsafe extern "C" fn notify_letters_trampoline<P>(this: *mut ffi::HdyDialerButton, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+unsafe extern "C" fn notify_symbols_trampoline<P>(this: *mut ffi::HdyDialerButton, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<DialerButton> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerButton::from_glib_borrow(this).downcast_unchecked())
