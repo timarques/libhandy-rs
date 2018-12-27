@@ -38,6 +38,10 @@ mod search_bar;
 pub use self::search_bar::SearchBar;
 pub use self::search_bar::SearchBarExt;
 
+mod title_bar;
+pub use self::title_bar::TitleBar;
+pub use self::title_bar::TitleBarExt;
+
 mod enums;
 pub use self::enums::ArrowsDirection;
 pub use self::enums::Fold;
@@ -55,4 +59,5 @@ pub mod traits {
     pub use super::ExpanderRowExt;
     pub use super::LeafletExt;
     pub use super::SearchBarExt;
+    pub use super::TitleBarExt;
 }
