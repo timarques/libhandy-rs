@@ -25,7 +25,8 @@ generate = ["Handy.Column",
             "Handy.LeafletChildTransitionType",
             "Handy.LeafletModeTransitionType",
             "Handy.ArrowsDirection",
-            "Handy.Arrows"
+            "Handy.Arrows",
+            "Handy.ActionRow",
             ]
 
 manual = ["Gtk.Widget",

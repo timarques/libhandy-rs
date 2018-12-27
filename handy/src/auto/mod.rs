@@ -2,6 +2,10 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+mod action_row;
+pub use self::action_row::ActionRow;
+pub use self::action_row::ActionRowExt;
+
 mod arrows;
 pub use self::arrows::Arrows;
 pub use self::arrows::ArrowsExt;
@@ -34,6 +38,7 @@ pub use self::enums::LeafletModeTransitionType;
 
 #[doc(hidden)]
 pub mod traits {
+    pub use super::ActionRowExt;
     pub use super::ArrowsExt;
     pub use super::ColumnExt;
     pub use super::DialerExt;
