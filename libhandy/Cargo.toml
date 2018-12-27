@@ -4,6 +4,8 @@ authors = ["Julian Sparber <julian@sparber.net>"]
 keywords = ["libhandy", "handy", "gtk-rs", "gnome"]
 version = "0.1.0"
 description = "Rust bindings for libhandy"
+license = "GPL-3.0-or-later"
+repository = "https://gitlab.gnome.org/World/Rust/libhandy-rs"
 exclude = [
     "gir-files/*",
 ]
