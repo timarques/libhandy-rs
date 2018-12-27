@@ -35,5 +35,7 @@ generate = ["Handy.Column",
             ]
 
 manual = ["Gtk.Widget",
-          "Gtk.Orientation"
+          "Gtk.Orientation",
+          "Gtk.Entry",
+          "Gdk.Event"
          ]
