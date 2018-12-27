@@ -5,7 +5,7 @@ This repository contains the WIP rust bindings for libhandy.
 Add this line to your Cargo file
 ```
 [dependencies]
-libhandy = { git = "https://gitlab.gnome.org/jsparber/libhandy-rs" }
+libhandy = { git = "https://gitlab.gnome.org/World/Rust/libhandy-rs" }
 ```
 
 ## Build
@@ -14,15 +14,9 @@ We use [gir](https://github.com/gtk-rs/gir) to generate rust libhandy bindings. 
 git clone https://github.com/gtk-rs/gir.git
 cd gir
 git clone https://github.com/gtk-rs/gir-files
-git clone https://gitlab.gnome.org/jsparber/libhandy-sys-rs.git
-cp libhandy-sys-rs/Gspell-1.0.gir gir-files
-cp libhandy-sys-rs/gir-libhandy.toml ./
-cargo run --release -- -c gir-libhandy.toml -d gir-files -m sys -o libhandy-sys
-git clone https://gitlab.gnome.org/jsparber/libhandy-rs.git
-cp libhandy-rs/Gir.toml ./
-cargo run --release -- -c Gir.toml -d gir-files -o libhandy
-cp libhandy-rs/src/lib.rs libhandy-rs/src/manual.rs libhandy-rs/src/rt.rs libhandy/src/
-cp libhandy-rs/Cargo.toml libhandy
+cp ../Handy-0.0.gir gir-files
+cargo run --release -- -c ../handy-sys/gir-libhandy.toml -d gir-files -m sys -o ../handy-sys
+cargo run --release -- -c ../handy/Gir.toml -d gir-files -o ../handy
 ```
 
 
