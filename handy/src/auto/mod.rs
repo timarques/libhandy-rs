@@ -34,6 +34,10 @@ mod leaflet;
 pub use self::leaflet::Leaflet;
 pub use self::leaflet::LeafletExt;
 
+mod search_bar;
+pub use self::search_bar::SearchBar;
+pub use self::search_bar::SearchBarExt;
+
 mod enums;
 pub use self::enums::ArrowsDirection;
 pub use self::enums::Fold;
@@ -50,4 +54,5 @@ pub mod traits {
     pub use super::DialerCycleButtonExt;
     pub use super::ExpanderRowExt;
     pub use super::LeafletExt;
+    pub use super::SearchBarExt;
 }

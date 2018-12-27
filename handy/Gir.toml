@@ -13,7 +13,9 @@ single_version_file = true
 external_libraries = [
    "GLib",
    "GObject",
+   "Gio",
    "Gtk",
+   "Gdk",
 ]
 
 generate = ["Handy.Column",
@@ -21,6 +23,7 @@ generate = ["Handy.Column",
             "Handy.Dialer",
             "Handy.DialerCycleButton",
             "Handy.ExpanderRow",
+            "Handy.SearchBar",
             "Handy.Fold",
             "Handy.Leaflet",
             "Handy.LeafletChildTransitionType",
