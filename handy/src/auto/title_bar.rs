@@ -3,17 +3,20 @@
 // DO NOT EDIT
 
 use ffi;
+use glib;
 use glib::object::Downcast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
-use glib::signal::connect_raw;
+use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
+use gobject_ffi;
 use gtk;
 use gtk_ffi;
 use std::boxed::Box as Box_;
-use std::fmt;
+use std::mem;
 use std::mem::transmute;
+use std::ptr;
 
 glib_wrapper! {
     pub struct TitleBar(Object<ffi::HdyTitleBar, ffi::HdyTitleBarClass>): [
@@ -40,7 +43,7 @@ impl Default for TitleBar {
     }
 }
 
-pub trait TitleBarExt: 'static {
+pub trait TitleBarExt {
     fn get_selection_mode(&self) -> bool;
 
     fn set_selection_mode(&self, selection_mode: bool);
@@ -48,7 +51,7 @@ pub trait TitleBarExt: 'static {
     fn connect_property_selection_mode_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<TitleBar>> TitleBarExt for O {
+impl<O: IsA<TitleBar> + IsA<glib::object::Object>> TitleBarExt for O {
     fn get_selection_mode(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_title_bar_get_selection_mode(self.to_glib_none().0))
@@ -64,7 +67,7 @@ impl<O: IsA<TitleBar>> TitleBarExt for O {
     fn connect_property_selection_mode_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect_raw(self.to_glib_none().0 as *mut _, b"notify::selection-mode\0".as_ptr() as *const _,
+            connect(self.to_glib_none().0, "notify::selection-mode",
                 transmute(notify_selection_mode_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -74,10 +77,4 @@ unsafe extern "C" fn notify_selection_mode_trampoline<P>(this: *mut ffi::HdyTitl
 where P: IsA<TitleBar> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&TitleBar::from_glib_borrow(this).downcast_unchecked())
-}
-
-impl fmt::Display for TitleBar {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "TitleBar")
-    }
 }

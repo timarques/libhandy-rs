@@ -3,20 +3,21 @@
 // DO NOT EDIT
 
 use ffi;
-use glib::GString;
+use glib;
 use glib::Value;
 use glib::object::Downcast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
-use glib::signal::connect_raw;
+use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
 use gobject_ffi;
 use gtk;
 use gtk_ffi;
 use std::boxed::Box as Box_;
-use std::fmt;
+use std::mem;
 use std::mem::transmute;
+use std::ptr;
 
 glib_wrapper! {
     pub struct DialerButton(Object<ffi::HdyDialerButton, ffi::HdyDialerButtonClass>): [
@@ -39,42 +40,41 @@ impl DialerButton {
     }
 }
 
-pub trait DialerButtonExt: 'static {
+pub trait DialerButtonExt {
     fn get_digit(&self) -> i32;
 
-    fn get_symbols(&self) -> Option<GString>;
+    fn get_symbols(&self) -> Option<String>;
 
-    fn set_property_symbols<'a, P: Into<Option<&'a str>>>(&self, symbols: P);
+    fn set_property_symbols(&self, symbols: Option<&str>);
 
     fn connect_property_digit_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_symbols_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<DialerButton>> DialerButtonExt for O {
+impl<O: IsA<DialerButton> + IsA<glib::object::Object>> DialerButtonExt for O {
     fn get_digit(&self) -> i32 {
         unsafe {
             ffi::hdy_dialer_button_get_digit(self.to_glib_none().0)
         }
     }
 
-    fn get_symbols(&self) -> Option<GString> {
+    fn get_symbols(&self) -> Option<String> {
         unsafe {
             from_glib_none(ffi::hdy_dialer_button_get_symbols(self.to_glib_none().0))
         }
     }
 
-    fn set_property_symbols<'a, P: Into<Option<&'a str>>>(&self, symbols: P) {
-        let symbols = symbols.into();
+    fn set_property_symbols(&self, symbols: Option<&str>) {
         unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"symbols\0".as_ptr() as *const _, Value::from(symbols).to_glib_none().0);
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "symbols".to_glib_none().0, Value::from(symbols).to_glib_none().0);
         }
     }
 
     fn connect_property_digit_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect_raw(self.to_glib_none().0 as *mut _, b"notify::digit\0".as_ptr() as *const _,
+            connect(self.to_glib_none().0, "notify::digit",
                 transmute(notify_digit_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -82,7 +82,7 @@ impl<O: IsA<DialerButton>> DialerButtonExt for O {
     fn connect_property_symbols_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect_raw(self.to_glib_none().0 as *mut _, b"notify::symbols\0".as_ptr() as *const _,
+            connect(self.to_glib_none().0, "notify::symbols",
                 transmute(notify_symbols_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -98,10 +98,4 @@ unsafe extern "C" fn notify_symbols_trampoline<P>(this: *mut ffi::HdyDialerButto
 where P: IsA<DialerButton> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&DialerButton::from_glib_borrow(this).downcast_unchecked())
-}
-
-impl fmt::Display for DialerButton {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DialerButton")
-    }
 }

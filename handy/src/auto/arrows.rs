@@ -4,17 +4,20 @@
 
 use ArrowsDirection;
 use ffi;
+use glib;
 use glib::object::Downcast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
-use glib::signal::connect_raw;
+use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
+use gobject_ffi;
 use gtk;
 use gtk_ffi;
 use std::boxed::Box as Box_;
-use std::fmt;
+use std::mem;
 use std::mem::transmute;
+use std::ptr;
 
 glib_wrapper! {
     pub struct Arrows(Object<ffi::HdyArrows, ffi::HdyArrowsClass>): [
@@ -41,7 +44,7 @@ impl Default for Arrows {
     }
 }
 
-pub trait ArrowsExt: 'static {
+pub trait ArrowsExt {
     fn animate(&self);
 
     fn get_count(&self) -> u32;
@@ -63,7 +66,7 @@ pub trait ArrowsExt: 'static {
     fn connect_property_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<Arrows>> ArrowsExt for O {
+impl<O: IsA<Arrows> + IsA<glib::object::Object>> ArrowsExt for O {
     fn animate(&self) {
         unsafe {
             ffi::hdy_arrows_animate(self.to_glib_none().0);
@@ -109,7 +112,7 @@ impl<O: IsA<Arrows>> ArrowsExt for O {
     fn connect_property_count_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect_raw(self.to_glib_none().0 as *mut _, b"notify::count\0".as_ptr() as *const _,
+            connect(self.to_glib_none().0, "notify::count",
                 transmute(notify_count_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -117,7 +120,7 @@ impl<O: IsA<Arrows>> ArrowsExt for O {
     fn connect_property_direction_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect_raw(self.to_glib_none().0 as *mut _, b"notify::direction\0".as_ptr() as *const _,
+            connect(self.to_glib_none().0, "notify::direction",
                 transmute(notify_direction_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -125,7 +128,7 @@ impl<O: IsA<Arrows>> ArrowsExt for O {
     fn connect_property_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect_raw(self.to_glib_none().0 as *mut _, b"notify::duration\0".as_ptr() as *const _,
+            connect(self.to_glib_none().0, "notify::duration",
                 transmute(notify_duration_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -147,10 +150,4 @@ unsafe extern "C" fn notify_duration_trampoline<P>(this: *mut ffi::HdyArrows, _p
 where P: IsA<Arrows> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&Arrows::from_glib_borrow(this).downcast_unchecked())
-}
-
-impl fmt::Display for Arrows {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Arrows")
-    }
 }

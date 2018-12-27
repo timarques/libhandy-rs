@@ -11,7 +11,6 @@ use glib::value::FromValueOptional;
 use glib::value::SetValue;
 use glib::value::Value;
 use gobject_ffi;
-use std::fmt;
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
@@ -22,18 +21,6 @@ pub enum ArrowsDirection {
     Right,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for ArrowsDirection {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ArrowsDirection::{}", match *self {
-            ArrowsDirection::Up => "Up",
-            ArrowsDirection::Down => "Down",
-            ArrowsDirection::Left => "Left",
-            ArrowsDirection::Right => "Right",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[doc(hidden)]
@@ -98,16 +85,6 @@ pub enum Fold {
     __Unknown(i32),
 }
 
-impl fmt::Display for Fold {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Fold::{}", match *self {
-            Fold::Unfolded => "Unfolded",
-            Fold::Folded => "Folded",
-            _ => "Unknown",
-        })
-    }
-}
-
 #[doc(hidden)]
 impl ToGlib for Fold {
     type GlibType = ffi::HdyFold;
@@ -166,18 +143,6 @@ pub enum LeafletChildTransitionType {
     Over,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for LeafletChildTransitionType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "LeafletChildTransitionType::{}", match *self {
-            LeafletChildTransitionType::None => "None",
-            LeafletChildTransitionType::Crossfade => "Crossfade",
-            LeafletChildTransitionType::Slide => "Slide",
-            LeafletChildTransitionType::Over => "Over",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[doc(hidden)]
@@ -240,16 +205,6 @@ pub enum LeafletModeTransitionType {
     Slide,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for LeafletModeTransitionType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "LeafletModeTransitionType::{}", match *self {
-            LeafletModeTransitionType::None => "None",
-            LeafletModeTransitionType::Slide => "Slide",
-            _ => "Unknown",
-        })
-    }
 }
 
 #[doc(hidden)]
