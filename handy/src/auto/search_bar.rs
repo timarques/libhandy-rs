@@ -3,6 +3,7 @@
 // DO NOT EDIT
 
 use ffi;
+use gdk;
 use glib;
 use glib::StaticType;
 use glib::Value;
@@ -46,13 +47,13 @@ impl Default for SearchBar {
 }
 
 pub trait SearchBarExt {
-    //fn connect_entry<P: IsA</*Ignored*/gtk::Entry>>(&self, entry: &P);
+    fn connect_entry<P: IsA<gtk::Entry>>(&self, entry: &P);
 
     fn get_search_mode(&self) -> bool;
 
     fn get_show_close_button(&self) -> bool;
 
-    //fn handle_event(&self, event: /*Ignored*/&mut gdk::Event) -> bool;
+    fn handle_event(&self, event: &mut gdk::Event) -> bool;
 
     fn set_search_mode(&self, search_mode: bool);
 
@@ -68,9 +69,11 @@ pub trait SearchBarExt {
 }
 
 impl<O: IsA<SearchBar> + IsA<glib::object::Object>> SearchBarExt for O {
-    //fn connect_entry<P: IsA</*Ignored*/gtk::Entry>>(&self, entry: &P) {
-    //    unsafe { TODO: call ffi::hdy_search_bar_connect_entry() }
-    //}
+    fn connect_entry<P: IsA<gtk::Entry>>(&self, entry: &P) {
+        unsafe {
+            ffi::hdy_search_bar_connect_entry(self.to_glib_none().0, entry.to_glib_none().0);
+        }
+    }
 
     fn get_search_mode(&self) -> bool {
         unsafe {
@@ -84,9 +87,11 @@ impl<O: IsA<SearchBar> + IsA<glib::object::Object>> SearchBarExt for O {
         }
     }
 
-    //fn handle_event(&self, event: /*Ignored*/&mut gdk::Event) -> bool {
-    //    unsafe { TODO: call ffi::hdy_search_bar_handle_event() }
-    //}
+    fn handle_event(&self, event: &mut gdk::Event) -> bool {
+        unsafe {
+            from_glib(ffi::hdy_search_bar_handle_event(self.to_glib_none().0, event.to_glib_none_mut().0))
+        }
+    }
 
     fn set_search_mode(&self, search_mode: bool) {
         unsafe {
