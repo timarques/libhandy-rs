@@ -8,7 +8,7 @@
 extern crate glib_sys as glib_ffi;
 extern crate gobject_sys as gobject_ffi;
 extern crate gtk_sys as gtk_ffi;
-extern crate handy_sys as ffi;
+extern crate libhandy_sys as ffi;
 #[macro_use]
 extern crate glib;
 extern crate bitflags;

@@ -20,10 +20,10 @@ dox = []
 v0_0_6 = []
 
 [lib]
-name = "handy_sys"
+name = "libhandy_sys"
 
 [package]
 build = "build.rs"
 links = "handy"
-name = "handy-sys"
+name = "libhandy-sys"
 version = "0.3.0"

@@ -1,5 +1,6 @@
 [workspace]
 members = [
-    "libhandy-rs",
-    "libhandy-sys"
+    "libhandy",
+    "libhandy-sys",
+    "gir"
 ]
