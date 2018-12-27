@@ -3,20 +3,18 @@
 // DO NOT EDIT
 
 use ffi;
-use glib;
+use glib::GString;
 use glib::object::Downcast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
-use glib::signal::connect;
+use glib::signal::connect_raw;
 use glib::translate::*;
 use glib_ffi;
-use gobject_ffi;
 use gtk;
 use gtk_ffi;
 use std::boxed::Box as Box_;
-use std::mem;
+use std::fmt;
 use std::mem::transmute;
-use std::ptr;
 
 glib_wrapper! {
     pub struct ActionRow(Object<ffi::HdyActionRow, ffi::HdyActionRowClass>): [
@@ -43,18 +41,18 @@ impl Default for ActionRow {
     }
 }
 
-pub trait ActionRowExt {
+pub trait ActionRowExt: 'static {
     fn activate(&self);
 
     fn add_action<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
 
     fn add_prefix<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
 
-    fn get_icon_name(&self) -> Option<String>;
+    fn get_icon_name(&self) -> Option<GString>;
 
-    fn get_subtitle(&self) -> Option<String>;
+    fn get_subtitle(&self) -> Option<GString>;
 
-    fn get_title(&self) -> Option<String>;
+    fn get_title(&self) -> Option<GString>;
 
     fn get_use_underline(&self) -> bool;
 
@@ -75,7 +73,7 @@ pub trait ActionRowExt {
     fn connect_property_use_underline_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
+impl<O: IsA<ActionRow>> ActionRowExt for O {
     fn activate(&self) {
         unsafe {
             ffi::hdy_action_row_activate(self.to_glib_none().0);
@@ -98,19 +96,19 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
-    fn get_icon_name(&self) -> Option<String> {
+    fn get_icon_name(&self) -> Option<GString> {
         unsafe {
             from_glib_none(ffi::hdy_action_row_get_icon_name(self.to_glib_none().0))
         }
     }
 
-    fn get_subtitle(&self) -> Option<String> {
+    fn get_subtitle(&self) -> Option<GString> {
         unsafe {
             from_glib_none(ffi::hdy_action_row_get_subtitle(self.to_glib_none().0))
         }
     }
 
-    fn get_title(&self) -> Option<String> {
+    fn get_title(&self) -> Option<GString> {
         unsafe {
             from_glib_none(ffi::hdy_action_row_get_title(self.to_glib_none().0))
         }
@@ -149,7 +147,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::icon-name",
+            connect_raw(self.to_glib_none().0 as *mut _, b"notify::icon-name\0".as_ptr() as *const _,
                 transmute(notify_icon_name_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -157,7 +155,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
     fn connect_property_subtitle_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::subtitle",
+            connect_raw(self.to_glib_none().0 as *mut _, b"notify::subtitle\0".as_ptr() as *const _,
                 transmute(notify_subtitle_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -165,7 +163,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::title",
+            connect_raw(self.to_glib_none().0 as *mut _, b"notify::title\0".as_ptr() as *const _,
                 transmute(notify_title_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -173,7 +171,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
     fn connect_property_use_underline_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::use-underline",
+            connect_raw(self.to_glib_none().0 as *mut _, b"notify::use-underline\0".as_ptr() as *const _,
                 transmute(notify_use_underline_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
         }
     }
@@ -201,4 +199,10 @@ unsafe extern "C" fn notify_use_underline_trampoline<P>(this: *mut ffi::HdyActio
 where P: IsA<ActionRow> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&ActionRow::from_glib_borrow(this).downcast_unchecked())
+}
+
+impl fmt::Display for ActionRow {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ActionRow")
+    }
 }
