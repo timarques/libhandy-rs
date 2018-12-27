@@ -26,6 +26,10 @@ mod dialer_cycle_button;
 pub use self::dialer_cycle_button::DialerCycleButton;
 pub use self::dialer_cycle_button::DialerCycleButtonExt;
 
+mod expander_row;
+pub use self::expander_row::ExpanderRow;
+pub use self::expander_row::ExpanderRowExt;
+
 mod leaflet;
 pub use self::leaflet::Leaflet;
 pub use self::leaflet::LeafletExt;
@@ -44,5 +48,6 @@ pub mod traits {
     pub use super::DialerExt;
     pub use super::DialerButtonExt;
     pub use super::DialerCycleButtonExt;
+    pub use super::ExpanderRowExt;
     pub use super::LeafletExt;
 }
