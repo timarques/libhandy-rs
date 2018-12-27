@@ -2,7 +2,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files @ 62f3bf0)
 // DO NOT EDIT
 
-extern crate handy_sys;
+extern crate libhandy_sys;
 extern crate shell_words;
 extern crate tempdir;
 use std::env;
@@ -11,7 +11,7 @@ use std::path::Path;
 use std::mem::{align_of, size_of};
 use std::process::Command;
 use std::str;
-use handy_sys::*;
+use libhandy_sys::*;
 
 static PACKAGES: &[&str] = &["libhandy-0.0"];
 
