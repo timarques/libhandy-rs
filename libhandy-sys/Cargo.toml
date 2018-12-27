@@ -27,3 +27,7 @@ build = "build.rs"
 links = "handy"
 name = "libhandy-sys"
 version = "0.1.0"
+authors = ["Julian Sparber <julian@sparber.net>"]
+keywords = ["libhandy", "handy", "gtk-rs", "gnome"]
+description = "The sys part of the rust bindings for libhandy"
+license = "GPL-3.0-or-later"
