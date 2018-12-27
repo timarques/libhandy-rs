@@ -1,9 +1,9 @@
 [package]
 name = "libhandy"
 authors = ["Julian Sparber <julian@sparber.net>"]
-keywords = ["handy", "gtk-rs", "gnome"]
-version = "0.2.0"
-description = "Rust bindings for the libhandy"
+keywords = ["libhandy", "handy", "gtk-rs", "gnome"]
+version = "0.1.0"
+description = "Rust bindings for libhandy"
 exclude = [
     "gir-files/*",
 ]
@@ -23,6 +23,6 @@ gio-sys = "0.7.0"
 gdk-sys = "0.7.0"
 
 [dependencies.libhandy-sys]
-version = "0.3.0"
+version = "0.1.0"
 path = "../libhandy-sys"
 features = [ "v0_0_6" ]
