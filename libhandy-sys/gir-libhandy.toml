@@ -12,4 +12,5 @@ external_libraries = [
 ]
 
 ignore = [
+   "Handy.Dialog",
 ]

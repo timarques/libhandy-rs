@@ -5,6 +5,8 @@
 use ActionRow;
 use ffi;
 use glib;
+use glib::StaticType;
+use glib::Value;
 use glib::object::Downcast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
@@ -31,6 +33,7 @@ glib_wrapper! {
 }
 
 impl ExpanderRow {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn new() -> ExpanderRow {
         assert_initialized_main_thread!();
         unsafe {
@@ -39,6 +42,7 @@ impl ExpanderRow {
     }
 }
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 impl Default for ExpanderRow {
     fn default() -> Self {
         Self::new()
@@ -46,13 +50,25 @@ impl Default for ExpanderRow {
 }
 
 pub trait ExpanderRowExt {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_enable_expansion(&self) -> bool;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_show_enable_switch(&self) -> bool;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_enable_expansion(&self, enable_expansion: bool);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_show_enable_switch(&self, show_enable_switch: bool);
+
+    fn get_property_enable_expansion(&self) -> bool;
+
+    fn set_property_enable_expansion(&self, enable_expansion: bool);
+
+    fn get_property_show_enable_switch(&self) -> bool;
+
+    fn set_property_show_enable_switch(&self, show_enable_switch: bool);
 
     fn connect_property_enable_expansion_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -60,27 +76,59 @@ pub trait ExpanderRowExt {
 }
 
 impl<O: IsA<ExpanderRow> + IsA<glib::object::Object>> ExpanderRowExt for O {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_enable_expansion(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_expander_row_get_enable_expansion(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_show_enable_switch(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_expander_row_get_show_enable_switch(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_enable_expansion(&self, enable_expansion: bool) {
         unsafe {
             ffi::hdy_expander_row_set_enable_expansion(self.to_glib_none().0, enable_expansion.to_glib());
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_show_enable_switch(&self, show_enable_switch: bool) {
         unsafe {
             ffi::hdy_expander_row_set_show_enable_switch(self.to_glib_none().0, show_enable_switch.to_glib());
+        }
+    }
+
+    fn get_property_enable_expansion(&self) -> bool {
+        unsafe {
+            let mut value = Value::from_type(<bool as StaticType>::static_type());
+            gobject_ffi::g_object_get_property(self.to_glib_none().0, "enable-expansion".to_glib_none().0, value.to_glib_none_mut().0);
+            value.get().unwrap()
+        }
+    }
+
+    fn set_property_enable_expansion(&self, enable_expansion: bool) {
+        unsafe {
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "enable-expansion".to_glib_none().0, Value::from(&enable_expansion).to_glib_none().0);
+        }
+    }
+
+    fn get_property_show_enable_switch(&self) -> bool {
+        unsafe {
+            let mut value = Value::from_type(<bool as StaticType>::static_type());
+            gobject_ffi::g_object_get_property(self.to_glib_none().0, "show-enable-switch".to_glib_none().0, value.to_glib_none_mut().0);
+            value.get().unwrap()
+        }
+    }
+
+    fn set_property_show_enable_switch(&self, show_enable_switch: bool) {
+        unsafe {
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "show-enable-switch".to_glib_none().0, Value::from(&show_enable_switch).to_glib_none().0);
         }
     }
 

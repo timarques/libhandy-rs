@@ -4,17 +4,22 @@
 
 use ffi;
 use glib;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib::object::Downcast;
 use glib::object::IsA;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib::signal::SignalHandlerId;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib::signal::connect;
 use glib::translate::*;
 use glib_ffi;
 use gobject_ffi;
 use gtk;
 use gtk_ffi;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use std::boxed::Box as Box_;
 use std::mem;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use std::mem::transmute;
 use std::ptr;
 
@@ -29,6 +34,7 @@ glib_wrapper! {
 }
 
 impl ActionRow {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn new() -> ActionRow {
         assert_initialized_main_thread!();
         unsafe {
@@ -37,6 +43,7 @@ impl ActionRow {
     }
 }
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 impl Default for ActionRow {
     fn default() -> Self {
         Self::new()
@@ -46,32 +53,55 @@ impl Default for ActionRow {
 pub trait ActionRowExt {
     fn activate(&self);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn add_action<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn add_prefix<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
 
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    fn get_activatable_widget(&self) -> Option<gtk::Widget>;
+
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_icon_name(&self) -> Option<String>;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_subtitle(&self) -> Option<String>;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_title(&self) -> Option<String>;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_use_underline(&self) -> bool;
 
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    fn set_activatable_widget<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
+
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_icon_name(&self, icon_name: &str);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_subtitle(&self, subtitle: &str);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_title(&self, title: &str);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_use_underline(&self, use_underline: bool);
 
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    fn connect_property_activatable_widget_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_subtitle_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_use_underline_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
@@ -82,6 +112,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn add_action<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q) {
         let widget = widget.into();
         let widget = widget.to_glib_none();
@@ -90,6 +121,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn add_prefix<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q) {
         let widget = widget.into();
         let widget = widget.to_glib_none();
@@ -98,54 +130,88 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    fn get_activatable_widget(&self) -> Option<gtk::Widget> {
+        unsafe {
+            from_glib_none(ffi::hdy_action_row_get_activatable_widget(self.to_glib_none().0))
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_icon_name(&self) -> Option<String> {
         unsafe {
             from_glib_none(ffi::hdy_action_row_get_icon_name(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_subtitle(&self) -> Option<String> {
         unsafe {
             from_glib_none(ffi::hdy_action_row_get_subtitle(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_title(&self) -> Option<String> {
         unsafe {
             from_glib_none(ffi::hdy_action_row_get_title(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_use_underline(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_action_row_get_use_underline(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    fn set_activatable_widget<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q) {
+        let widget = widget.into();
+        let widget = widget.to_glib_none();
+        unsafe {
+            ffi::hdy_action_row_set_activatable_widget(self.to_glib_none().0, widget.0);
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_icon_name(&self, icon_name: &str) {
         unsafe {
             ffi::hdy_action_row_set_icon_name(self.to_glib_none().0, icon_name.to_glib_none().0);
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_subtitle(&self, subtitle: &str) {
         unsafe {
             ffi::hdy_action_row_set_subtitle(self.to_glib_none().0, subtitle.to_glib_none().0);
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_title(&self, title: &str) {
         unsafe {
             ffi::hdy_action_row_set_title(self.to_glib_none().0, title.to_glib_none().0);
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_use_underline(&self, use_underline: bool) {
         unsafe {
             ffi::hdy_action_row_set_use_underline(self.to_glib_none().0, use_underline.to_glib());
         }
     }
 
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    fn connect_property_activatable_widget_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe {
+            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
+            connect(self.to_glib_none().0, "notify::activatable-widget",
+                transmute(notify_activatable_widget_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
@@ -154,6 +220,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_subtitle_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
@@ -162,6 +229,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
@@ -170,6 +238,7 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_use_underline_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
@@ -179,24 +248,35 @@ impl<O: IsA<ActionRow> + IsA<glib::object::Object>> ActionRowExt for O {
     }
 }
 
+#[cfg(any(feature = "v0_0_7", feature = "dox"))]
+unsafe extern "C" fn notify_activatable_widget_trampoline<P>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+where P: IsA<ActionRow> {
+    let f: &&(Fn(&P) + 'static) = transmute(f);
+    f(&ActionRow::from_glib_borrow(this).downcast_unchecked())
+}
+
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 unsafe extern "C" fn notify_icon_name_trampoline<P>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<ActionRow> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&ActionRow::from_glib_borrow(this).downcast_unchecked())
 }
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 unsafe extern "C" fn notify_subtitle_trampoline<P>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<ActionRow> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&ActionRow::from_glib_borrow(this).downcast_unchecked())
 }
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 unsafe extern "C" fn notify_title_trampoline<P>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<ActionRow> {
     let f: &&(Fn(&P) + 'static) = transmute(f);
     f(&ActionRow::from_glib_borrow(this).downcast_unchecked())
 }
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 unsafe extern "C" fn notify_use_underline_trampoline<P>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<ActionRow> {
     let f: &&(Fn(&P) + 'static) = transmute(f);

@@ -3,6 +3,7 @@
 // DO NOT EDIT
 
 use ffi;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use gdk;
 use glib;
 use glib::StaticType;
@@ -32,6 +33,7 @@ glib_wrapper! {
 }
 
 impl SearchBar {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn new() -> SearchBar {
         assert_initialized_main_thread!();
         unsafe {
@@ -40,6 +42,7 @@ impl SearchBar {
     }
 }
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 impl Default for SearchBar {
     fn default() -> Self {
         Self::new()
@@ -47,21 +50,31 @@ impl Default for SearchBar {
 }
 
 pub trait SearchBarExt {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_entry<P: IsA<gtk::Entry>>(&self, entry: &P);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_search_mode(&self) -> bool;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_show_close_button(&self) -> bool;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn handle_event(&self, event: &mut gdk::Event) -> bool;
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_search_mode(&self, search_mode: bool);
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_show_close_button(&self, visible: bool);
 
     fn get_property_search_mode_enabled(&self) -> bool;
 
     fn set_property_search_mode_enabled(&self, search_mode_enabled: bool);
+
+    fn get_property_show_close_button(&self) -> bool;
+
+    fn set_property_show_close_button(&self, show_close_button: bool);
 
     fn connect_property_search_mode_enabled_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -69,36 +82,42 @@ pub trait SearchBarExt {
 }
 
 impl<O: IsA<SearchBar> + IsA<glib::object::Object>> SearchBarExt for O {
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_entry<P: IsA<gtk::Entry>>(&self, entry: &P) {
         unsafe {
             ffi::hdy_search_bar_connect_entry(self.to_glib_none().0, entry.to_glib_none().0);
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_search_mode(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_search_bar_get_search_mode(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_show_close_button(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_search_bar_get_show_close_button(self.to_glib_none().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn handle_event(&self, event: &mut gdk::Event) -> bool {
         unsafe {
             from_glib(ffi::hdy_search_bar_handle_event(self.to_glib_none().0, event.to_glib_none_mut().0))
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_search_mode(&self, search_mode: bool) {
         unsafe {
             ffi::hdy_search_bar_set_search_mode(self.to_glib_none().0, search_mode.to_glib());
         }
     }
 
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_show_close_button(&self, visible: bool) {
         unsafe {
             ffi::hdy_search_bar_set_show_close_button(self.to_glib_none().0, visible.to_glib());
@@ -116,6 +135,20 @@ impl<O: IsA<SearchBar> + IsA<glib::object::Object>> SearchBarExt for O {
     fn set_property_search_mode_enabled(&self, search_mode_enabled: bool) {
         unsafe {
             gobject_ffi::g_object_set_property(self.to_glib_none().0, "search-mode-enabled".to_glib_none().0, Value::from(&search_mode_enabled).to_glib_none().0);
+        }
+    }
+
+    fn get_property_show_close_button(&self) -> bool {
+        unsafe {
+            let mut value = Value::from_type(<bool as StaticType>::static_type());
+            gobject_ffi::g_object_get_property(self.to_glib_none().0, "show-close-button".to_glib_none().0, value.to_glib_none_mut().0);
+            value.get().unwrap()
+        }
+    }
+
+    fn set_property_show_close_button(&self, show_close_button: bool) {
+        unsafe {
+            gobject_ffi::g_object_set_property(self.to_glib_none().0, "show-close-button".to_glib_none().0, Value::from(&show_close_button).to_glib_none().0);
         }
     }
 

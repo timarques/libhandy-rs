@@ -139,6 +139,19 @@ impl ::std::fmt::Debug for HdyDialerCycleButtonClass {
 }
 
 #[repr(C)]
+pub struct HdyDialogClass {
+    _truncated_record_marker: c_void,
+    // /*Ignored*/field parent_class has incomplete type
+}
+
+impl ::std::fmt::Debug for HdyDialogClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyDialogClass @ {:?}", self as *const _))
+         .finish()
+    }
+}
+
+#[repr(C)]
 #[derive(Copy, Clone)]
 pub struct HdyEnumValueObjectClass {
     pub parent_class: gobject::GObjectClass,
@@ -422,6 +435,8 @@ extern "C" {
     pub fn hdy_action_row_add_action(self_: *mut HdyActionRow, widget: *mut gtk::GtkWidget);
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_action_row_add_prefix(self_: *mut HdyActionRow, widget: *mut gtk::GtkWidget);
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    pub fn hdy_action_row_get_activatable_widget(self_: *mut HdyActionRow) -> *mut gtk::GtkWidget;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_action_row_get_icon_name(self_: *mut HdyActionRow) -> *const c_char;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
@@ -430,6 +445,8 @@ extern "C" {
     pub fn hdy_action_row_get_title(self_: *mut HdyActionRow) -> *const c_char;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_action_row_get_use_underline(self_: *mut HdyActionRow) -> gboolean;
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    pub fn hdy_action_row_set_activatable_widget(self_: *mut HdyActionRow, widget: *mut gtk::GtkWidget);
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_action_row_set_icon_name(self_: *mut HdyActionRow, icon_name: *const c_char);
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
@@ -474,8 +491,12 @@ extern "C" {
     pub fn hdy_combo_row_bind_name_model(self_: *mut HdyComboRow, model: *mut gio::GListModel, get_name_func: HdyComboRowGetNameFunc, user_data: gpointer, user_data_free_func: glib::GDestroyNotify);
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_combo_row_get_model(self_: *mut HdyComboRow) -> *mut gio::GListModel;
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    pub fn hdy_combo_row_get_selected_index(self_: *mut HdyComboRow) -> c_int;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_combo_row_set_for_enum(self_: *mut HdyComboRow, enum_type: GType, get_name_func: HdyComboRowGetEnumValueNameFunc, user_data: gpointer, user_data_free_func: glib::GDestroyNotify);
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    pub fn hdy_combo_row_set_selected_index(self_: *mut HdyComboRow, selected_index: c_int);
 
     //=========================================================================
     // HdyDialer
@@ -508,6 +529,13 @@ extern "C" {
     pub fn hdy_dialer_cycle_button_is_cycling(self_: *mut HdyDialerCycleButton) -> gboolean;
     pub fn hdy_dialer_cycle_button_set_cycle_timeout(self_: *mut HdyDialerCycleButton, timeout: c_int);
     pub fn hdy_dialer_cycle_button_stop_cycle(self_: *mut HdyDialerCycleButton);
+
+    //=========================================================================
+    // HdyDialog
+    //=========================================================================
+    pub fn hdy_dialog_get_type() -> GType;
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    pub fn hdy_dialog_new(parent: *mut gtk::GtkWindow) -> *mut gtk::GtkWidget;
 
     //=========================================================================
     // HdyEnumValueObject

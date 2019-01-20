@@ -16,7 +16,9 @@ fn main() {
 fn find() -> Result<(), Error> {
     let package_name = "libhandy-0.0";
     let shared_libs = ["handy-0.0"];
-    let version = {
+    let version = if cfg!(feature = "v0_0_7") {
+        "0.0.7"
+    } else {
         "0.0"
     };
 

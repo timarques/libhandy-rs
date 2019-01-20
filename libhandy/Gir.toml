@@ -2,7 +2,7 @@
 girs_dir = "gir-files"
 library = "Handy"
 version = "0.0"
-min_cfg_version = "1.8"
+min_cfg_version = "0.0"
 target_path = "."
 work_mode = "normal"
 generate_safety_asserts = true

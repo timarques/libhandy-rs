@@ -96,6 +96,22 @@ and/or use gtk-doc annotations.  -->
           </parameter>
         </parameters>
       </method>
+      <method name="get_activatable_widget"
+              c:identifier="hdy_action_row_get_activatable_widget"
+              version="0.0.7">
+        <doc xml:space="preserve">Gets the widget activated when @self is activated.</doc>
+        <return-value transfer-ownership="none" nullable="1">
+          <doc xml:space="preserve">the widget activated when @self is
+         activated, or %NULL if none has been set.</doc>
+          <type name="Gtk.Widget" c:type="GtkWidget*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve">a #HdyActionRow</doc>
+            <type name="ActionRow" c:type="HdyActionRow*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
       <method name="get_icon_name"
               c:identifier="hdy_action_row_get_icon_name"
               version="0.0.6">
@@ -156,6 +172,32 @@ labels indicates a mnemonic. See hdy_action_row_set_use_underline().</doc>
             <doc xml:space="preserve">a #HdyActionRow</doc>
             <type name="ActionRow" c:type="HdyActionRow*"/>
           </instance-parameter>
+        </parameters>
+      </method>
+      <method name="set_activatable_widget"
+              c:identifier="hdy_action_row_set_activatable_widget"
+              version="0.0.7">
+        <doc xml:space="preserve">Sets the widget to activate when @self is activated, either by clicking
+on it, by calling hdy_action_row_activate(), or via mnemonics in the title or
+the subtitle. See the “use_underline” property to enable mnemonics.
+
+The target widget will be activated by emitting the
+GtkWidget::mnemonic-activate signal on it.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve">a #HdyActionRow</doc>
+            <type name="ActionRow" c:type="HdyActionRow*"/>
+          </instance-parameter>
+          <parameter name="widget"
+                     transfer-ownership="none"
+                     nullable="1"
+                     allow-none="1">
+            <doc xml:space="preserve">the target #GtkWidget, or %NULL to unset</doc>
+            <type name="Gtk.Widget" c:type="GtkWidget*"/>
+          </parameter>
         </parameters>
       </method>
       <method name="set_icon_name"
@@ -231,19 +273,40 @@ the next character should be used for the mnemonic accelerator key.</doc>
           </parameter>
         </parameters>
       </method>
-      <property name="icon-name" writable="1" transfer-ownership="none">
+      <property name="activatable-widget"
+                version="0.0.7"
+                writable="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve">The activatable widget for this row.</doc>
+        <type name="Gtk.Widget"/>
+      </property>
+      <property name="icon-name"
+                version="0.0.6"
+                writable="1"
+                transfer-ownership="none">
         <doc xml:space="preserve">The icon name for this row.</doc>
         <type name="utf8" c:type="gchar*"/>
       </property>
-      <property name="subtitle" writable="1" transfer-ownership="none">
+      <property name="subtitle"
+                version="0.0.6"
+                writable="1"
+                transfer-ownership="none">
         <doc xml:space="preserve">The subtitle for this row.</doc>
         <type name="utf8" c:type="gchar*"/>
       </property>
-      <property name="title" writable="1" transfer-ownership="none">
+      <property name="title"
+                version="0.0.6"
+                writable="1"
+                transfer-ownership="none">
         <doc xml:space="preserve">The title for this row.</doc>
         <type name="utf8" c:type="gchar*"/>
       </property>
-      <property name="use-underline" writable="1" transfer-ownership="none">
+      <property name="use-underline"
+                version="0.0.6"
+                writable="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve">Whether an embedded underline in the text of the title and subtitle labels
+indicates a mnemonic.</doc>
         <type name="gboolean" c:type="gboolean"/>
       </property>
       <field name="parent_instance">
@@ -553,8 +616,7 @@ width. In bith cases the allocated width won't exceed the declared maximum.</doc
       </constructor>
       <method name="bind_model"
               c:identifier="hdy_combo_row_bind_model"
-              version="0.0.6"
-              introspectable="0">
+              version="0.0.6">
         <doc xml:space="preserve">Binds @model to @self.
 
 If @self was already bound to a model, that previous binding is destroyed.
@@ -580,10 +642,11 @@ items from @model. @self is updated whenever @model changes. If @model is
           <parameter name="create_list_widget_func"
                      transfer-ownership="none"
                      nullable="1"
-                     allow-none="1">
-            <doc xml:space="preserve">a function that creates widgets for
-  items to display in the list, or %NULL in case you also passed %NULL as
-  @model</doc>
+                     allow-none="1"
+                     scope="call">
+            <doc xml:space="preserve">a function that creates
+  widgets for items to display in the list, or %NULL in case you also passed
+  %NULL as @model</doc>
             <type name="Gtk.ListBoxCreateWidgetFunc"
                   c:type="GtkListBoxCreateWidgetFunc"/>
           </parameter>
@@ -685,6 +748,21 @@ to represent items of the model with names.</doc>
           </instance-parameter>
         </parameters>
       </method>
+      <method name="get_selected_index"
+              c:identifier="hdy_combo_row_get_selected_index"
+              version="0.0.7">
+        <doc xml:space="preserve">Gets the index of the selected item in its #GListModel.</doc>
+        <return-value transfer-ownership="none">
+          <doc xml:space="preserve">the index of the selected item, or -1 if no item is selected</doc>
+          <type name="gint" c:type="gint"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve">a #GtkListBoxRow</doc>
+            <type name="ComboRow" c:type="HdyComboRow*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
       <method name="set_for_enum"
               c:identifier="hdy_combo_row_set_for_enum"
               version="0.0.6">
@@ -740,6 +818,31 @@ See hdy_enum_value_row_name().</doc>
           </parameter>
         </parameters>
       </method>
+      <method name="set_selected_index"
+              c:identifier="hdy_combo_row_set_selected_index"
+              version="0.0.7">
+        <doc xml:space="preserve">Sets the index of the selected item in its #GListModel.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve">a #HdyComboRow</doc>
+            <type name="ComboRow" c:type="HdyComboRow*"/>
+          </instance-parameter>
+          <parameter name="selected_index" transfer-ownership="none">
+            <doc xml:space="preserve">the index of the selected item</doc>
+            <type name="gint" c:type="gint"/>
+          </parameter>
+        </parameters>
+      </method>
+      <property name="selected-index"
+                version="0.0.7"
+                writable="1"
+                transfer-ownership="none">
+        <doc xml:space="preserve">The index of the selected item in its #GListModel.</doc>
+        <type name="gint" c:type="gint"/>
+      </property>
       <field name="parent_instance">
         <type name="ActionRow" c:type="HdyActionRow"/>
       </field>
@@ -1258,6 +1361,53 @@ the first button press).</doc>
             </parameter>
           </parameters>
         </callback>
+      </field>
+    </record>
+    <class name="Dialog"
+           c:symbol-prefix="dialog"
+           c:type="HdyDialog"
+           parent="Gtk.Dialog"
+           glib:type-name="HdyDialog"
+           glib:get-type="hdy_dialog_get_type"
+           glib:type-struct="DialogClass">
+      <implements name="Atk.ImplementorIface"/>
+      <implements name="Gtk.Buildable"/>
+      <constructor name="new" c:identifier="hdy_dialog_new" version="0.0.7">
+        <doc xml:space="preserve">Create a #HdyDialog with #GtkWindow:transient-for set to parent
+
+C Usage
+|[&lt;!-- language="C" --&gt;
+GtkWidget *dlg = hdy_dialog_new (GTK_WINDOW (main_window));
+]|
+
+Vala Usage
+|[&lt;!-- language="Vala" --&gt;
+var dlg = new Hdy.Dialog (main_window);
+]|
+
+Python Usage
+|[&lt;!-- language="Python" --&gt;
+dlg = Handy.Dialog.new (main_window);
+]|</doc>
+        <return-value transfer-ownership="none">
+          <type name="Gtk.Widget" c:type="GtkWidget*"/>
+        </return-value>
+        <parameters>
+          <parameter name="parent" transfer-ownership="none">
+            <doc xml:space="preserve">#GtkWindow this dialog is a child of</doc>
+            <type name="Gtk.Window" c:type="GtkWindow*"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <field name="parent_instance">
+        <type name="Gtk.Dialog" c:type="GtkDialog"/>
+      </field>
+    </class>
+    <record name="DialogClass"
+            c:type="HdyDialogClass"
+            glib:is-gtype-struct-for="Dialog">
+      <field name="parent_class">
+        <type name="Gtk.DialogClass" c:type="GtkDialogClass"/>
       </field>
     </record>
     <class name="EnumValueObject"

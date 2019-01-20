@@ -26,16 +26,22 @@ mod dialer_cycle_button;
 pub use self::dialer_cycle_button::DialerCycleButton;
 pub use self::dialer_cycle_button::DialerCycleButtonExt;
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod expander_row;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::ExpanderRow;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::ExpanderRowExt;
 
 mod leaflet;
 pub use self::leaflet::Leaflet;
 pub use self::leaflet::LeafletExt;
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod search_bar;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::search_bar::SearchBar;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::search_bar::SearchBarExt;
 
 mod title_bar;
@@ -56,8 +62,10 @@ pub mod traits {
     pub use super::DialerExt;
     pub use super::DialerButtonExt;
     pub use super::DialerCycleButtonExt;
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::ExpanderRowExt;
     pub use super::LeafletExt;
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::SearchBarExt;
     pub use super::TitleBarExt;
 }
