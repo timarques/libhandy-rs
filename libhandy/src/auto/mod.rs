@@ -14,6 +14,13 @@ mod column;
 pub use self::column::Column;
 pub use self::column::ColumnExt;
 
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
+mod combo_row;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
+pub use self::combo_row::ComboRow;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
+pub use self::combo_row::ComboRowExt;
+
 mod dialer;
 pub use self::dialer::Dialer;
 pub use self::dialer::DialerExt;
@@ -26,12 +33,21 @@ mod dialer_cycle_button;
 pub use self::dialer_cycle_button::DialerCycleButton;
 pub use self::dialer_cycle_button::DialerCycleButtonExt;
 
+#[cfg(any(feature = "v0_0_7", feature = "dox"))]
+mod dialog;
+#[cfg(any(feature = "v0_0_7", feature = "dox"))]
+pub use self::dialog::Dialog;
+
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod expander_row;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::ExpanderRow;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::ExpanderRowExt;
+
+mod header_group;
+pub use self::header_group::HeaderGroup;
+pub use self::header_group::HeaderGroupExt;
 
 mod leaflet;
 pub use self::leaflet::Leaflet;
@@ -59,11 +75,14 @@ pub mod traits {
     pub use super::ActionRowExt;
     pub use super::ArrowsExt;
     pub use super::ColumnExt;
+    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    pub use super::ComboRowExt;
     pub use super::DialerExt;
     pub use super::DialerButtonExt;
     pub use super::DialerCycleButtonExt;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::ExpanderRowExt;
+    pub use super::HeaderGroupExt;
     pub use super::LeafletExt;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::SearchBarExt;

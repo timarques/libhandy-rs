@@ -10,7 +10,3 @@ external_libraries = [
    "Gtk",
    "Gdk",
 ]
-
-ignore = [
-   "Handy.Dialog",
-]

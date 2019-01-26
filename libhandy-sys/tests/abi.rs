@@ -239,6 +239,7 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
     ("HdyDialer", Layout {size: size_of::<HdyDialer>(), alignment: align_of::<HdyDialer>()}),
     ("HdyDialerButton", Layout {size: size_of::<HdyDialerButton>(), alignment: align_of::<HdyDialerButton>()}),
     ("HdyDialerCycleButton", Layout {size: size_of::<HdyDialerCycleButton>(), alignment: align_of::<HdyDialerCycleButton>()}),
+    ("HdyDialog", Layout {size: size_of::<HdyDialog>(), alignment: align_of::<HdyDialog>()}),
     ("HdyEnumValueObjectClass", Layout {size: size_of::<HdyEnumValueObjectClass>(), alignment: align_of::<HdyEnumValueObjectClass>()}),
     ("HdyExpanderRow", Layout {size: size_of::<HdyExpanderRow>(), alignment: align_of::<HdyExpanderRow>()}),
     ("HdyFold", Layout {size: size_of::<HdyFold>(), alignment: align_of::<HdyFold>()}),

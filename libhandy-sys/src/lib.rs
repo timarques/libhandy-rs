@@ -327,6 +327,20 @@ impl ::std::fmt::Debug for HdyDialerCycleButton {
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
+pub struct HdyDialog {
+    pub parent_instance: gtk::GtkDialog,
+}
+
+impl ::std::fmt::Debug for HdyDialog {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyDialog @ {:?}", self as *const _))
+         .field("parent_instance", &self.parent_instance)
+         .finish()
+    }
+}
+
+#[repr(C)]
 pub struct HdyEnumValueObject(c_void);
 
 impl ::std::fmt::Debug for HdyEnumValueObject {
