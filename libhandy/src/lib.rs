@@ -38,8 +38,13 @@ macro_rules! skip_assert_initialized {
 }
 
 pub use glib::Error;
+pub mod prelude;
+pub use prelude::*;
 #[cfg_attr(feature = "cargo-clippy", allow(too_many_arguments))]
 #[cfg_attr(feature = "cargo-clippy", allow(useless_transmute))]
 mod auto;
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
 mod value_object;
 pub use auto::*;
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
+pub use value_object::*;
