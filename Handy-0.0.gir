@@ -2158,7 +2158,13 @@ New values may be added to this enumeration over time.</doc>
               value="3"
               c:identifier="HDY_LEAFLET_CHILD_TRANSITION_TYPE_OVER"
               glib:nick="over">
-        <doc xml:space="preserve">Cover the old page or uncover the new page, sliding according to orientation, text direction and order</doc>
+        <doc xml:space="preserve">Cover the old page or uncover the new page, sliding from or towards the end according to orientation, text direction and children order</doc>
+      </member>
+      <member name="under"
+              value="4"
+              c:identifier="HDY_LEAFLET_CHILD_TRANSITION_TYPE_UNDER"
+              glib:nick="under">
+        <doc xml:space="preserve">Uncover the new page or cover the old page, sliding from or towards the start according to orientation, text direction and children order</doc>
       </member>
     </enumeration>
     <record name="LeafletClass"
@@ -2452,6 +2458,161 @@ See hdy_search_bar_set_search_mode() for details.</doc>
             glib:is-gtype-struct-for="TitleBar">
       <field name="parent_class">
         <type name="Gtk.BinClass" c:type="GtkBinClass"/>
+      </field>
+    </record>
+    <class name="ValueObject"
+           c:symbol-prefix="value_object"
+           c:type="HdyValueObject"
+           parent="GObject.Object"
+           glib:type-name="HdyValueObject"
+           glib:get-type="hdy_value_object_get_type"
+           glib:type-struct="ValueObjectClass">
+      <constructor name="new"
+                   c:identifier="hdy_value_object_new"
+                   version="0.0.8">
+        <doc xml:space="preserve">Create a new #HdyValueObject.</doc>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve">a new #HdyValueObject</doc>
+          <type name="ValueObject" c:type="HdyValueObject*"/>
+        </return-value>
+        <parameters>
+          <parameter name="value" transfer-ownership="none">
+            <doc xml:space="preserve">the #GValue to store</doc>
+            <type name="GObject.Value" c:type="const GValue*"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <constructor name="new_collect"
+                   c:identifier="hdy_value_object_new_collect"
+                   version="0.0.8"
+                   introspectable="0">
+        <doc xml:space="preserve">Creates a new #HdyValueObject. This is a convenience method which uses
+the G_VALUE_COLLECT() macro internally.</doc>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve">a new #HdyValueObject</doc>
+          <type name="ValueObject" c:type="HdyValueObject*"/>
+        </return-value>
+        <parameters>
+          <parameter name="type" transfer-ownership="none">
+            <doc xml:space="preserve">the #GType of the value</doc>
+            <type name="GType" c:type="GType"/>
+          </parameter>
+          <parameter name="..." transfer-ownership="none">
+            <doc xml:space="preserve">the value to store</doc>
+            <varargs/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <constructor name="new_string"
+                   c:identifier="hdy_value_object_new_string"
+                   version="0.0.8"
+                   introspectable="0">
+        <doc xml:space="preserve">Creates a new #HdyValueObject. This is a convenience method to create a
+#HdyValueObject that stores a string.</doc>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve">a new #HdyValueObject</doc>
+          <type name="ValueObject" c:type="HdyValueObject*"/>
+        </return-value>
+        <parameters>
+          <parameter name="string" transfer-ownership="none">
+            <doc xml:space="preserve">the string to store</doc>
+            <type name="utf8" c:type="const gchar*"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <constructor name="new_take_string"
+                   c:identifier="hdy_value_object_new_take_string"
+                   version="0.0.8"
+                   introspectable="0">
+        <doc xml:space="preserve">Creates a new #HdyValueObject. This is a convenience method to create a
+#HdyValueObject that stores a string taking ownership of it.</doc>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve">a new #HdyValueObject</doc>
+          <type name="ValueObject" c:type="HdyValueObject*"/>
+        </return-value>
+        <parameters>
+          <parameter name="string" transfer-ownership="full">
+            <doc xml:space="preserve">the string to store</doc>
+            <type name="utf8" c:type="gchar*"/>
+          </parameter>
+        </parameters>
+      </constructor>
+      <method name="copy_value"
+              c:identifier="hdy_value_object_copy_value"
+              version="0.0.8">
+        <doc xml:space="preserve">Copy data from the contained #GValue into @dest.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="value" transfer-ownership="none">
+            <doc xml:space="preserve">the #HdyValueObject</doc>
+            <type name="ValueObject" c:type="HdyValueObject*"/>
+          </instance-parameter>
+          <parameter name="dest" transfer-ownership="none">
+            <doc xml:space="preserve">#GValue with correct type to copy into</doc>
+            <type name="GObject.Value" c:type="GValue*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="dup_string"
+              c:identifier="hdy_value_object_dup_string"
+              version="0.0.8">
+        <doc xml:space="preserve">Returns a copy of the contained string if the value is of type
+#G_TYPE_STRING.</doc>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve">a copy of the contained string</doc>
+          <type name="utf8" c:type="gchar*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="value" transfer-ownership="none">
+            <doc xml:space="preserve">the #HdyValueObject</doc>
+            <type name="ValueObject" c:type="HdyValueObject*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_string"
+              c:identifier="hdy_value_object_get_string"
+              version="0.0.8">
+        <doc xml:space="preserve">Returns the contained string if the value is of type #G_TYPE_STRING.</doc>
+        <return-value transfer-ownership="none">
+          <doc xml:space="preserve">the contained string</doc>
+          <type name="utf8" c:type="const gchar*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="value" transfer-ownership="none">
+            <doc xml:space="preserve">the #HdyValueObject</doc>
+            <type name="ValueObject" c:type="HdyValueObject*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="get_value"
+              c:identifier="hdy_value_object_get_value"
+              version="0.0.8">
+        <doc xml:space="preserve">Return the contained value.</doc>
+        <return-value transfer-ownership="none">
+          <doc xml:space="preserve">the contained #GValue</doc>
+          <type name="GObject.Value" c:type="const GValue*"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="value" transfer-ownership="none">
+            <doc xml:space="preserve">the #HdyValueObject</doc>
+            <type name="ValueObject" c:type="HdyValueObject*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <property name="value"
+                writable="1"
+                construct-only="1"
+                transfer-ownership="none">
+        <type name="GObject.Value"/>
+      </property>
+    </class>
+    <record name="ValueObjectClass"
+            c:type="HdyValueObjectClass"
+            glib:is-gtype-struct-for="ValueObject">
+      <field name="parent_class">
+        <type name="GObject.ObjectClass" c:type="GObjectClass"/>
       </field>
     </record>
     <function name="enum_value_row_name"

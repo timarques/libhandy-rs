@@ -64,6 +64,13 @@ mod title_bar;
 pub use self::title_bar::TitleBar;
 pub use self::title_bar::TitleBarExt;
 
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
+mod value_object;
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
+pub use self::value_object::ValueObject;
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
+pub use self::value_object::ValueObjectExt;
+
 mod enums;
 pub use self::enums::ArrowsDirection;
 pub use self::enums::Fold;
@@ -87,4 +94,6 @@ pub mod traits {
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::SearchBarExt;
     pub use super::TitleBarExt;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub use super::ValueObjectExt;
 }

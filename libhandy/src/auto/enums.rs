@@ -141,6 +141,7 @@ pub enum LeafletChildTransitionType {
     Crossfade,
     Slide,
     Over,
+    Under,
     #[doc(hidden)]
     __Unknown(i32),
 }
@@ -155,6 +156,7 @@ impl ToGlib for LeafletChildTransitionType {
             LeafletChildTransitionType::Crossfade => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_CROSSFADE,
             LeafletChildTransitionType::Slide => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_SLIDE,
             LeafletChildTransitionType::Over => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_OVER,
+            LeafletChildTransitionType::Under => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_UNDER,
             LeafletChildTransitionType::__Unknown(value) => value
         }
     }
@@ -169,6 +171,7 @@ impl FromGlib<ffi::HdyLeafletChildTransitionType> for LeafletChildTransitionType
             1 => LeafletChildTransitionType::Crossfade,
             2 => LeafletChildTransitionType::Slide,
             3 => LeafletChildTransitionType::Over,
+            4 => LeafletChildTransitionType::Under,
             value => LeafletChildTransitionType::__Unknown(value),
         }
     }

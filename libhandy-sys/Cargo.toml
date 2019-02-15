@@ -19,6 +19,7 @@ tempdir = "0.3"
 dox = []
 v0_0_6 = []
 v0_0_7 = ["v0_0_6"]
+v0_0_8 = ["v0_0_7"]
 
 [lib]
 name = "libhandy_sys"
@@ -32,4 +33,4 @@ license = "GPL-3.0-or-later"
 links = "handy"
 name = "libhandy-sys"
 repository = "https://gitlab.gnome.org/World/Rust/libhandy-rs"
-version = "0.2.0"
+version = "0.2.1"

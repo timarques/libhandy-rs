@@ -2,7 +2,7 @@
 name = "libhandy"
 authors = ["Julian Sparber <julian@sparber.net>"]
 keywords = ["libhandy", "handy", "gtk-rs", "gnome"]
-version = "0.2.0"
+version = "0.2.1"
 description = "Rust bindings for libhandy"
 license = "GPL-3.0-or-later"
 repository = "https://gitlab.gnome.org/World/Rust/libhandy-rs"
@@ -29,11 +29,11 @@ version = "0.5.0"
 features = [ "v3_22" ]
 
 [dependencies.libhandy-sys]
-version = "0.2.0"
+version = "0.2.1"
 path = "../libhandy-sys"
-features = [ "v0_0_7" ]
 
 [features]
 dox = []
-v0_0_6 = []
-v0_0_7 = ["v0_0_6"]
+v0_0_6 = ["libhandy-sys/v0_0_6"]
+v0_0_7 = ["v0_0_6", "libhandy-sys/v0_0_7"]
+v0_0_8 = ["v0_0_7", "libhandy-sys/v0_0_8"]

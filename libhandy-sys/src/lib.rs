@@ -36,6 +36,7 @@ pub const HDY_LEAFLET_CHILD_TRANSITION_TYPE_NONE: HdyLeafletChildTransitionType 
 pub const HDY_LEAFLET_CHILD_TRANSITION_TYPE_CROSSFADE: HdyLeafletChildTransitionType = 1;
 pub const HDY_LEAFLET_CHILD_TRANSITION_TYPE_SLIDE: HdyLeafletChildTransitionType = 2;
 pub const HDY_LEAFLET_CHILD_TRANSITION_TYPE_OVER: HdyLeafletChildTransitionType = 3;
+pub const HDY_LEAFLET_CHILD_TRANSITION_TYPE_UNDER: HdyLeafletChildTransitionType = 4;
 
 pub type HdyLeafletModeTransitionType = c_int;
 pub const HDY_LEAFLET_MODE_TRANSITION_TYPE_NONE: HdyLeafletModeTransitionType = 0;
@@ -231,6 +232,20 @@ impl ::std::fmt::Debug for HdyTitleBarClass {
     }
 }
 
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct HdyValueObjectClass {
+    pub parent_class: gobject::GObjectClass,
+}
+
+impl ::std::fmt::Debug for HdyValueObjectClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyValueObjectClass @ {:?}", self as *const _))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
 // Classes
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -412,6 +427,16 @@ pub struct HdyTitleBar(c_void);
 impl ::std::fmt::Debug for HdyTitleBar {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HdyTitleBar @ {:?}", self as *const _))
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct HdyValueObject(c_void);
+
+impl ::std::fmt::Debug for HdyValueObject {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyValueObject @ {:?}", self as *const _))
          .finish()
     }
 }
@@ -636,6 +661,27 @@ extern "C" {
     pub fn hdy_title_bar_new() -> *mut HdyTitleBar;
     pub fn hdy_title_bar_get_selection_mode(self_: *mut HdyTitleBar) -> gboolean;
     pub fn hdy_title_bar_set_selection_mode(self_: *mut HdyTitleBar, selection_mode: gboolean);
+
+    //=========================================================================
+    // HdyValueObject
+    //=========================================================================
+    pub fn hdy_value_object_get_type() -> GType;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_new(value: *const gobject::GValue) -> *mut HdyValueObject;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_new_collect(type_: GType, ...) -> *mut HdyValueObject;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_new_string(string: *const c_char) -> *mut HdyValueObject;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_new_take_string(string: *mut c_char) -> *mut HdyValueObject;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_copy_value(value: *mut HdyValueObject, dest: *mut gobject::GValue);
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_dup_string(value: *mut HdyValueObject) -> *mut c_char;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_get_string(value: *mut HdyValueObject) -> *const c_char;
+    #[cfg(any(feature = "v0_0_8", feature = "dox"))]
+    pub fn hdy_value_object_get_value(value: *mut HdyValueObject) -> *const gobject::GValue;
 
     //=========================================================================
     // Other functions

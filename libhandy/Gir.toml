@@ -45,4 +45,24 @@ manual = ["Gtk.Widget",
           "Gtk.Entry",
           "Gdk.Event",
           "Gio.ListModel",
+          "GObject.Value",
          ]
+
+[[object]]
+name = "Handy.ValueObject"
+status = "generate"
+    [[object.function]]
+    name = "dup_string"
+    ignore = true
+    [[object.function]]
+    name = "copy_value"
+    ignore = true
+    [[object.function]]
+    name = "new_take_string"
+    ignore = true
+    [[object.function]]
+    name = "new_string"
+    ignore = true
+    [[object.property]]
+    name = "value"
+    ignore = true

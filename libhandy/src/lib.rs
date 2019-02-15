@@ -41,6 +41,5 @@ pub use glib::Error;
 #[cfg_attr(feature = "cargo-clippy", allow(too_many_arguments))]
 #[cfg_attr(feature = "cargo-clippy", allow(useless_transmute))]
 mod auto;
-/*mod manual;*/
+mod value_object;
 pub use auto::*;
-/* pub use manual::*; */

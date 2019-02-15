@@ -249,6 +249,7 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
     ("HdyLeafletChildTransitionType", Layout {size: size_of::<HdyLeafletChildTransitionType>(), alignment: align_of::<HdyLeafletChildTransitionType>()}),
     ("HdyLeafletModeTransitionType", Layout {size: size_of::<HdyLeafletModeTransitionType>(), alignment: align_of::<HdyLeafletModeTransitionType>()}),
     ("HdySearchBar", Layout {size: size_of::<HdySearchBar>(), alignment: align_of::<HdySearchBar>()}),
+    ("HdyValueObjectClass", Layout {size: size_of::<HdyValueObjectClass>(), alignment: align_of::<HdyValueObjectClass>()}),
 ];
 
 const RUST_CONSTANTS: &[(&str, &str)] = &[
@@ -262,6 +263,7 @@ const RUST_CONSTANTS: &[(&str, &str)] = &[
     ("HDY_LEAFLET_CHILD_TRANSITION_TYPE_NONE", "0"),
     ("HDY_LEAFLET_CHILD_TRANSITION_TYPE_OVER", "3"),
     ("HDY_LEAFLET_CHILD_TRANSITION_TYPE_SLIDE", "2"),
+    ("HDY_LEAFLET_CHILD_TRANSITION_TYPE_UNDER", "4"),
     ("HDY_LEAFLET_MODE_TRANSITION_TYPE_NONE", "0"),
     ("HDY_LEAFLET_MODE_TRANSITION_TYPE_SLIDE", "1"),
 ];
