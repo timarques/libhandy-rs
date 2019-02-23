@@ -23,7 +23,7 @@ impl<O: IsA<ValueObject> + IsA<glib::object::Object>> ValueObjectExtManual for O
     fn copy_value(&self) -> glib::Value {
         unsafe {
             let mut dest = glib::Value::uninitialized();
-            ffi::hdy_value_object_copy_value(self.to_glib_none().0, dest.to_glib_none_mut().0);
+            ffi::hdy_value_object_copy_value(self.as_ref().to_glib_none().0, dest.to_glib_none_mut().0);
             dest
         }
     }

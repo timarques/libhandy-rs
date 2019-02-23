@@ -6,31 +6,25 @@ use ActionRow;
 use ffi;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use gio;
-use glib;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-use glib::object::Downcast;
+use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use glib::signal::SignalHandlerId;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-use glib::signal::connect;
+use glib::signal::connect_raw;
 use glib::translate::*;
+#[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use glib_ffi;
-use gobject_ffi;
 use gtk;
-use gtk_ffi;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use std::boxed::Box as Box_;
-use std::mem;
+use std::fmt;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use std::mem::transmute;
-use std::ptr;
 
 glib_wrapper! {
-    pub struct ComboRow(Object<ffi::HdyComboRow, ffi::HdyComboRowClass>): [
-        ActionRow,
-        gtk::Widget => gtk_ffi::GtkWidget,
-    ];
+    pub struct ComboRow(Object<ffi::HdyComboRow, ffi::HdyComboRowClass, ComboRowClass>) @extends ActionRow, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_combo_row_get_type(),
@@ -54,12 +48,14 @@ impl Default for ComboRow {
     }
 }
 
-pub trait ComboRowExt {
+pub const NONE_COMBO_ROW: Option<&ComboRow> = None;
+
+pub trait ComboRowExt: 'static {
     //#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    //fn bind_model<'a, 'b, 'c, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>, R: Into<Option<&'b /*Ignored*/gtk::ListBoxCreateWidgetFunc>>, S: Into<Option<&'c /*Ignored*/gtk::ListBoxCreateWidgetFunc>>>(&self, model: Q, create_list_widget_func: R, create_current_widget_func: S, user_data_free_func: /*Unknown conversion*//*Unimplemented*/DestroyNotify);
+    //fn bind_model<'a, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>>(&self, model: Q, create_list_widget_func: /*Unimplemented*/FnMut(/*Ignored*/glib::Object) -> gtk::Widget, create_current_widget_func: /*Unimplemented*/Fn(/*Ignored*/glib::Object) -> gtk::Widget, user_data: /*Unimplemented*/Option<Fundamental: Pointer>);
 
     //#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    //fn bind_name_model<'a, 'b, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>, R: Into<Option<&'b /*Unimplemented*/ComboRowGetNameFunc>>>(&self, model: Q, get_name_func: R, user_data_free_func: /*Unknown conversion*//*Unimplemented*/DestroyNotify);
+    //fn bind_name_model<'a, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>>(&self, model: Q, get_name_func: /*Unimplemented*/Fn(/*Ignored*/glib::Object) -> String, user_data: /*Unimplemented*/Option<Fundamental: Pointer>);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_model(&self) -> Option<gio::ListModel>;
@@ -68,7 +64,7 @@ pub trait ComboRowExt {
     fn get_selected_index(&self) -> i32;
 
     //#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    //fn set_for_enum<'a, P: Into<Option<&'a /*Unimplemented*/ComboRowGetEnumValueNameFunc>>>(&self, enum_type: glib::types::Type, get_name_func: P, user_data_free_func: /*Unknown conversion*//*Unimplemented*/DestroyNotify);
+    //fn set_for_enum(&self, enum_type: glib::types::Type, get_name_func: /*Unimplemented*/Fn(/*Ignored*/EnumValueObject) -> String, user_data: /*Unimplemented*/Option<Fundamental: Pointer>);
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn set_selected_index(&self, selected_index: i32);
@@ -77,56 +73,62 @@ pub trait ComboRowExt {
     fn connect_property_selected_index_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<ComboRow> + IsA<glib::object::Object>> ComboRowExt for O {
+impl<O: IsA<ComboRow>> ComboRowExt for O {
     //#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    //fn bind_model<'a, 'b, 'c, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>, R: Into<Option<&'b /*Ignored*/gtk::ListBoxCreateWidgetFunc>>, S: Into<Option<&'c /*Ignored*/gtk::ListBoxCreateWidgetFunc>>>(&self, model: Q, create_list_widget_func: R, create_current_widget_func: S, user_data_free_func: /*Unknown conversion*//*Unimplemented*/DestroyNotify) {
+    //fn bind_model<'a, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>>(&self, model: Q, create_list_widget_func: /*Unimplemented*/FnMut(/*Ignored*/glib::Object) -> gtk::Widget, create_current_widget_func: /*Unimplemented*/Fn(/*Ignored*/glib::Object) -> gtk::Widget, user_data: /*Unimplemented*/Option<Fundamental: Pointer>) {
     //    unsafe { TODO: call ffi::hdy_combo_row_bind_model() }
     //}
 
     //#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    //fn bind_name_model<'a, 'b, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>, R: Into<Option<&'b /*Unimplemented*/ComboRowGetNameFunc>>>(&self, model: Q, get_name_func: R, user_data_free_func: /*Unknown conversion*//*Unimplemented*/DestroyNotify) {
+    //fn bind_name_model<'a, P: IsA<gio::ListModel> + 'a, Q: Into<Option<&'a P>>>(&self, model: Q, get_name_func: /*Unimplemented*/Fn(/*Ignored*/glib::Object) -> String, user_data: /*Unimplemented*/Option<Fundamental: Pointer>) {
     //    unsafe { TODO: call ffi::hdy_combo_row_bind_name_model() }
     //}
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_model(&self) -> Option<gio::ListModel> {
         unsafe {
-            from_glib_none(ffi::hdy_combo_row_get_model(self.to_glib_none().0))
+            from_glib_none(ffi::hdy_combo_row_get_model(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn get_selected_index(&self) -> i32 {
         unsafe {
-            ffi::hdy_combo_row_get_selected_index(self.to_glib_none().0)
+            ffi::hdy_combo_row_get_selected_index(self.as_ref().to_glib_none().0)
         }
     }
 
     //#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    //fn set_for_enum<'a, P: Into<Option<&'a /*Unimplemented*/ComboRowGetEnumValueNameFunc>>>(&self, enum_type: glib::types::Type, get_name_func: P, user_data_free_func: /*Unknown conversion*//*Unimplemented*/DestroyNotify) {
+    //fn set_for_enum(&self, enum_type: glib::types::Type, get_name_func: /*Unimplemented*/Fn(/*Ignored*/EnumValueObject) -> String, user_data: /*Unimplemented*/Option<Fundamental: Pointer>) {
     //    unsafe { TODO: call ffi::hdy_combo_row_set_for_enum() }
     //}
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn set_selected_index(&self, selected_index: i32) {
         unsafe {
-            ffi::hdy_combo_row_set_selected_index(self.to_glib_none().0, selected_index);
+            ffi::hdy_combo_row_set_selected_index(self.as_ref().to_glib_none().0, selected_index);
         }
     }
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn connect_property_selected_index_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::selected-index",
-                transmute(notify_selected_index_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::selected-index\0".as_ptr() as *const _,
+                Some(transmute(notify_selected_index_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
 }
 
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-unsafe extern "C" fn notify_selected_index_trampoline<P>(this: *mut ffi::HdyComboRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+unsafe extern "C" fn notify_selected_index_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyComboRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<ComboRow> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&ComboRow::from_glib_borrow(this).downcast_unchecked())
+    let f: &F = transmute(f);
+    f(&ComboRow::from_glib_borrow(this).unsafe_cast())
+}
+
+impl fmt::Display for ComboRow {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ComboRow")
+    }
 }

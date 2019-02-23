@@ -3,22 +3,19 @@
 // DO NOT EDIT
 
 use ffi;
-use glib;
-use glib::object::Downcast;
+use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
-use glib::signal::connect;
+use glib::signal::connect_raw;
 use glib::translate::*;
 use glib_ffi;
-use gobject_ffi;
 use gtk;
 use std::boxed::Box as Box_;
-use std::mem;
+use std::fmt;
 use std::mem::transmute;
-use std::ptr;
 
 glib_wrapper! {
-    pub struct HeaderGroup(Object<ffi::HdyHeaderGroup, ffi::HdyHeaderGroupClass>);
+    pub struct HeaderGroup(Object<ffi::HdyHeaderGroup, ffi::HdyHeaderGroupClass, HeaderGroupClass>);
 
     match fn {
         get_type => || ffi::hdy_header_group_get_type(),
@@ -40,64 +37,71 @@ impl Default for HeaderGroup {
     }
 }
 
-pub trait HeaderGroupExt {
-    fn add_header_bar(&self, header_bar: &gtk::HeaderBar);
+pub const NONE_HEADER_GROUP: Option<&HeaderGroup> = None;
+
+pub trait HeaderGroupExt: 'static {
+    fn add_header_bar<P: IsA<gtk::HeaderBar>>(&self, header_bar: &P);
 
     fn get_focus(&self) -> Option<gtk::HeaderBar>;
 
     fn get_header_bars(&self) -> Vec<gtk::HeaderBar>;
 
-    fn remove_header_bar(&self, header_bar: &gtk::HeaderBar);
+    fn remove_header_bar<P: IsA<gtk::HeaderBar>>(&self, header_bar: &P);
 
-    fn set_focus<'a, P: Into<Option<&'a gtk::HeaderBar>>>(&self, header_bar: P);
+    fn set_focus<'a, P: IsA<gtk::HeaderBar> + 'a, Q: Into<Option<&'a P>>>(&self, header_bar: Q);
 
     fn connect_property_focus_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<HeaderGroup> + IsA<glib::object::Object>> HeaderGroupExt for O {
-    fn add_header_bar(&self, header_bar: &gtk::HeaderBar) {
+impl<O: IsA<HeaderGroup>> HeaderGroupExt for O {
+    fn add_header_bar<P: IsA<gtk::HeaderBar>>(&self, header_bar: &P) {
         unsafe {
-            ffi::hdy_header_group_add_header_bar(self.to_glib_none().0, header_bar.to_glib_none().0);
+            ffi::hdy_header_group_add_header_bar(self.as_ref().to_glib_none().0, header_bar.as_ref().to_glib_none().0);
         }
     }
 
     fn get_focus(&self) -> Option<gtk::HeaderBar> {
         unsafe {
-            from_glib_none(ffi::hdy_header_group_get_focus(self.to_glib_none().0))
+            from_glib_none(ffi::hdy_header_group_get_focus(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_header_bars(&self) -> Vec<gtk::HeaderBar> {
         unsafe {
-            FromGlibPtrContainer::from_glib_none(ffi::hdy_header_group_get_header_bars(self.to_glib_none().0))
+            FromGlibPtrContainer::from_glib_none(ffi::hdy_header_group_get_header_bars(self.as_ref().to_glib_none().0))
         }
     }
 
-    fn remove_header_bar(&self, header_bar: &gtk::HeaderBar) {
+    fn remove_header_bar<P: IsA<gtk::HeaderBar>>(&self, header_bar: &P) {
         unsafe {
-            ffi::hdy_header_group_remove_header_bar(self.to_glib_none().0, header_bar.to_glib_none().0);
+            ffi::hdy_header_group_remove_header_bar(self.as_ref().to_glib_none().0, header_bar.as_ref().to_glib_none().0);
         }
     }
 
-    fn set_focus<'a, P: Into<Option<&'a gtk::HeaderBar>>>(&self, header_bar: P) {
+    fn set_focus<'a, P: IsA<gtk::HeaderBar> + 'a, Q: Into<Option<&'a P>>>(&self, header_bar: Q) {
         let header_bar = header_bar.into();
-        let header_bar = header_bar.to_glib_none();
         unsafe {
-            ffi::hdy_header_group_set_focus(self.to_glib_none().0, header_bar.0);
+            ffi::hdy_header_group_set_focus(self.as_ref().to_glib_none().0, header_bar.map(|p| p.as_ref()).to_glib_none().0);
         }
     }
 
     fn connect_property_focus_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::focus",
-                transmute(notify_focus_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::focus\0".as_ptr() as *const _,
+                Some(transmute(notify_focus_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
 }
 
-unsafe extern "C" fn notify_focus_trampoline<P>(this: *mut ffi::HdyHeaderGroup, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+unsafe extern "C" fn notify_focus_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyHeaderGroup, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<HeaderGroup> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&HeaderGroup::from_glib_borrow(this).downcast_unchecked())
+    let f: &F = transmute(f);
+    f(&HeaderGroup::from_glib_borrow(this).unsafe_cast())
+}
+
+impl fmt::Display for HeaderGroup {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "HeaderGroup")
+    }
 }

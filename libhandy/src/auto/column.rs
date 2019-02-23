@@ -3,25 +3,19 @@
 // DO NOT EDIT
 
 use ffi;
-use glib;
-use glib::object::Downcast;
+use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
-use glib::signal::connect;
+use glib::signal::connect_raw;
 use glib::translate::*;
 use glib_ffi;
-use gobject_ffi;
 use gtk;
-use gtk_ffi;
 use std::boxed::Box as Box_;
-use std::mem;
+use std::fmt;
 use std::mem::transmute;
-use std::ptr;
 
 glib_wrapper! {
-    pub struct Column(Object<ffi::HdyColumn, ffi::HdyColumnClass>): [
-        gtk::Widget => gtk_ffi::GtkWidget,
-    ];
+    pub struct Column(Object<ffi::HdyColumn, ffi::HdyColumnClass, ColumnClass>) @extends gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_column_get_type(),
@@ -43,7 +37,9 @@ impl Default for Column {
     }
 }
 
-pub trait ColumnExt {
+pub const NONE_COLUMN: Option<&Column> = None;
+
+pub trait ColumnExt: 'static {
     fn get_linear_growth_width(&self) -> i32;
 
     fn get_maximum_width(&self) -> i32;
@@ -57,56 +53,62 @@ pub trait ColumnExt {
     fn connect_property_maximum_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
-impl<O: IsA<Column> + IsA<glib::object::Object>> ColumnExt for O {
+impl<O: IsA<Column>> ColumnExt for O {
     fn get_linear_growth_width(&self) -> i32 {
         unsafe {
-            ffi::hdy_column_get_linear_growth_width(self.to_glib_none().0)
+            ffi::hdy_column_get_linear_growth_width(self.as_ref().to_glib_none().0)
         }
     }
 
     fn get_maximum_width(&self) -> i32 {
         unsafe {
-            ffi::hdy_column_get_maximum_width(self.to_glib_none().0)
+            ffi::hdy_column_get_maximum_width(self.as_ref().to_glib_none().0)
         }
     }
 
     fn set_linear_growth_width(&self, linear_growth_width: i32) {
         unsafe {
-            ffi::hdy_column_set_linear_growth_width(self.to_glib_none().0, linear_growth_width);
+            ffi::hdy_column_set_linear_growth_width(self.as_ref().to_glib_none().0, linear_growth_width);
         }
     }
 
     fn set_maximum_width(&self, maximum_width: i32) {
         unsafe {
-            ffi::hdy_column_set_maximum_width(self.to_glib_none().0, maximum_width);
+            ffi::hdy_column_set_maximum_width(self.as_ref().to_glib_none().0, maximum_width);
         }
     }
 
     fn connect_property_linear_growth_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::linear-growth-width",
-                transmute(notify_linear_growth_width_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::linear-growth-width\0".as_ptr() as *const _,
+                Some(transmute(notify_linear_growth_width_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
 
     fn connect_property_maximum_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
-            let f: Box_<Box_<Fn(&Self) + 'static>> = Box_::new(Box_::new(f));
-            connect(self.to_glib_none().0, "notify::maximum-width",
-                transmute(notify_maximum_width_trampoline::<Self> as usize), Box_::into_raw(f) as *mut _)
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::maximum-width\0".as_ptr() as *const _,
+                Some(transmute(notify_maximum_width_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
 }
 
-unsafe extern "C" fn notify_linear_growth_width_trampoline<P>(this: *mut ffi::HdyColumn, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+unsafe extern "C" fn notify_linear_growth_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyColumn, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Column> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&Column::from_glib_borrow(this).downcast_unchecked())
+    let f: &F = transmute(f);
+    f(&Column::from_glib_borrow(this).unsafe_cast())
 }
 
-unsafe extern "C" fn notify_maximum_width_trampoline<P>(this: *mut ffi::HdyColumn, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+unsafe extern "C" fn notify_maximum_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyColumn, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<Column> {
-    let f: &&(Fn(&P) + 'static) = transmute(f);
-    f(&Column::from_glib_borrow(this).downcast_unchecked())
+    let f: &F = transmute(f);
+    f(&Column::from_glib_borrow(this).unsafe_cast())
+}
+
+impl fmt::Display for Column {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Column")
+    }
 }

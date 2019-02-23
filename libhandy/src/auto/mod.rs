@@ -3,71 +3,71 @@
 // DO NOT EDIT
 
 mod action_row;
-pub use self::action_row::ActionRow;
+pub use self::action_row::{ActionRow, ActionRowClass, NONE_ACTION_ROW};
 pub use self::action_row::ActionRowExt;
 
 mod arrows;
-pub use self::arrows::Arrows;
+pub use self::arrows::{Arrows, ArrowsClass, NONE_ARROWS};
 pub use self::arrows::ArrowsExt;
 
 mod column;
-pub use self::column::Column;
+pub use self::column::{Column, ColumnClass, NONE_COLUMN};
 pub use self::column::ColumnExt;
 
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod combo_row;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-pub use self::combo_row::ComboRow;
+pub use self::combo_row::{ComboRow, ComboRowClass, NONE_COMBO_ROW};
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::combo_row::ComboRowExt;
 
 mod dialer;
-pub use self::dialer::Dialer;
+pub use self::dialer::{Dialer, DialerClass, NONE_DIALER};
 pub use self::dialer::DialerExt;
 
 mod dialer_button;
-pub use self::dialer_button::DialerButton;
+pub use self::dialer_button::{DialerButton, DialerButtonClass, NONE_DIALER_BUTTON};
 pub use self::dialer_button::DialerButtonExt;
 
 mod dialer_cycle_button;
-pub use self::dialer_cycle_button::DialerCycleButton;
+pub use self::dialer_cycle_button::{DialerCycleButton, DialerCycleButtonClass, NONE_DIALER_CYCLE_BUTTON};
 pub use self::dialer_cycle_button::DialerCycleButtonExt;
 
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 mod dialog;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-pub use self::dialog::Dialog;
+pub use self::dialog::{Dialog, DialogClass, NONE_DIALOG};
 
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod expander_row;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-pub use self::expander_row::ExpanderRow;
+pub use self::expander_row::{ExpanderRow, ExpanderRowClass, NONE_EXPANDER_ROW};
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::ExpanderRowExt;
 
 mod header_group;
-pub use self::header_group::HeaderGroup;
+pub use self::header_group::{HeaderGroup, HeaderGroupClass, NONE_HEADER_GROUP};
 pub use self::header_group::HeaderGroupExt;
 
 mod leaflet;
-pub use self::leaflet::Leaflet;
+pub use self::leaflet::{Leaflet, LeafletClass, NONE_LEAFLET};
 pub use self::leaflet::LeafletExt;
 
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod search_bar;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-pub use self::search_bar::SearchBar;
+pub use self::search_bar::{SearchBar, SearchBarClass, NONE_SEARCH_BAR};
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::search_bar::SearchBarExt;
 
 mod title_bar;
-pub use self::title_bar::TitleBar;
+pub use self::title_bar::{TitleBar, TitleBarClass, NONE_TITLE_BAR};
 pub use self::title_bar::TitleBarExt;
 
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
 mod value_object;
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
-pub use self::value_object::ValueObject;
+pub use self::value_object::{ValueObject, ValueObjectClass, NONE_VALUE_OBJECT};
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
 pub use self::value_object::ValueObjectExt;
 

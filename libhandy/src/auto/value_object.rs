@@ -5,15 +5,14 @@
 use ffi;
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
 use glib;
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
+use glib::GString;
 use glib::object::IsA;
 use glib::translate::*;
-use glib_ffi;
-use gobject_ffi;
-use std::mem;
-use std::ptr;
+use std::fmt;
 
 glib_wrapper! {
-    pub struct ValueObject(Object<ffi::HdyValueObject, ffi::HdyValueObjectClass>);
+    pub struct ValueObject(Object<ffi::HdyValueObject, ffi::HdyValueObjectClass, ValueObjectClass>);
 
     match fn {
         get_type => || ffi::hdy_value_object_get_type(),
@@ -35,9 +34,11 @@ impl ValueObject {
     //}
 }
 
-pub trait ValueObjectExt {
+pub const NONE_VALUE_OBJECT: Option<&ValueObject> = None;
+
+pub trait ValueObjectExt: 'static {
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
-    fn get_string(&self) -> Option<String>;
+    fn get_string(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
     fn get_value(&self) -> Option<glib::Value>;
@@ -45,16 +46,22 @@ pub trait ValueObjectExt {
 
 impl<O: IsA<ValueObject>> ValueObjectExt for O {
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
-    fn get_string(&self) -> Option<String> {
+    fn get_string(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(ffi::hdy_value_object_get_string(self.to_glib_none().0))
+            from_glib_none(ffi::hdy_value_object_get_string(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
     fn get_value(&self) -> Option<glib::Value> {
         unsafe {
-            from_glib_none(ffi::hdy_value_object_get_value(self.to_glib_none().0))
+            from_glib_none(ffi::hdy_value_object_get_value(self.as_ref().to_glib_none().0))
         }
+    }
+}
+
+impl fmt::Display for ValueObject {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ValueObject")
     }
 }

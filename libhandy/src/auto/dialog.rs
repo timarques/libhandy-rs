@@ -3,22 +3,14 @@
 // DO NOT EDIT
 
 use ffi;
-use glib::object::Downcast;
+use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
-use glib_ffi;
-use gobject_ffi;
 use gtk;
-use gtk_ffi;
-use std::mem;
-use std::ptr;
+use std::fmt;
 
 glib_wrapper! {
-    pub struct Dialog(Object<ffi::HdyDialog, ffi::HdyDialogClass>): [
-        gtk::Dialog => gtk_ffi::GtkDialog,
-        gtk::Window => gtk_ffi::GtkWindow,
-        gtk::Widget => gtk_ffi::GtkWidget,
-    ];
+    pub struct Dialog(Object<ffi::HdyDialog, ffi::HdyDialogClass, DialogClass>) @extends gtk::Dialog, gtk::Window, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_dialog_get_type(),
@@ -30,7 +22,15 @@ impl Dialog {
     pub fn new<P: IsA<gtk::Window>>(parent: &P) -> Dialog {
         assert_initialized_main_thread!();
         unsafe {
-            gtk::Widget::from_glib_none(ffi::hdy_dialog_new(parent.to_glib_none().0)).downcast_unchecked()
+            gtk::Widget::from_glib_none(ffi::hdy_dialog_new(parent.as_ref().to_glib_none().0)).unsafe_cast()
         }
+    }
+}
+
+pub const NONE_DIALOG: Option<&Dialog> = None;
+
+impl fmt::Display for Dialog {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Dialog")
     }
 }

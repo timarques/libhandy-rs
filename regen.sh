@@ -17,6 +17,9 @@ GIR=./target/release/gir
 git submodule update --init
 (cd gir && cargo build --release)
 
+# Copy the gir
+cp Handy-0.0.gir gir-files/
+
 # Regenerate the sys crate
 rm -rf ${CRATE_SYS}/{build.rs, src/auto}
 ${GIR} -c ${CONFIG_SYS} -d gir-files -o ${CRATE_SYS}
@@ -25,3 +28,4 @@ ${GIR} -c ${CONFIG_SYS} -d gir-files -o ${CRATE_SYS}
 rm -rf ${CRATE_API}/src/auto
 ${GIR} -c ${CONFIG_API} -d gir-files -o ${CRATE_API}
 
+rm gir-files/Handy-0.0.gir
