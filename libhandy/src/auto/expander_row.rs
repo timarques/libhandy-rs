@@ -49,11 +49,15 @@ pub trait ExpanderRowExt: 'static {
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_enable_expansion(&self) -> bool;
 
+    fn get_expanded(&self) -> bool;
+
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_show_enable_switch(&self) -> bool;
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_enable_expansion(&self, enable_expansion: bool);
+
+    fn set_expanded(&self, expanded: bool);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_show_enable_switch(&self, show_enable_switch: bool);
@@ -68,6 +72,8 @@ pub trait ExpanderRowExt: 'static {
 
     fn connect_property_enable_expansion_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    fn connect_property_expanded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
     fn connect_property_show_enable_switch_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
@@ -76,6 +82,12 @@ impl<O: IsA<ExpanderRow>> ExpanderRowExt for O {
     fn get_enable_expansion(&self) -> bool {
         unsafe {
             from_glib(ffi::hdy_expander_row_get_enable_expansion(self.as_ref().to_glib_none().0))
+        }
+    }
+
+    fn get_expanded(&self) -> bool {
+        unsafe {
+            from_glib(ffi::hdy_expander_row_get_expanded(self.as_ref().to_glib_none().0))
         }
     }
 
@@ -90,6 +102,12 @@ impl<O: IsA<ExpanderRow>> ExpanderRowExt for O {
     fn set_enable_expansion(&self, enable_expansion: bool) {
         unsafe {
             ffi::hdy_expander_row_set_enable_expansion(self.as_ref().to_glib_none().0, enable_expansion.to_glib());
+        }
+    }
+
+    fn set_expanded(&self, expanded: bool) {
+        unsafe {
+            ffi::hdy_expander_row_set_expanded(self.as_ref().to_glib_none().0, expanded.to_glib());
         }
     }
 
@@ -136,6 +154,14 @@ impl<O: IsA<ExpanderRow>> ExpanderRowExt for O {
         }
     }
 
+    fn connect_property_expanded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::expanded\0".as_ptr() as *const _,
+                Some(transmute(notify_expanded_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+        }
+    }
+
     fn connect_property_show_enable_switch_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe {
             let f: Box_<F> = Box_::new(f);
@@ -146,6 +172,12 @@ impl<O: IsA<ExpanderRow>> ExpanderRowExt for O {
 }
 
 unsafe extern "C" fn notify_enable_expansion_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyExpanderRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
+where P: IsA<ExpanderRow> {
+    let f: &F = transmute(f);
+    f(&ExpanderRow::from_glib_borrow(this).unsafe_cast())
+}
+
+unsafe extern "C" fn notify_expanded_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyExpanderRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
 where P: IsA<ExpanderRow> {
     let f: &F = transmute(f);
     f(&ExpanderRow::from_glib_borrow(this).unsafe_cast())

@@ -614,10 +614,12 @@ extern "C" {
     pub fn hdy_expander_row_new() -> *mut HdyExpanderRow;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_expander_row_get_enable_expansion(self_: *mut HdyExpanderRow) -> gboolean;
+    pub fn hdy_expander_row_get_expanded(self_: *mut HdyExpanderRow) -> gboolean;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_expander_row_get_show_enable_switch(self_: *mut HdyExpanderRow) -> gboolean;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_expander_row_set_enable_expansion(self_: *mut HdyExpanderRow, enable_expansion: gboolean);
+    pub fn hdy_expander_row_set_expanded(self_: *mut HdyExpanderRow, expanded: gboolean);
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_expander_row_set_show_enable_switch(self_: *mut HdyExpanderRow, show_enable_switch: gboolean);
 

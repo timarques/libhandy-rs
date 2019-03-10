@@ -38,11 +38,8 @@ mod dialog;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 pub use self::dialog::{Dialog, DialogClass, NONE_DIALOG};
 
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 mod expander_row;
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::{ExpanderRow, ExpanderRowClass, NONE_EXPANDER_ROW};
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 pub use self::expander_row::ExpanderRowExt;
 
 mod header_group;
@@ -87,7 +84,6 @@ pub mod traits {
     pub use super::DialerExt;
     pub use super::DialerButtonExt;
     pub use super::DialerCycleButtonExt;
-    #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::ExpanderRowExt;
     pub use super::HeaderGroupExt;
     pub use super::LeafletExt;

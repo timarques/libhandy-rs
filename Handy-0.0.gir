@@ -1499,6 +1499,16 @@ dlg = Handy.Dialog.new (main_window);
           </instance-parameter>
         </parameters>
       </method>
+      <method name="get_expanded" c:identifier="hdy_expander_row_get_expanded">
+        <return-value transfer-ownership="none">
+          <type name="gboolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <type name="ExpanderRow" c:type="HdyExpanderRow*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
       <method name="get_show_enable_switch"
               c:identifier="hdy_expander_row_get_show_enable_switch"
               version="0.0.6">
@@ -1532,6 +1542,19 @@ dlg = Handy.Dialog.new (main_window);
           </parameter>
         </parameters>
       </method>
+      <method name="set_expanded" c:identifier="hdy_expander_row_set_expanded">
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <type name="ExpanderRow" c:type="HdyExpanderRow*"/>
+          </instance-parameter>
+          <parameter name="expanded" transfer-ownership="none">
+            <type name="gboolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </method>
       <method name="set_show_enable_switch"
               c:identifier="hdy_expander_row_set_show_enable_switch"
               version="0.0.6">
@@ -1552,6 +1575,10 @@ dlg = Handy.Dialog.new (main_window);
       </method>
       <property name="enable-expansion" writable="1" transfer-ownership="none">
         <doc xml:space="preserve">%TRUE if the expansion is enabled.</doc>
+        <type name="gboolean" c:type="gboolean"/>
+      </property>
+      <property name="expanded" writable="1" transfer-ownership="none">
+        <doc xml:space="preserve">%TRUE if the row is expanded.</doc>
         <type name="gboolean" c:type="gboolean"/>
       </property>
       <property name="show-enable-switch"
@@ -2152,7 +2179,7 @@ New values may be added to this enumeration over time.</doc>
               value="2"
               c:identifier="HDY_LEAFLET_CHILD_TRANSITION_TYPE_SLIDE"
               glib:nick="slide">
-        <doc xml:space="preserve">Slide from left, right, up or down according to orientation, text direction and order</doc>
+        <doc xml:space="preserve">Slide from left, right, up or down according to the orientation, text direction and the children order</doc>
       </member>
       <member name="over"
               value="3"

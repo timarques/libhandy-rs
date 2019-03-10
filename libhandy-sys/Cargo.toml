@@ -20,6 +20,7 @@ dox = []
 v0_0_6 = []
 v0_0_7 = ["v0_0_6"]
 v0_0_8 = ["v0_0_7"]
+v0_0_9 = ["v0_0_8"]
 
 [lib]
 name = "libhandy_sys"
@@ -33,4 +34,4 @@ license = "GPL-3.0-or-later"
 links = "handy"
 name = "libhandy-sys"
 repository = "https://gitlab.gnome.org/World/Rust/libhandy-rs"
-version = "0.3.0"
+version = "0.3.1"
