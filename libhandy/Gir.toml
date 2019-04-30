@@ -37,7 +37,8 @@ generate = ["Handy.Column",
             "Handy.HeaderGroup",
             ]
 
-manual = ["Gtk.Widget",
+manual = ["Gtk.Container",
+          "Gtk.Widget",
           "Gtk.HeaderBar",
           "Gtk.Window",
           "Gtk.Dialog",

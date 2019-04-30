@@ -16,7 +16,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct DialerCycleButton(Object<ffi::HdyDialerCycleButton, ffi::HdyDialerCycleButtonClass, DialerCycleButtonClass>) @extends DialerButton, gtk::Widget;
+    pub struct DialerCycleButton(Object<ffi::HdyDialerCycleButton, ffi::HdyDialerCycleButtonClass, DialerCycleButtonClass>) @extends DialerButton, gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_dialer_cycle_button_get_type(),

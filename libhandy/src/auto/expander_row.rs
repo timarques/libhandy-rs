@@ -19,7 +19,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct ExpanderRow(Object<ffi::HdyExpanderRow, ffi::HdyExpanderRowClass, ExpanderRowClass>) @extends ActionRow, gtk::Widget;
+    pub struct ExpanderRow(Object<ffi::HdyExpanderRow, ffi::HdyExpanderRowClass, ExpanderRowClass>) @extends ActionRow, gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_expander_row_get_type(),

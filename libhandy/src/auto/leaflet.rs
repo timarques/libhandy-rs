@@ -22,7 +22,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Leaflet(Object<ffi::HdyLeaflet, ffi::HdyLeafletClass, LeafletClass>) @extends gtk::Widget;
+    pub struct Leaflet(Object<ffi::HdyLeaflet, ffi::HdyLeafletClass, LeafletClass>) @extends gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_leaflet_get_type(),

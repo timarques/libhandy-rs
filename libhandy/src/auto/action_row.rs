@@ -23,7 +23,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct ActionRow(Object<ffi::HdyActionRow, ffi::HdyActionRowClass, ActionRowClass>) @extends gtk::Widget;
+    pub struct ActionRow(Object<ffi::HdyActionRow, ffi::HdyActionRowClass, ActionRowClass>) @extends gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_action_row_get_type(),

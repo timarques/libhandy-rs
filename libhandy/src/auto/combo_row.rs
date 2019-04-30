@@ -24,7 +24,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct ComboRow(Object<ffi::HdyComboRow, ffi::HdyComboRowClass, ComboRowClass>) @extends ActionRow, gtk::Widget;
+    pub struct ComboRow(Object<ffi::HdyComboRow, ffi::HdyComboRowClass, ComboRowClass>) @extends ActionRow, gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_combo_row_get_type(),

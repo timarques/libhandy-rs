@@ -15,7 +15,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct TitleBar(Object<ffi::HdyTitleBar, ffi::HdyTitleBarClass, TitleBarClass>) @extends gtk::Widget;
+    pub struct TitleBar(Object<ffi::HdyTitleBar, ffi::HdyTitleBarClass, TitleBarClass>) @extends gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_title_bar_get_type(),

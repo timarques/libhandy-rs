@@ -10,7 +10,7 @@ use gtk;
 use std::fmt;
 
 glib_wrapper! {
-    pub struct Dialog(Object<ffi::HdyDialog, ffi::HdyDialogClass, DialogClass>) @extends gtk::Dialog, gtk::Window, gtk::Widget;
+    pub struct Dialog(Object<ffi::HdyDialog, ffi::HdyDialogClass, DialogClass>) @extends gtk::Dialog, gtk::Window, gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || ffi::hdy_dialog_get_type(),
