@@ -15,17 +15,17 @@ exclude = [
 libc = "0.2.49"
 bitflags = "1.0.4"
 lazy_static = "1.2.0"
-glib-sys = "0.8.0"
-glib = "0.7.0"
-gtk-sys = "0.8.0"
-gobject-sys = "0.8.0"
-gio = "0.6.0"
-gdk = "0.10.0"
-gio-sys = "0.8.0"
-gdk-sys = "0.8.0"
+glib-sys = "0.9.0"
+glib = "0.8.0"
+gtk-sys = "0.9.0"
+gobject-sys = "0.9.0"
+gio = "0.7.0"
+gdk = "0.11.0"
+gio-sys = "0.9.0"
+gdk-sys = "0.9.0"
 
 [dependencies.gtk]
-version = "0.6.0"
+version = "0.7.0"
 features = [ "v3_24" ]
 
 [dependencies.libhandy-sys]
