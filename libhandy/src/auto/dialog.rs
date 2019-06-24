@@ -2,18 +2,18 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ffi;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
 use gtk;
+use handy_sys;
 use std::fmt;
 
 glib_wrapper! {
-    pub struct Dialog(Object<ffi::HdyDialog, ffi::HdyDialogClass, DialogClass>) @extends gtk::Dialog, gtk::Window, gtk::Container, gtk::Widget;
+    pub struct Dialog(Object<handy_sys::HdyDialog, handy_sys::HdyDialogClass, DialogClass>) @extends gtk::Dialog, gtk::Window, gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_dialog_get_type(),
+        get_type => || handy_sys::hdy_dialog_get_type(),
     }
 }
 
@@ -22,7 +22,7 @@ impl Dialog {
     pub fn new<P: IsA<gtk::Window>>(parent: &P) -> Dialog {
         assert_initialized_main_thread!();
         unsafe {
-            gtk::Widget::from_glib_none(ffi::hdy_dialog_new(parent.as_ref().to_glib_none().0)).unsafe_cast()
+            gtk::Widget::from_glib_none(handy_sys::hdy_dialog_new(parent.as_ref().to_glib_none().0)).unsafe_cast()
         }
     }
 }

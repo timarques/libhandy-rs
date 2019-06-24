@@ -2,7 +2,6 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ffi;
 use glib::StaticType;
 use glib::Type;
 use glib::translate::*;
@@ -10,7 +9,8 @@ use glib::value::FromValue;
 use glib::value::FromValueOptional;
 use glib::value::SetValue;
 use glib::value::Value;
-use gobject_ffi;
+use gobject_sys;
+use handy_sys;
 use std::fmt;
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -38,22 +38,22 @@ impl fmt::Display for ArrowsDirection {
 
 #[doc(hidden)]
 impl ToGlib for ArrowsDirection {
-    type GlibType = ffi::HdyArrowsDirection;
+    type GlibType = handy_sys::HdyArrowsDirection;
 
-    fn to_glib(&self) -> ffi::HdyArrowsDirection {
+    fn to_glib(&self) -> handy_sys::HdyArrowsDirection {
         match *self {
-            ArrowsDirection::Up => ffi::HDY_ARROWS_DIRECTION_UP,
-            ArrowsDirection::Down => ffi::HDY_ARROWS_DIRECTION_DOWN,
-            ArrowsDirection::Left => ffi::HDY_ARROWS_DIRECTION_LEFT,
-            ArrowsDirection::Right => ffi::HDY_ARROWS_DIRECTION_RIGHT,
+            ArrowsDirection::Up => handy_sys::HDY_ARROWS_DIRECTION_UP,
+            ArrowsDirection::Down => handy_sys::HDY_ARROWS_DIRECTION_DOWN,
+            ArrowsDirection::Left => handy_sys::HDY_ARROWS_DIRECTION_LEFT,
+            ArrowsDirection::Right => handy_sys::HDY_ARROWS_DIRECTION_RIGHT,
             ArrowsDirection::__Unknown(value) => value
         }
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<ffi::HdyArrowsDirection> for ArrowsDirection {
-    fn from_glib(value: ffi::HdyArrowsDirection) -> Self {
+impl FromGlib<handy_sys::HdyArrowsDirection> for ArrowsDirection {
+    fn from_glib(value: handy_sys::HdyArrowsDirection) -> Self {
         skip_assert_initialized!();
         match value {
             0 => ArrowsDirection::Up,
@@ -67,7 +67,7 @@ impl FromGlib<ffi::HdyArrowsDirection> for ArrowsDirection {
 
 impl StaticType for ArrowsDirection {
     fn static_type() -> Type {
-        unsafe { from_glib(ffi::hdy_arrows_direction_get_type()) }
+        unsafe { from_glib(handy_sys::hdy_arrows_direction_get_type()) }
     }
 }
 
@@ -79,13 +79,81 @@ impl<'a> FromValueOptional<'a> for ArrowsDirection {
 
 impl<'a> FromValue<'a> for ArrowsDirection {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl SetValue for ArrowsDirection {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+pub enum CenteringPolicy {
+    Loose,
+    Strict,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for CenteringPolicy {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "CenteringPolicy::{}", match *self {
+            CenteringPolicy::Loose => "Loose",
+            CenteringPolicy::Strict => "Strict",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for CenteringPolicy {
+    type GlibType = handy_sys::HdyCenteringPolicy;
+
+    fn to_glib(&self) -> handy_sys::HdyCenteringPolicy {
+        match *self {
+            CenteringPolicy::Loose => handy_sys::HDY_CENTERING_POLICY_LOOSE,
+            CenteringPolicy::Strict => handy_sys::HDY_CENTERING_POLICY_STRICT,
+            CenteringPolicy::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<handy_sys::HdyCenteringPolicy> for CenteringPolicy {
+    fn from_glib(value: handy_sys::HdyCenteringPolicy) -> Self {
+        skip_assert_initialized!();
+        match value {
+            0 => CenteringPolicy::Loose,
+            1 => CenteringPolicy::Strict,
+            value => CenteringPolicy::__Unknown(value),
+        }
+    }
+}
+
+impl StaticType for CenteringPolicy {
+    fn static_type() -> Type {
+        unsafe { from_glib(handy_sys::hdy_centering_policy_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for CenteringPolicy {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for CenteringPolicy {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for CenteringPolicy {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
@@ -110,20 +178,20 @@ impl fmt::Display for Fold {
 
 #[doc(hidden)]
 impl ToGlib for Fold {
-    type GlibType = ffi::HdyFold;
+    type GlibType = handy_sys::HdyFold;
 
-    fn to_glib(&self) -> ffi::HdyFold {
+    fn to_glib(&self) -> handy_sys::HdyFold {
         match *self {
-            Fold::Unfolded => ffi::HDY_FOLD_UNFOLDED,
-            Fold::Folded => ffi::HDY_FOLD_FOLDED,
+            Fold::Unfolded => handy_sys::HDY_FOLD_UNFOLDED,
+            Fold::Folded => handy_sys::HDY_FOLD_FOLDED,
             Fold::__Unknown(value) => value
         }
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<ffi::HdyFold> for Fold {
-    fn from_glib(value: ffi::HdyFold) -> Self {
+impl FromGlib<handy_sys::HdyFold> for Fold {
+    fn from_glib(value: handy_sys::HdyFold) -> Self {
         skip_assert_initialized!();
         match value {
             0 => Fold::Unfolded,
@@ -135,7 +203,7 @@ impl FromGlib<ffi::HdyFold> for Fold {
 
 impl StaticType for Fold {
     fn static_type() -> Type {
-        unsafe { from_glib(ffi::hdy_fold_get_type()) }
+        unsafe { from_glib(handy_sys::hdy_fold_get_type()) }
     }
 }
 
@@ -147,13 +215,13 @@ impl<'a> FromValueOptional<'a> for Fold {
 
 impl<'a> FromValue<'a> for Fold {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl SetValue for Fold {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
@@ -184,23 +252,23 @@ impl fmt::Display for LeafletChildTransitionType {
 
 #[doc(hidden)]
 impl ToGlib for LeafletChildTransitionType {
-    type GlibType = ffi::HdyLeafletChildTransitionType;
+    type GlibType = handy_sys::HdyLeafletChildTransitionType;
 
-    fn to_glib(&self) -> ffi::HdyLeafletChildTransitionType {
+    fn to_glib(&self) -> handy_sys::HdyLeafletChildTransitionType {
         match *self {
-            LeafletChildTransitionType::None => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_NONE,
-            LeafletChildTransitionType::Crossfade => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_CROSSFADE,
-            LeafletChildTransitionType::Slide => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_SLIDE,
-            LeafletChildTransitionType::Over => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_OVER,
-            LeafletChildTransitionType::Under => ffi::HDY_LEAFLET_CHILD_TRANSITION_TYPE_UNDER,
+            LeafletChildTransitionType::None => handy_sys::HDY_LEAFLET_CHILD_TRANSITION_TYPE_NONE,
+            LeafletChildTransitionType::Crossfade => handy_sys::HDY_LEAFLET_CHILD_TRANSITION_TYPE_CROSSFADE,
+            LeafletChildTransitionType::Slide => handy_sys::HDY_LEAFLET_CHILD_TRANSITION_TYPE_SLIDE,
+            LeafletChildTransitionType::Over => handy_sys::HDY_LEAFLET_CHILD_TRANSITION_TYPE_OVER,
+            LeafletChildTransitionType::Under => handy_sys::HDY_LEAFLET_CHILD_TRANSITION_TYPE_UNDER,
             LeafletChildTransitionType::__Unknown(value) => value
         }
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<ffi::HdyLeafletChildTransitionType> for LeafletChildTransitionType {
-    fn from_glib(value: ffi::HdyLeafletChildTransitionType) -> Self {
+impl FromGlib<handy_sys::HdyLeafletChildTransitionType> for LeafletChildTransitionType {
+    fn from_glib(value: handy_sys::HdyLeafletChildTransitionType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => LeafletChildTransitionType::None,
@@ -215,7 +283,7 @@ impl FromGlib<ffi::HdyLeafletChildTransitionType> for LeafletChildTransitionType
 
 impl StaticType for LeafletChildTransitionType {
     fn static_type() -> Type {
-        unsafe { from_glib(ffi::hdy_leaflet_child_transition_type_get_type()) }
+        unsafe { from_glib(handy_sys::hdy_leaflet_child_transition_type_get_type()) }
     }
 }
 
@@ -227,13 +295,13 @@ impl<'a> FromValueOptional<'a> for LeafletChildTransitionType {
 
 impl<'a> FromValue<'a> for LeafletChildTransitionType {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl SetValue for LeafletChildTransitionType {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
@@ -258,20 +326,20 @@ impl fmt::Display for LeafletModeTransitionType {
 
 #[doc(hidden)]
 impl ToGlib for LeafletModeTransitionType {
-    type GlibType = ffi::HdyLeafletModeTransitionType;
+    type GlibType = handy_sys::HdyLeafletModeTransitionType;
 
-    fn to_glib(&self) -> ffi::HdyLeafletModeTransitionType {
+    fn to_glib(&self) -> handy_sys::HdyLeafletModeTransitionType {
         match *self {
-            LeafletModeTransitionType::None => ffi::HDY_LEAFLET_MODE_TRANSITION_TYPE_NONE,
-            LeafletModeTransitionType::Slide => ffi::HDY_LEAFLET_MODE_TRANSITION_TYPE_SLIDE,
+            LeafletModeTransitionType::None => handy_sys::HDY_LEAFLET_MODE_TRANSITION_TYPE_NONE,
+            LeafletModeTransitionType::Slide => handy_sys::HDY_LEAFLET_MODE_TRANSITION_TYPE_SLIDE,
             LeafletModeTransitionType::__Unknown(value) => value
         }
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<ffi::HdyLeafletModeTransitionType> for LeafletModeTransitionType {
-    fn from_glib(value: ffi::HdyLeafletModeTransitionType) -> Self {
+impl FromGlib<handy_sys::HdyLeafletModeTransitionType> for LeafletModeTransitionType {
+    fn from_glib(value: handy_sys::HdyLeafletModeTransitionType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => LeafletModeTransitionType::None,
@@ -283,7 +351,7 @@ impl FromGlib<ffi::HdyLeafletModeTransitionType> for LeafletModeTransitionType {
 
 impl StaticType for LeafletModeTransitionType {
     fn static_type() -> Type {
-        unsafe { from_glib(ffi::hdy_leaflet_mode_transition_type_get_type()) }
+        unsafe { from_glib(handy_sys::hdy_leaflet_mode_transition_type_get_type()) }
     }
 }
 
@@ -295,13 +363,153 @@ impl<'a> FromValueOptional<'a> for LeafletModeTransitionType {
 
 impl<'a> FromValue<'a> for LeafletModeTransitionType {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl SetValue for LeafletModeTransitionType {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+pub enum SqueezerTransitionType {
+    None,
+    Crossfade,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for SqueezerTransitionType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SqueezerTransitionType::{}", match *self {
+            SqueezerTransitionType::None => "None",
+            SqueezerTransitionType::Crossfade => "Crossfade",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for SqueezerTransitionType {
+    type GlibType = handy_sys::HdySqueezerTransitionType;
+
+    fn to_glib(&self) -> handy_sys::HdySqueezerTransitionType {
+        match *self {
+            SqueezerTransitionType::None => handy_sys::HDY_SQUEEZER_TRANSITION_TYPE_NONE,
+            SqueezerTransitionType::Crossfade => handy_sys::HDY_SQUEEZER_TRANSITION_TYPE_CROSSFADE,
+            SqueezerTransitionType::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<handy_sys::HdySqueezerTransitionType> for SqueezerTransitionType {
+    fn from_glib(value: handy_sys::HdySqueezerTransitionType) -> Self {
+        skip_assert_initialized!();
+        match value {
+            0 => SqueezerTransitionType::None,
+            1 => SqueezerTransitionType::Crossfade,
+            value => SqueezerTransitionType::__Unknown(value),
+        }
+    }
+}
+
+impl StaticType for SqueezerTransitionType {
+    fn static_type() -> Type {
+        unsafe { from_glib(handy_sys::hdy_squeezer_transition_type_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for SqueezerTransitionType {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for SqueezerTransitionType {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for SqueezerTransitionType {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+pub enum ViewSwitcherPolicy {
+    Auto,
+    Narrow,
+    Wide,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for ViewSwitcherPolicy {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ViewSwitcherPolicy::{}", match *self {
+            ViewSwitcherPolicy::Auto => "Auto",
+            ViewSwitcherPolicy::Narrow => "Narrow",
+            ViewSwitcherPolicy::Wide => "Wide",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for ViewSwitcherPolicy {
+    type GlibType = handy_sys::HdyViewSwitcherPolicy;
+
+    fn to_glib(&self) -> handy_sys::HdyViewSwitcherPolicy {
+        match *self {
+            ViewSwitcherPolicy::Auto => handy_sys::HDY_VIEW_SWITCHER_POLICY_AUTO,
+            ViewSwitcherPolicy::Narrow => handy_sys::HDY_VIEW_SWITCHER_POLICY_NARROW,
+            ViewSwitcherPolicy::Wide => handy_sys::HDY_VIEW_SWITCHER_POLICY_WIDE,
+            ViewSwitcherPolicy::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<handy_sys::HdyViewSwitcherPolicy> for ViewSwitcherPolicy {
+    fn from_glib(value: handy_sys::HdyViewSwitcherPolicy) -> Self {
+        skip_assert_initialized!();
+        match value {
+            0 => ViewSwitcherPolicy::Auto,
+            1 => ViewSwitcherPolicy::Narrow,
+            2 => ViewSwitcherPolicy::Wide,
+            value => ViewSwitcherPolicy::__Unknown(value),
+        }
+    }
+}
+
+impl StaticType for ViewSwitcherPolicy {
+    fn static_type() -> Type {
+        unsafe { from_glib(handy_sys::hdy_view_switcher_policy_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for ViewSwitcherPolicy {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for ViewSwitcherPolicy {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for ViewSwitcherPolicy {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 

@@ -5,7 +5,7 @@
 use gdk;
 use glib;
 use glib::translate::*;
-use gtk_ffi;
+use gtk_sys;
 use libc::{c_int, c_uint};
 use std::cell::Cell;
 use std::env;
@@ -101,7 +101,7 @@ pub fn init() -> Result<(), glib::BoolError> {
         panic!("Attempted to initialize GTK from two different threads.");
     }
     unsafe {
-        if pre_init() && from_glib(gtk_ffi::gtk_init_check(ptr::null_mut(), ptr::null_mut())) {
+        if pre_init() && from_glib(gtk_sys::gtk_init_check(ptr::null_mut(), ptr::null_mut())) {
             set_initialized();
             Ok(())
         } else {
@@ -136,8 +136,8 @@ fn pre_init() -> bool {
         let argv = ["", "--gtk-debug=misc"];
         let mut argc = argv.len() as c_int;
         let mut argv_stash = argv.to_glib_none();
-        let ret = from_glib(gtk_ffi::gtk_parse_args(&mut argc, &mut argv_stash.0));
-        let flags = gtk_ffi::gtk_get_debug_flags();
+        let ret = from_glib(gtk_sys::gtk_parse_args(&mut argc, &mut argv_stash.0));
+        let flags = gtk_sys::gtk_get_debug_flags();
         if flags == 0 {
             panic!(
                 "libgtk-3 was configured with `--enable-debug=no`. \
@@ -146,7 +146,7 @@ fn pre_init() -> bool {
         }
         if !has_misc {
             // FIXME not sure why this fails
-            //gtk_ffi::gtk_set_debug_flags(flags & !gtk_ffi::GTK_DEBUG_MISC);
+            //gtk_sys::gtk_set_debug_flags(flags & !gtk_sys::GTK_DEBUG_MISC);
         }
         ret
     }
@@ -155,8 +155,8 @@ fn pre_init() -> bool {
 pub fn main_quit() {
     assert_initialized_main_thread!();
     unsafe {
-        if gtk_ffi::gtk_main_level() > 0 {
-            gtk_ffi::gtk_main_quit();
+        if gtk_sys::gtk_main_level() > 0 {
+            gtk_sys::gtk_main_quit();
         } else if cfg!(debug_assertions) {
             panic!("Attempted to quit a GTK main loop when none is running.");
         }
@@ -165,27 +165,27 @@ pub fn main_quit() {
 
 pub fn get_major_version() -> u32 {
     skip_assert_initialized!();
-    unsafe { gtk_ffi::gtk_get_major_version() as u32 }
+    unsafe { gtk_sys::gtk_get_major_version() as u32 }
 }
 
 pub fn get_minor_version() -> u32 {
     skip_assert_initialized!();
-    unsafe { gtk_ffi::gtk_get_minor_version() as u32 }
+    unsafe { gtk_sys::gtk_get_minor_version() as u32 }
 }
 
 pub fn get_micro_version() -> u32 {
     skip_assert_initialized!();
-    unsafe { gtk_ffi::gtk_get_micro_version() as u32 }
+    unsafe { gtk_sys::gtk_get_micro_version() as u32 }
 }
 
 pub fn get_binary_age() -> u32 {
     skip_assert_initialized!();
-    unsafe { gtk_ffi::gtk_get_binary_age() as u32 }
+    unsafe { gtk_sys::gtk_get_binary_age() as u32 }
 }
 
 pub fn get_interface_age() -> u32 {
     skip_assert_initialized!();
-    unsafe { gtk_ffi::gtk_get_interface_age() as u32 }
+    unsafe { gtk_sys::gtk_get_interface_age() as u32 }
 }
 
 pub fn check_version(
@@ -195,7 +195,7 @@ pub fn check_version(
 ) -> Option<String> {
     skip_assert_initialized!();
     unsafe {
-        from_glib_none(gtk_ffi::gtk_check_version(
+        from_glib_none(gtk_sys::gtk_check_version(
             required_major as c_uint,
             required_minor as c_uint,
             required_micro as c_uint,

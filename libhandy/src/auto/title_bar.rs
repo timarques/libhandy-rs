@@ -2,23 +2,23 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ffi;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
 use glib::translate::*;
-use glib_ffi;
+use glib_sys;
 use gtk;
+use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct TitleBar(Object<ffi::HdyTitleBar, ffi::HdyTitleBarClass, TitleBarClass>) @extends gtk::Container, gtk::Widget;
+    pub struct TitleBar(Object<handy_sys::HdyTitleBar, handy_sys::HdyTitleBarClass, TitleBarClass>) @extends gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_title_bar_get_type(),
+        get_type => || handy_sys::hdy_title_bar_get_type(),
     }
 }
 
@@ -26,7 +26,7 @@ impl TitleBar {
     pub fn new() -> TitleBar {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_none(ffi::hdy_title_bar_new())
+            from_glib_none(handy_sys::hdy_title_bar_new())
         }
     }
 }
@@ -50,29 +50,29 @@ pub trait TitleBarExt: 'static {
 impl<O: IsA<TitleBar>> TitleBarExt for O {
     fn get_selection_mode(&self) -> bool {
         unsafe {
-            from_glib(ffi::hdy_title_bar_get_selection_mode(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_title_bar_get_selection_mode(self.as_ref().to_glib_none().0))
         }
     }
 
     fn set_selection_mode(&self, selection_mode: bool) {
         unsafe {
-            ffi::hdy_title_bar_set_selection_mode(self.as_ref().to_glib_none().0, selection_mode.to_glib());
+            handy_sys::hdy_title_bar_set_selection_mode(self.as_ref().to_glib_none().0, selection_mode.to_glib());
         }
     }
 
     fn connect_property_selection_mode_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_selection_mode_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyTitleBar, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<TitleBar>
+        {
+            let f: &F = &*(f as *const F);
+            f(&TitleBar::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::selection-mode\0".as_ptr() as *const _,
                 Some(transmute(notify_selection_mode_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
-}
-
-unsafe extern "C" fn notify_selection_mode_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyTitleBar, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<TitleBar> {
-    let f: &F = transmute(f);
-    f(&TitleBar::from_glib_borrow(this).unsafe_cast())
 }
 
 impl fmt::Display for TitleBar {

@@ -5,7 +5,6 @@
 use Fold;
 use LeafletChildTransitionType;
 use LeafletModeTransitionType;
-use ffi;
 use glib::GString;
 use glib::StaticType;
 use glib::Value;
@@ -14,18 +13,19 @@ use glib::object::IsA;
 use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
 use glib::translate::*;
-use glib_ffi;
-use gobject_ffi;
+use glib_sys;
+use gobject_sys;
 use gtk;
+use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Leaflet(Object<ffi::HdyLeaflet, ffi::HdyLeafletClass, LeafletClass>) @extends gtk::Container, gtk::Widget;
+    pub struct Leaflet(Object<handy_sys::HdyLeaflet, handy_sys::HdyLeafletClass, LeafletClass>) @extends gtk::Container, gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_leaflet_get_type(),
+        get_type => || handy_sys::hdy_leaflet_get_type(),
     }
 }
 
@@ -33,7 +33,7 @@ impl Leaflet {
     pub fn new() -> Leaflet {
         assert_initialized_main_thread!();
         unsafe {
-            gtk::Widget::from_glib_none(ffi::hdy_leaflet_new()).unsafe_cast()
+            gtk::Widget::from_glib_none(handy_sys::hdy_leaflet_new()).unsafe_cast()
         }
     }
 }
@@ -133,116 +133,116 @@ pub trait LeafletExt: 'static {
 impl<O: IsA<Leaflet>> LeafletExt for O {
     fn get_child_transition_duration(&self) -> u32 {
         unsafe {
-            ffi::hdy_leaflet_get_child_transition_duration(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_leaflet_get_child_transition_duration(self.as_ref().to_glib_none().0)
         }
     }
 
     fn get_child_transition_running(&self) -> bool {
         unsafe {
-            from_glib(ffi::hdy_leaflet_get_child_transition_running(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_leaflet_get_child_transition_running(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_child_transition_type(&self) -> LeafletChildTransitionType {
         unsafe {
-            from_glib(ffi::hdy_leaflet_get_child_transition_type(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_leaflet_get_child_transition_type(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_fold(&self) -> Fold {
         unsafe {
-            from_glib(ffi::hdy_leaflet_get_fold(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_leaflet_get_fold(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_homogeneous(&self, fold: Fold, orientation: gtk::Orientation) -> bool {
         unsafe {
-            from_glib(ffi::hdy_leaflet_get_homogeneous(self.as_ref().to_glib_none().0, fold.to_glib(), orientation.to_glib()))
+            from_glib(handy_sys::hdy_leaflet_get_homogeneous(self.as_ref().to_glib_none().0, fold.to_glib(), orientation.to_glib()))
         }
     }
 
     fn get_interpolate_size(&self) -> bool {
         unsafe {
-            from_glib(ffi::hdy_leaflet_get_interpolate_size(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_leaflet_get_interpolate_size(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_mode_transition_duration(&self) -> u32 {
         unsafe {
-            ffi::hdy_leaflet_get_mode_transition_duration(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_leaflet_get_mode_transition_duration(self.as_ref().to_glib_none().0)
         }
     }
 
     fn get_mode_transition_type(&self) -> LeafletModeTransitionType {
         unsafe {
-            from_glib(ffi::hdy_leaflet_get_mode_transition_type(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_leaflet_get_mode_transition_type(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_visible_child(&self) -> Option<gtk::Widget> {
         unsafe {
-            from_glib_none(ffi::hdy_leaflet_get_visible_child(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_leaflet_get_visible_child(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_visible_child_name(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(ffi::hdy_leaflet_get_visible_child_name(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_leaflet_get_visible_child_name(self.as_ref().to_glib_none().0))
         }
     }
 
     fn set_child_transition_duration(&self, duration: u32) {
         unsafe {
-            ffi::hdy_leaflet_set_child_transition_duration(self.as_ref().to_glib_none().0, duration);
+            handy_sys::hdy_leaflet_set_child_transition_duration(self.as_ref().to_glib_none().0, duration);
         }
     }
 
     fn set_child_transition_type(&self, transition: LeafletChildTransitionType) {
         unsafe {
-            ffi::hdy_leaflet_set_child_transition_type(self.as_ref().to_glib_none().0, transition.to_glib());
+            handy_sys::hdy_leaflet_set_child_transition_type(self.as_ref().to_glib_none().0, transition.to_glib());
         }
     }
 
     fn set_homogeneous(&self, fold: Fold, orientation: gtk::Orientation, homogeneous: bool) {
         unsafe {
-            ffi::hdy_leaflet_set_homogeneous(self.as_ref().to_glib_none().0, fold.to_glib(), orientation.to_glib(), homogeneous.to_glib());
+            handy_sys::hdy_leaflet_set_homogeneous(self.as_ref().to_glib_none().0, fold.to_glib(), orientation.to_glib(), homogeneous.to_glib());
         }
     }
 
     fn set_interpolate_size(&self, interpolate_size: bool) {
         unsafe {
-            ffi::hdy_leaflet_set_interpolate_size(self.as_ref().to_glib_none().0, interpolate_size.to_glib());
+            handy_sys::hdy_leaflet_set_interpolate_size(self.as_ref().to_glib_none().0, interpolate_size.to_glib());
         }
     }
 
     fn set_mode_transition_duration(&self, duration: u32) {
         unsafe {
-            ffi::hdy_leaflet_set_mode_transition_duration(self.as_ref().to_glib_none().0, duration);
+            handy_sys::hdy_leaflet_set_mode_transition_duration(self.as_ref().to_glib_none().0, duration);
         }
     }
 
     fn set_mode_transition_type(&self, transition: LeafletModeTransitionType) {
         unsafe {
-            ffi::hdy_leaflet_set_mode_transition_type(self.as_ref().to_glib_none().0, transition.to_glib());
+            handy_sys::hdy_leaflet_set_mode_transition_type(self.as_ref().to_glib_none().0, transition.to_glib());
         }
     }
 
     fn set_visible_child<P: IsA<gtk::Widget>>(&self, visible_child: &P) {
         unsafe {
-            ffi::hdy_leaflet_set_visible_child(self.as_ref().to_glib_none().0, visible_child.as_ref().to_glib_none().0);
+            handy_sys::hdy_leaflet_set_visible_child(self.as_ref().to_glib_none().0, visible_child.as_ref().to_glib_none().0);
         }
     }
 
     fn set_visible_child_name(&self, name: &str) {
         unsafe {
-            ffi::hdy_leaflet_set_visible_child_name(self.as_ref().to_glib_none().0, name.to_glib_none().0);
+            handy_sys::hdy_leaflet_set_visible_child_name(self.as_ref().to_glib_none().0, name.to_glib_none().0);
         }
     }
 
     fn get_property_folded(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().unwrap()
         }
     }
@@ -250,60 +250,66 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     fn get_property_hhomogeneous_folded(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"hhomogeneous-folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"hhomogeneous-folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().unwrap()
         }
     }
 
     fn set_property_hhomogeneous_folded(&self, hhomogeneous_folded: bool) {
         unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"hhomogeneous-folded\0".as_ptr() as *const _, Value::from(&hhomogeneous_folded).to_glib_none().0);
+            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"hhomogeneous-folded\0".as_ptr() as *const _, Value::from(&hhomogeneous_folded).to_glib_none().0);
         }
     }
 
     fn get_property_hhomogeneous_unfolded(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"hhomogeneous-unfolded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"hhomogeneous-unfolded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().unwrap()
         }
     }
 
     fn set_property_hhomogeneous_unfolded(&self, hhomogeneous_unfolded: bool) {
         unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"hhomogeneous-unfolded\0".as_ptr() as *const _, Value::from(&hhomogeneous_unfolded).to_glib_none().0);
+            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"hhomogeneous-unfolded\0".as_ptr() as *const _, Value::from(&hhomogeneous_unfolded).to_glib_none().0);
         }
     }
 
     fn get_property_vhomogeneous_folded(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"vhomogeneous-folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"vhomogeneous-folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().unwrap()
         }
     }
 
     fn set_property_vhomogeneous_folded(&self, vhomogeneous_folded: bool) {
         unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"vhomogeneous-folded\0".as_ptr() as *const _, Value::from(&vhomogeneous_folded).to_glib_none().0);
+            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"vhomogeneous-folded\0".as_ptr() as *const _, Value::from(&vhomogeneous_folded).to_glib_none().0);
         }
     }
 
     fn get_property_vhomogeneous_unfolded(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_ffi::g_object_get_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"vhomogeneous-unfolded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"vhomogeneous-unfolded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().unwrap()
         }
     }
 
     fn set_property_vhomogeneous_unfolded(&self, vhomogeneous_unfolded: bool) {
         unsafe {
-            gobject_ffi::g_object_set_property(self.to_glib_none().0 as *mut gobject_ffi::GObject, b"vhomogeneous-unfolded\0".as_ptr() as *const _, Value::from(&vhomogeneous_unfolded).to_glib_none().0);
+            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"vhomogeneous-unfolded\0".as_ptr() as *const _, Value::from(&vhomogeneous_unfolded).to_glib_none().0);
         }
     }
 
     fn connect_property_child_transition_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_child_transition_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::child-transition-duration\0".as_ptr() as *const _,
@@ -312,6 +318,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_child_transition_running_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_child_transition_running_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::child-transition-running\0".as_ptr() as *const _,
@@ -320,6 +332,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_child_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_child_transition_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::child-transition-type\0".as_ptr() as *const _,
@@ -328,6 +346,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_fold_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_fold_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::fold\0".as_ptr() as *const _,
@@ -336,6 +360,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_folded_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::folded\0".as_ptr() as *const _,
@@ -344,6 +374,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_hhomogeneous_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_hhomogeneous_folded_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::hhomogeneous-folded\0".as_ptr() as *const _,
@@ -352,6 +388,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_hhomogeneous_unfolded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_hhomogeneous_unfolded_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::hhomogeneous-unfolded\0".as_ptr() as *const _,
@@ -360,6 +402,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_interpolate_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_interpolate_size_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::interpolate-size\0".as_ptr() as *const _,
@@ -368,6 +416,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_mode_transition_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_mode_transition_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::mode-transition-duration\0".as_ptr() as *const _,
@@ -376,6 +430,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_mode_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_mode_transition_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::mode-transition-type\0".as_ptr() as *const _,
@@ -384,6 +444,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_vhomogeneous_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_vhomogeneous_folded_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::vhomogeneous-folded\0".as_ptr() as *const _,
@@ -392,6 +458,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_vhomogeneous_unfolded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_vhomogeneous_unfolded_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::vhomogeneous-unfolded\0".as_ptr() as *const _,
@@ -400,6 +472,12 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_visible_child_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_visible_child_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::visible-child\0".as_ptr() as *const _,
@@ -408,96 +486,18 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     }
 
     fn connect_property_visible_child_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_visible_child_name_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::visible-child-name\0".as_ptr() as *const _,
                 Some(transmute(notify_visible_child_name_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
-}
-
-unsafe extern "C" fn notify_child_transition_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_child_transition_running_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_child_transition_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_fold_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_folded_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_hhomogeneous_folded_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_hhomogeneous_unfolded_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_interpolate_size_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_mode_transition_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_mode_transition_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_vhomogeneous_folded_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_vhomogeneous_unfolded_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_visible_child_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_visible_child_name_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyLeaflet, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Leaflet> {
-    let f: &F = transmute(f);
-    f(&Leaflet::from_glib_borrow(this).unsafe_cast())
 }
 
 impl fmt::Display for Leaflet {

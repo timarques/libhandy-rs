@@ -2,7 +2,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ffi;
+use PreferencesRow;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib::GString;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
@@ -14,8 +14,9 @@ use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
 use glib::translate::*;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-use glib_ffi;
+use glib_sys;
 use gtk;
+use handy_sys;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use std::boxed::Box as Box_;
 use std::fmt;
@@ -23,10 +24,10 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct ActionRow(Object<ffi::HdyActionRow, ffi::HdyActionRowClass, ActionRowClass>) @extends gtk::Container, gtk::Widget;
+    pub struct ActionRow(Object<handy_sys::HdyActionRow, handy_sys::HdyActionRowClass, ActionRowClass>) @extends PreferencesRow, gtk::ListBoxRow, gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_action_row_get_type(),
+        get_type => || handy_sys::hdy_action_row_get_type(),
     }
 }
 
@@ -35,7 +36,7 @@ impl ActionRow {
     pub fn new() -> ActionRow {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_none(ffi::hdy_action_row_new())
+            from_glib_none(handy_sys::hdy_action_row_new())
         }
     }
 }
@@ -53,10 +54,10 @@ pub trait ActionRowExt: 'static {
     fn activate(&self);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    fn add_action<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
+    fn add_action<P: IsA<gtk::Widget>>(&self, widget: Option<&P>);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    fn add_prefix<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
+    fn add_prefix<P: IsA<gtk::Widget>>(&self, widget: Option<&P>);
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn get_activatable_widget(&self) -> Option<gtk::Widget>;
@@ -68,13 +69,15 @@ pub trait ActionRowExt: 'static {
     fn get_subtitle(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn get_title(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn get_use_underline(&self) -> bool;
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-    fn set_activatable_widget<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q);
+    fn set_activatable_widget<P: IsA<gtk::Widget>>(&self, widget: Option<&P>);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_icon_name(&self, icon_name: &str);
@@ -83,9 +86,11 @@ pub trait ActionRowExt: 'static {
     fn set_subtitle(&self, subtitle: &str);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn set_title(&self, title: &str);
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn set_use_underline(&self, use_underline: bool);
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
@@ -107,99 +112,106 @@ pub trait ActionRowExt: 'static {
 impl<O: IsA<ActionRow>> ActionRowExt for O {
     fn activate(&self) {
         unsafe {
-            ffi::hdy_action_row_activate(self.as_ref().to_glib_none().0);
+            handy_sys::hdy_action_row_activate(self.as_ref().to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    fn add_action<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q) {
-        let widget = widget.into();
+    fn add_action<P: IsA<gtk::Widget>>(&self, widget: Option<&P>) {
         unsafe {
-            ffi::hdy_action_row_add_action(self.as_ref().to_glib_none().0, widget.map(|p| p.as_ref()).to_glib_none().0);
+            handy_sys::hdy_action_row_add_action(self.as_ref().to_glib_none().0, widget.map(|p| p.as_ref()).to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-    fn add_prefix<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q) {
-        let widget = widget.into();
+    fn add_prefix<P: IsA<gtk::Widget>>(&self, widget: Option<&P>) {
         unsafe {
-            ffi::hdy_action_row_add_prefix(self.as_ref().to_glib_none().0, widget.map(|p| p.as_ref()).to_glib_none().0);
+            handy_sys::hdy_action_row_add_prefix(self.as_ref().to_glib_none().0, widget.map(|p| p.as_ref()).to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn get_activatable_widget(&self) -> Option<gtk::Widget> {
         unsafe {
-            from_glib_none(ffi::hdy_action_row_get_activatable_widget(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_action_row_get_activatable_widget(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_icon_name(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(ffi::hdy_action_row_get_icon_name(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_action_row_get_icon_name(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn get_subtitle(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(ffi::hdy_action_row_get_subtitle(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_action_row_get_subtitle(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn get_title(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(ffi::hdy_action_row_get_title(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_action_row_get_title(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn get_use_underline(&self) -> bool {
         unsafe {
-            from_glib(ffi::hdy_action_row_get_use_underline(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_action_row_get_use_underline(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-    fn set_activatable_widget<'a, P: IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(&self, widget: Q) {
-        let widget = widget.into();
+    fn set_activatable_widget<P: IsA<gtk::Widget>>(&self, widget: Option<&P>) {
         unsafe {
-            ffi::hdy_action_row_set_activatable_widget(self.as_ref().to_glib_none().0, widget.map(|p| p.as_ref()).to_glib_none().0);
+            handy_sys::hdy_action_row_set_activatable_widget(self.as_ref().to_glib_none().0, widget.map(|p| p.as_ref()).to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_icon_name(&self, icon_name: &str) {
         unsafe {
-            ffi::hdy_action_row_set_icon_name(self.as_ref().to_glib_none().0, icon_name.to_glib_none().0);
+            handy_sys::hdy_action_row_set_icon_name(self.as_ref().to_glib_none().0, icon_name.to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn set_subtitle(&self, subtitle: &str) {
         unsafe {
-            ffi::hdy_action_row_set_subtitle(self.as_ref().to_glib_none().0, subtitle.to_glib_none().0);
+            handy_sys::hdy_action_row_set_subtitle(self.as_ref().to_glib_none().0, subtitle.to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn set_title(&self, title: &str) {
         unsafe {
-            ffi::hdy_action_row_set_title(self.as_ref().to_glib_none().0, title.to_glib_none().0);
+            handy_sys::hdy_action_row_set_title(self.as_ref().to_glib_none().0, title.to_glib_none().0);
         }
     }
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
+    #[cfg(any(not(feature = "v0_0_10"), feature = "dox"))]
     fn set_use_underline(&self, use_underline: bool) {
         unsafe {
-            ffi::hdy_action_row_set_use_underline(self.as_ref().to_glib_none().0, use_underline.to_glib());
+            handy_sys::hdy_action_row_set_use_underline(self.as_ref().to_glib_none().0, use_underline.to_glib());
         }
     }
 
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     fn connect_property_activatable_widget_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_activatable_widget_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyActionRow, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<ActionRow>
+        {
+            let f: &F = &*(f as *const F);
+            f(&ActionRow::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::activatable-widget\0".as_ptr() as *const _,
@@ -209,6 +221,12 @@ impl<O: IsA<ActionRow>> ActionRowExt for O {
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_icon_name_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyActionRow, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<ActionRow>
+        {
+            let f: &F = &*(f as *const F);
+            f(&ActionRow::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::icon-name\0".as_ptr() as *const _,
@@ -218,6 +236,12 @@ impl<O: IsA<ActionRow>> ActionRowExt for O {
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_subtitle_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_subtitle_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyActionRow, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<ActionRow>
+        {
+            let f: &F = &*(f as *const F);
+            f(&ActionRow::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::subtitle\0".as_ptr() as *const _,
@@ -227,6 +251,12 @@ impl<O: IsA<ActionRow>> ActionRowExt for O {
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_title_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyActionRow, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<ActionRow>
+        {
+            let f: &F = &*(f as *const F);
+            f(&ActionRow::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::title\0".as_ptr() as *const _,
@@ -236,47 +266,18 @@ impl<O: IsA<ActionRow>> ActionRowExt for O {
 
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     fn connect_property_use_underline_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_use_underline_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyActionRow, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<ActionRow>
+        {
+            let f: &F = &*(f as *const F);
+            f(&ActionRow::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::use-underline\0".as_ptr() as *const _,
                 Some(transmute(notify_use_underline_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
-}
-
-#[cfg(any(feature = "v0_0_7", feature = "dox"))]
-unsafe extern "C" fn notify_activatable_widget_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<ActionRow> {
-    let f: &F = transmute(f);
-    f(&ActionRow::from_glib_borrow(this).unsafe_cast())
-}
-
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-unsafe extern "C" fn notify_icon_name_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<ActionRow> {
-    let f: &F = transmute(f);
-    f(&ActionRow::from_glib_borrow(this).unsafe_cast())
-}
-
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-unsafe extern "C" fn notify_subtitle_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<ActionRow> {
-    let f: &F = transmute(f);
-    f(&ActionRow::from_glib_borrow(this).unsafe_cast())
-}
-
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-unsafe extern "C" fn notify_title_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<ActionRow> {
-    let f: &F = transmute(f);
-    f(&ActionRow::from_glib_borrow(this).unsafe_cast())
-}
-
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-unsafe extern "C" fn notify_use_underline_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyActionRow, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<ActionRow> {
-    let f: &F = transmute(f);
-    f(&ActionRow::from_glib_borrow(this).unsafe_cast())
 }
 
 impl fmt::Display for ActionRow {

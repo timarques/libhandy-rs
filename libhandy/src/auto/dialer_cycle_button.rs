@@ -3,23 +3,23 @@
 // DO NOT EDIT
 
 use DialerButton;
-use ffi;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
 use glib::translate::*;
-use glib_ffi;
+use glib_sys;
 use gtk;
+use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct DialerCycleButton(Object<ffi::HdyDialerCycleButton, ffi::HdyDialerCycleButtonClass, DialerCycleButtonClass>) @extends DialerButton, gtk::Container, gtk::Widget;
+    pub struct DialerCycleButton(Object<handy_sys::HdyDialerCycleButton, handy_sys::HdyDialerCycleButtonClass, DialerCycleButtonClass>) @extends DialerButton, gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_dialer_cycle_button_get_type(),
+        get_type => || handy_sys::hdy_dialer_cycle_button_get_type(),
     }
 }
 
@@ -27,7 +27,7 @@ impl DialerCycleButton {
     pub fn new(symbols: &str) -> DialerCycleButton {
         assert_initialized_main_thread!();
         unsafe {
-            gtk::Widget::from_glib_none(ffi::hdy_dialer_cycle_button_new(symbols.to_glib_none().0)).unsafe_cast()
+            gtk::Widget::from_glib_none(handy_sys::hdy_dialer_cycle_button_new(symbols.to_glib_none().0)).unsafe_cast()
         }
     }
 }
@@ -55,35 +55,41 @@ pub trait DialerCycleButtonExt: 'static {
 impl<O: IsA<DialerCycleButton>> DialerCycleButtonExt for O {
     fn get_current_symbol(&self) -> char {
         unsafe {
-            from_glib(ffi::hdy_dialer_cycle_button_get_current_symbol(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_dialer_cycle_button_get_current_symbol(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_cycle_timeout(&self) -> i32 {
         unsafe {
-            ffi::hdy_dialer_cycle_button_get_cycle_timeout(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_dialer_cycle_button_get_cycle_timeout(self.as_ref().to_glib_none().0)
         }
     }
 
     fn is_cycling(&self) -> bool {
         unsafe {
-            from_glib(ffi::hdy_dialer_cycle_button_is_cycling(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_dialer_cycle_button_is_cycling(self.as_ref().to_glib_none().0))
         }
     }
 
     fn set_cycle_timeout(&self, timeout: i32) {
         unsafe {
-            ffi::hdy_dialer_cycle_button_set_cycle_timeout(self.as_ref().to_glib_none().0, timeout);
+            handy_sys::hdy_dialer_cycle_button_set_cycle_timeout(self.as_ref().to_glib_none().0, timeout);
         }
     }
 
     fn stop_cycle(&self) {
         unsafe {
-            ffi::hdy_dialer_cycle_button_stop_cycle(self.as_ref().to_glib_none().0);
+            handy_sys::hdy_dialer_cycle_button_stop_cycle(self.as_ref().to_glib_none().0);
         }
     }
 
     fn connect_cycle_end<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn cycle_end_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyDialerCycleButton, f: glib_sys::gpointer)
+            where P: IsA<DialerCycleButton>
+        {
+            let f: &F = &*(f as *const F);
+            f(&DialerCycleButton::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"cycle-end\0".as_ptr() as *const _,
@@ -92,6 +98,12 @@ impl<O: IsA<DialerCycleButton>> DialerCycleButtonExt for O {
     }
 
     fn connect_cycle_start<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn cycle_start_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyDialerCycleButton, f: glib_sys::gpointer)
+            where P: IsA<DialerCycleButton>
+        {
+            let f: &F = &*(f as *const F);
+            f(&DialerCycleButton::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"cycle-start\0".as_ptr() as *const _,
@@ -100,30 +112,18 @@ impl<O: IsA<DialerCycleButton>> DialerCycleButtonExt for O {
     }
 
     fn connect_property_cycle_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_cycle_timeout_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyDialerCycleButton, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<DialerCycleButton>
+        {
+            let f: &F = &*(f as *const F);
+            f(&DialerCycleButton::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::cycle-timeout\0".as_ptr() as *const _,
                 Some(transmute(notify_cycle_timeout_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
-}
-
-unsafe extern "C" fn cycle_end_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyDialerCycleButton, f: glib_ffi::gpointer)
-where P: IsA<DialerCycleButton> {
-    let f: &F = transmute(f);
-    f(&DialerCycleButton::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn cycle_start_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyDialerCycleButton, f: glib_ffi::gpointer)
-where P: IsA<DialerCycleButton> {
-    let f: &F = transmute(f);
-    f(&DialerCycleButton::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_cycle_timeout_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyDialerCycleButton, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<DialerCycleButton> {
-    let f: &F = transmute(f);
-    f(&DialerCycleButton::from_glib_borrow(this).unsafe_cast())
 }
 
 impl fmt::Display for DialerCycleButton {

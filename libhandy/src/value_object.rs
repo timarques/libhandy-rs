@@ -8,7 +8,7 @@ impl ValueObject {
     pub fn new_string(string: &str) -> ValueObject {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_full(ffi::hdy_value_object_new_take_string(string.to_glib_full()))
+            from_glib_full(handy_sys::hdy_value_object_new_take_string(string.to_glib_full()))
         }
     }
 }

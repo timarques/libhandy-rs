@@ -9,4 +9,5 @@ external_libraries = [
    "Gio",
    "Gtk",
    "Gdk",
+   "Pango"
 ]

@@ -2,23 +2,23 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ffi;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
 use glib::translate::*;
-use glib_ffi;
+use glib_sys;
 use gtk;
+use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Column(Object<ffi::HdyColumn, ffi::HdyColumnClass, ColumnClass>) @extends gtk::Container, gtk::Widget;
+    pub struct Column(Object<handy_sys::HdyColumn, handy_sys::HdyColumnClass, ColumnClass>) @extends gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_column_get_type(),
+        get_type => || handy_sys::hdy_column_get_type(),
     }
 }
 
@@ -26,7 +26,7 @@ impl Column {
     pub fn new() -> Column {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_none(ffi::hdy_column_new())
+            from_glib_none(handy_sys::hdy_column_new())
         }
     }
 }
@@ -56,29 +56,35 @@ pub trait ColumnExt: 'static {
 impl<O: IsA<Column>> ColumnExt for O {
     fn get_linear_growth_width(&self) -> i32 {
         unsafe {
-            ffi::hdy_column_get_linear_growth_width(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_column_get_linear_growth_width(self.as_ref().to_glib_none().0)
         }
     }
 
     fn get_maximum_width(&self) -> i32 {
         unsafe {
-            ffi::hdy_column_get_maximum_width(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_column_get_maximum_width(self.as_ref().to_glib_none().0)
         }
     }
 
     fn set_linear_growth_width(&self, linear_growth_width: i32) {
         unsafe {
-            ffi::hdy_column_set_linear_growth_width(self.as_ref().to_glib_none().0, linear_growth_width);
+            handy_sys::hdy_column_set_linear_growth_width(self.as_ref().to_glib_none().0, linear_growth_width);
         }
     }
 
     fn set_maximum_width(&self, maximum_width: i32) {
         unsafe {
-            ffi::hdy_column_set_maximum_width(self.as_ref().to_glib_none().0, maximum_width);
+            handy_sys::hdy_column_set_maximum_width(self.as_ref().to_glib_none().0, maximum_width);
         }
     }
 
     fn connect_property_linear_growth_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_linear_growth_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyColumn, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Column>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Column::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::linear-growth-width\0".as_ptr() as *const _,
@@ -87,24 +93,18 @@ impl<O: IsA<Column>> ColumnExt for O {
     }
 
     fn connect_property_maximum_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_maximum_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyColumn, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Column>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Column::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::maximum-width\0".as_ptr() as *const _,
                 Some(transmute(notify_maximum_width_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
-}
-
-unsafe extern "C" fn notify_linear_growth_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyColumn, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Column> {
-    let f: &F = transmute(f);
-    f(&Column::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_maximum_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyColumn, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Column> {
-    let f: &F = transmute(f);
-    f(&Column::from_glib_borrow(this).unsafe_cast())
 }
 
 impl fmt::Display for Column {

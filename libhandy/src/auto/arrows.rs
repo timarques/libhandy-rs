@@ -3,23 +3,23 @@
 // DO NOT EDIT
 
 use ArrowsDirection;
-use ffi;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
 use glib::translate::*;
-use glib_ffi;
+use glib_sys;
 use gtk;
+use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Arrows(Object<ffi::HdyArrows, ffi::HdyArrowsClass, ArrowsClass>) @extends gtk::Widget;
+    pub struct Arrows(Object<handy_sys::HdyArrows, handy_sys::HdyArrowsClass, ArrowsClass>) @extends gtk::Widget;
 
     match fn {
-        get_type => || ffi::hdy_arrows_get_type(),
+        get_type => || handy_sys::hdy_arrows_get_type(),
     }
 }
 
@@ -27,7 +27,7 @@ impl Arrows {
     pub fn new() -> Arrows {
         assert_initialized_main_thread!();
         unsafe {
-            gtk::Widget::from_glib_none(ffi::hdy_arrows_new()).unsafe_cast()
+            gtk::Widget::from_glib_none(handy_sys::hdy_arrows_new()).unsafe_cast()
         }
     }
 }
@@ -65,47 +65,53 @@ pub trait ArrowsExt: 'static {
 impl<O: IsA<Arrows>> ArrowsExt for O {
     fn animate(&self) {
         unsafe {
-            ffi::hdy_arrows_animate(self.as_ref().to_glib_none().0);
+            handy_sys::hdy_arrows_animate(self.as_ref().to_glib_none().0);
         }
     }
 
     fn get_count(&self) -> u32 {
         unsafe {
-            ffi::hdy_arrows_get_count(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_arrows_get_count(self.as_ref().to_glib_none().0)
         }
     }
 
     fn get_direction(&self) -> ArrowsDirection {
         unsafe {
-            from_glib(ffi::hdy_arrows_get_direction(self.as_ref().to_glib_none().0))
+            from_glib(handy_sys::hdy_arrows_get_direction(self.as_ref().to_glib_none().0))
         }
     }
 
     fn get_duration(&self) -> u32 {
         unsafe {
-            ffi::hdy_arrows_get_duration(self.as_ref().to_glib_none().0)
+            handy_sys::hdy_arrows_get_duration(self.as_ref().to_glib_none().0)
         }
     }
 
     fn set_count(&self, count: u32) {
         unsafe {
-            ffi::hdy_arrows_set_count(self.as_ref().to_glib_none().0, count);
+            handy_sys::hdy_arrows_set_count(self.as_ref().to_glib_none().0, count);
         }
     }
 
     fn set_direction(&self, direction: ArrowsDirection) {
         unsafe {
-            ffi::hdy_arrows_set_direction(self.as_ref().to_glib_none().0, direction.to_glib());
+            handy_sys::hdy_arrows_set_direction(self.as_ref().to_glib_none().0, direction.to_glib());
         }
     }
 
     fn set_duration(&self, duration: u32) {
         unsafe {
-            ffi::hdy_arrows_set_duration(self.as_ref().to_glib_none().0, duration);
+            handy_sys::hdy_arrows_set_duration(self.as_ref().to_glib_none().0, duration);
         }
     }
 
     fn connect_property_count_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_count_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyArrows, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Arrows>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Arrows::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::count\0".as_ptr() as *const _,
@@ -114,6 +120,12 @@ impl<O: IsA<Arrows>> ArrowsExt for O {
     }
 
     fn connect_property_direction_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_direction_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyArrows, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Arrows>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Arrows::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::direction\0".as_ptr() as *const _,
@@ -122,30 +134,18 @@ impl<O: IsA<Arrows>> ArrowsExt for O {
     }
 
     fn connect_property_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyArrows, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Arrows>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Arrows::from_glib_borrow(this).unsafe_cast())
+        }
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::duration\0".as_ptr() as *const _,
                 Some(transmute(notify_duration_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
-}
-
-unsafe extern "C" fn notify_count_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyArrows, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Arrows> {
-    let f: &F = transmute(f);
-    f(&Arrows::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_direction_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyArrows, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Arrows> {
-    let f: &F = transmute(f);
-    f(&Arrows::from_glib_borrow(this).unsafe_cast())
-}
-
-unsafe extern "C" fn notify_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut ffi::HdyArrows, _param_spec: glib_ffi::gpointer, f: glib_ffi::gpointer)
-where P: IsA<Arrows> {
-    let f: &F = transmute(f);
-    f(&Arrows::from_glib_borrow(this).unsafe_cast())
 }
 
 impl fmt::Display for Arrows {

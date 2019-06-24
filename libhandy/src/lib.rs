@@ -5,17 +5,18 @@
 #![allow(deprecated)]
 #![allow(dead_code)]
 
-extern crate glib_sys as glib_ffi;
-extern crate gobject_sys as gobject_ffi;
-extern crate gtk_sys as gtk_ffi;
-extern crate libhandy_sys as ffi;
+extern crate glib_sys;
+extern crate gobject_sys;
+extern crate gtk_sys;
+extern crate pango;
+extern crate libhandy_sys as handy_sys;
 #[macro_use]
 extern crate glib;
 extern crate bitflags;
 extern crate gdk;
-extern crate gdk_sys as gdk_ffi;
+extern crate gdk_sys;
 extern crate gio;
-extern crate gio_sys as gio_ffi;
+extern crate gio_sys;
 extern crate gtk;
 extern crate lazy_static;
 extern crate libc;

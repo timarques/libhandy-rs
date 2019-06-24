@@ -2,20 +2,20 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ffi;
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
 use glib;
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
 use glib::GString;
 use glib::object::IsA;
 use glib::translate::*;
+use handy_sys;
 use std::fmt;
 
 glib_wrapper! {
-    pub struct ValueObject(Object<ffi::HdyValueObject, ffi::HdyValueObjectClass, ValueObjectClass>);
+    pub struct ValueObject(Object<handy_sys::HdyValueObject, handy_sys::HdyValueObjectClass, ValueObjectClass>);
 
     match fn {
-        get_type => || ffi::hdy_value_object_get_type(),
+        get_type => || handy_sys::hdy_value_object_get_type(),
     }
 }
 
@@ -24,13 +24,13 @@ impl ValueObject {
     pub fn new(value: &glib::Value) -> ValueObject {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_full(ffi::hdy_value_object_new(value.to_glib_none().0))
+            from_glib_full(handy_sys::hdy_value_object_new(value.to_glib_none().0))
         }
     }
 
     //#[cfg(any(feature = "v0_0_8", feature = "dox"))]
     //pub fn new_collect(type_: glib::types::Type, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> ValueObject {
-    //    unsafe { TODO: call ffi::hdy_value_object_new_collect() }
+    //    unsafe { TODO: call handy_sys:hdy_value_object_new_collect() }
     //}
 }
 
@@ -48,14 +48,14 @@ impl<O: IsA<ValueObject>> ValueObjectExt for O {
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
     fn get_string(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(ffi::hdy_value_object_get_string(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_value_object_get_string(self.as_ref().to_glib_none().0))
         }
     }
 
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
     fn get_value(&self) -> Option<glib::Value> {
         unsafe {
-            from_glib_none(ffi::hdy_value_object_get_value(self.as_ref().to_glib_none().0))
+            from_glib_none(handy_sys::hdy_value_object_get_value(self.as_ref().to_glib_none().0))
         }
     }
 }
