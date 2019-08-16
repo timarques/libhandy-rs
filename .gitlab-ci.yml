@@ -1,0 +1,19 @@
+variables:
+  FEDORA_DEPS: rust cargo git libhandy-devel
+
+pages:
+  image: 'registry.fedoraproject.org/fedora:31'
+  stage: deploy
+  before_script:
+    - dnf update -y
+    - dnf install -y $FEDORA_DEPS
+  script:
+    - git submodule update --init
+    - cargo doc -p libhandy
+    - mv target/doc/ public
+  artifacts:
+    paths:
+      - public
+  only:
+    refs:
+      - master
