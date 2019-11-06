@@ -89,6 +89,7 @@ status = "generate"
 
 [[object]]
 name = "Handy.Leaflet"
+child_type = "Gtk.Widget"
 status = "generate"
     [[object.child_prop]]
     name = "icon-name"

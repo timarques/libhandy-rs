@@ -101,25 +101,25 @@ pub trait LeafletExt: 'static {
 
     fn set_property_vhomogeneous_unfolded(&self, vhomogeneous_unfolded: bool);
 
-    fn get_child_icon_name<T: IsA<Widget>>(&self, item: &T) -> Option<GString>;
+    fn get_child_icon_name<T: IsA<gtk::Widget>>(&self, item: &T) -> Option<GString>;
 
-    fn set_child_icon_name<T: IsA<Widget>>(&self, item: &T, icon_name: Option<&str>);
+    fn set_child_icon_name<T: IsA<gtk::Widget>>(&self, item: &T, icon_name: Option<&str>);
 
-    fn get_child_name<T: IsA<Widget>>(&self, item: &T) -> Option<GString>;
+    fn get_child_name<T: IsA<gtk::Widget>>(&self, item: &T) -> Option<GString>;
 
-    fn set_child_name<T: IsA<Widget>>(&self, item: &T, name: Option<&str>);
+    fn set_child_name<T: IsA<gtk::Widget>>(&self, item: &T, name: Option<&str>);
 
-    fn get_child_needs_attention<T: IsA<Widget>>(&self, item: &T) -> bool;
+    fn get_child_needs_attention<T: IsA<gtk::Widget>>(&self, item: &T) -> bool;
 
-    fn set_child_needs_attention<T: IsA<Widget>>(&self, item: &T, needs_attention: bool);
+    fn set_child_needs_attention<T: IsA<gtk::Widget>>(&self, item: &T, needs_attention: bool);
 
-    fn get_child_position<T: IsA<Widget>>(&self, item: &T) -> i32;
+    fn get_child_position<T: IsA<gtk::Widget>>(&self, item: &T) -> i32;
 
-    fn set_child_position<T: IsA<Widget>>(&self, item: &T, position: i32);
+    fn set_child_position<T: IsA<gtk::Widget>>(&self, item: &T, position: i32);
 
-    fn get_child_title<T: IsA<Widget>>(&self, item: &T) -> Option<GString>;
+    fn get_child_title<T: IsA<gtk::Widget>>(&self, item: &T) -> Option<GString>;
 
-    fn set_child_title<T: IsA<Widget>>(&self, item: &T, title: Option<&str>);
+    fn set_child_title<T: IsA<gtk::Widget>>(&self, item: &T, title: Option<&str>);
 
     fn connect_property_child_transition_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -323,7 +323,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
-    fn get_child_icon_name<T: IsA<Widget>>(&self, item: &T) -> Option<GString> {
+    fn get_child_icon_name<T: IsA<gtk::Widget>>(&self, item: &T) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"icon-name\0".as_ptr() as *const _, value.to_glib_none_mut().0);
@@ -331,13 +331,13 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
-    fn set_child_icon_name<T: IsA<Widget>>(&self, item: &T, icon_name: Option<&str>) {
+    fn set_child_icon_name<T: IsA<gtk::Widget>>(&self, item: &T, icon_name: Option<&str>) {
         unsafe {
             gtk_sys::gtk_container_child_set_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"icon-name\0".as_ptr() as *const _, Value::from(icon_name).to_glib_none().0);
         }
     }
 
-    fn get_child_name<T: IsA<Widget>>(&self, item: &T) -> Option<GString> {
+    fn get_child_name<T: IsA<gtk::Widget>>(&self, item: &T) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"name\0".as_ptr() as *const _, value.to_glib_none_mut().0);
@@ -345,13 +345,13 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
-    fn set_child_name<T: IsA<Widget>>(&self, item: &T, name: Option<&str>) {
+    fn set_child_name<T: IsA<gtk::Widget>>(&self, item: &T, name: Option<&str>) {
         unsafe {
             gtk_sys::gtk_container_child_set_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"name\0".as_ptr() as *const _, Value::from(name).to_glib_none().0);
         }
     }
 
-    fn get_child_needs_attention<T: IsA<Widget>>(&self, item: &T) -> bool {
+    fn get_child_needs_attention<T: IsA<gtk::Widget>>(&self, item: &T) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"needs-attention\0".as_ptr() as *const _, value.to_glib_none_mut().0);
@@ -359,13 +359,13 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
-    fn set_child_needs_attention<T: IsA<Widget>>(&self, item: &T, needs_attention: bool) {
+    fn set_child_needs_attention<T: IsA<gtk::Widget>>(&self, item: &T, needs_attention: bool) {
         unsafe {
             gtk_sys::gtk_container_child_set_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"needs-attention\0".as_ptr() as *const _, Value::from(&needs_attention).to_glib_none().0);
         }
     }
 
-    fn get_child_position<T: IsA<Widget>>(&self, item: &T) -> i32 {
+    fn get_child_position<T: IsA<gtk::Widget>>(&self, item: &T) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"position\0".as_ptr() as *const _, value.to_glib_none_mut().0);
@@ -373,13 +373,13 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
-    fn set_child_position<T: IsA<Widget>>(&self, item: &T, position: i32) {
+    fn set_child_position<T: IsA<gtk::Widget>>(&self, item: &T, position: i32) {
         unsafe {
             gtk_sys::gtk_container_child_set_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"position\0".as_ptr() as *const _, Value::from(&position).to_glib_none().0);
         }
     }
 
-    fn get_child_title<T: IsA<Widget>>(&self, item: &T) -> Option<GString> {
+    fn get_child_title<T: IsA<gtk::Widget>>(&self, item: &T) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"title\0".as_ptr() as *const _, value.to_glib_none_mut().0);
@@ -387,7 +387,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
-    fn set_child_title<T: IsA<Widget>>(&self, item: &T, title: Option<&str>) {
+    fn set_child_title<T: IsA<gtk::Widget>>(&self, item: &T, title: Option<&str>) {
         unsafe {
             gtk_sys::gtk_container_child_set_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"title\0".as_ptr() as *const _, Value::from(title).to_glib_none().0);
         }
