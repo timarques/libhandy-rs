@@ -35,7 +35,6 @@ generate = ["Handy.CenteringPolicy",
             "Handy.SqueezerTransitionType",
             "Handy.TitleBar",
             "Handy.Fold",
-            "Handy.Leaflet",
             "Handy.LeafletChildTransitionType",
             "Handy.LeafletModeTransitionType",
             "Handy.ArrowsDirection",
@@ -87,3 +86,22 @@ status = "generate"
     [[object.property]]
     name = "value"
     ignore = true
+
+[[object]]
+name = "Handy.Leaflet"
+status = "generate"
+    [[object.child_prop]]
+    name = "icon-name"
+    type = "utf8"
+    [[object.child_prop]]
+    name = "name"
+    type = "utf8"
+    [[object.child_prop]]
+    name = "needs-attention"
+    type = "gboolean"
+    [[object.child_prop]]
+    name = "position"
+    type = "gint"
+    [[object.child_prop]]
+    name = "title"
+    type = "utf8"
