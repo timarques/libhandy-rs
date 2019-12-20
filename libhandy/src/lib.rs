@@ -8,8 +8,8 @@
 extern crate glib_sys;
 extern crate gobject_sys;
 extern crate gtk_sys;
-extern crate pango;
 extern crate libhandy_sys as handy_sys;
+extern crate pango;
 #[macro_use]
 extern crate glib;
 extern crate bitflags;

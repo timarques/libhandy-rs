@@ -1,7 +1,6 @@
 use glib;
 use ValueObject;
 use glib::translate::*;
-use glib::object::IsA;
 
 impl ValueObject {
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]

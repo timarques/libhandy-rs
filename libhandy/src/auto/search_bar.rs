@@ -125,7 +125,7 @@ impl<O: IsA<SearchBar>> SearchBarExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"search-mode-enabled\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `search-mode-enabled` getter").unwrap()
         }
     }
 
@@ -139,7 +139,7 @@ impl<O: IsA<SearchBar>> SearchBarExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"show-close-button\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `show-close-button` getter").unwrap()
         }
     }
 

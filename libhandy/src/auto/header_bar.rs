@@ -327,7 +327,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<CenteringPolicy as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"centering-policy\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `centering-policy` getter").unwrap()
         }
     }
 
@@ -341,7 +341,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<gtk::Widget as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"custom-title\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get()
+            value.get().expect("Return Value for property `custom-title` getter")
         }
     }
 
@@ -356,7 +356,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"decoration-layout-set\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `decoration-layout-set` getter").unwrap()
         }
     }
 
@@ -371,7 +371,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"interpolate-size\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `interpolate-size` getter").unwrap()
         }
     }
 
@@ -385,7 +385,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"spacing\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `spacing` getter").unwrap()
         }
     }
 
@@ -399,7 +399,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"subtitle\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get()
+            value.get().expect("Return Value for property `subtitle` getter")
         }
     }
 
@@ -413,7 +413,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"title\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get()
+            value.get().expect("Return Value for property `title` getter")
         }
     }
 
@@ -427,7 +427,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<u32 as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"transition-duration\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `transition-duration` getter").unwrap()
         }
     }
 
@@ -441,7 +441,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"transition-running\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `transition-running` getter").unwrap()
         }
     }
 

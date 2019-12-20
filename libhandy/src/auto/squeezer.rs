@@ -174,7 +174,7 @@ impl<O: IsA<Squeezer>> SqueezerExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"homogeneous\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `homogenous` getter").unwrap()
         }
     }
 
@@ -188,7 +188,7 @@ impl<O: IsA<Squeezer>> SqueezerExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"interpolate-size\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `interpolate-size` getter").unwrap()
         }
     }
 

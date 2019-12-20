@@ -263,7 +263,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `folded` getter").unwrap()
         }
     }
 
@@ -271,7 +271,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"hhomogeneous-folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `hhomogeneous-folded` getter").unwrap()
         }
     }
 
@@ -285,7 +285,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"hhomogeneous-unfolded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `hhomogeneous-unfolded` getter").unwrap()
         }
     }
 
@@ -299,7 +299,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"vhomogeneous-folded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `vhomogeneous-folded` getter").unwrap()
         }
     }
 
@@ -313,7 +313,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"vhomogeneous-unfolded\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `vhomogeneous-unfolded` getter").unwrap()
         }
     }
 
@@ -327,7 +327,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"icon-name\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get()
+            value.get().expect("Return Value for property `icon-name` getter")
         }
     }
 
@@ -341,7 +341,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"name\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get()
+            value.get().expect("Return Value for property `name` getter")
         }
     }
 
@@ -355,7 +355,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"needs-attention\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `needs-attention` getter").unwrap()
         }
     }
 
@@ -369,7 +369,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"position\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().unwrap()
+            value.get().expect("Return Value for property `position` getter").unwrap()
         }
     }
 
@@ -383,7 +383,7 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
             gtk_sys::gtk_container_child_get_property(self.to_glib_none().0 as *mut gtk_sys::GtkContainer, item.to_glib_none().0 as *mut _, b"title\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get()
+            value.get().expect("Return Value for property `title` getter")
         }
     }
 
