@@ -19,7 +19,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Squeezer(Object<handy_sys::HdySqueezer, handy_sys::HdySqueezerClass, SqueezerClass>) @extends gtk::Container, gtk::Widget;
+    pub struct Squeezer(Object<handy_sys::HdySqueezer, handy_sys::HdySqueezerClass, SqueezerClass>) @extends gtk::Container, gtk::Widget, @implements gtk::Orientable;
 
     match fn {
         get_type => || handy_sys::hdy_squeezer_get_type(),

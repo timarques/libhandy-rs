@@ -1,14 +1,19 @@
 [package]
-name = "libhandy"
-authors = ["Julian Sparber <julian@sparber.net>"]
-keywords = ["libhandy", "handy", "gtk-rs", "gnome"]
-version = "0.4.0"
-description = "Rust bindings for libhandy"
-license = "GPL-3.0-or-later"
-repository = "https://gitlab.gnome.org/World/Rust/libhandy-rs"
+name = 'libhandy'
+authors = ['Julian Sparber <julian@sparber.net>']
+keywords = [
+    'libhandy',
+    'handy',
+    'gtk-rs',
+    'gnome',
+]
+version = '0.4.0'
+description = 'Rust bindings for libhandy'
+license = 'GPL-3.0-or-later'
+repository = 'https://gitlab.gnome.org/World/Rust/libhandy-rs'
 exclude = [
-    "gir-files/*",
-    "gir/",
+    'gir-files/*',
+    'gir/',
 ]
 
 [dependencies]
@@ -30,15 +35,26 @@ version = '0.8'
 features = ['v3_24']
 
 [dependencies.libhandy-sys]
-version = "0.3.0"
-path = "../libhandy-sys"
+version = '0.3.0'
+path = '../libhandy-sys'
 
 [features]
-default = ["v0_0_10"]
-
+default = ['v0_0_10']
 dox = []
-v0_0_6 = ["libhandy-sys/v0_0_6"]
-v0_0_7 = ["v0_0_6", "libhandy-sys/v0_0_7"]
-v0_0_8 = ["v0_0_7", "libhandy-sys/v0_0_8"]
-v0_0_9 = ["v0_0_8", "libhandy-sys/v0_0_9"]
-v0_0_10 = ["v0_0_9", "libhandy-sys/v0_0_10"]
+v0_0_6 = ['libhandy-sys/v0_0_6']
+v0_0_7 = [
+    'v0_0_6',
+    'libhandy-sys/v0_0_7',
+]
+v0_0_8 = [
+    'v0_0_7',
+    'libhandy-sys/v0_0_8',
+]
+v0_0_9 = [
+    'v0_0_8',
+    'libhandy-sys/v0_0_9',
+]
+v0_0_10 = [
+    'v0_0_9',
+    'libhandy-sys/v0_0_10',
+]

@@ -23,7 +23,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct PreferencesGroup(Object<handy_sys::HdyPreferencesGroup, handy_sys::HdyPreferencesGroupClass, PreferencesGroupClass>) @extends gtk::Box, gtk::Container, gtk::Widget;
+    pub struct PreferencesGroup(Object<handy_sys::HdyPreferencesGroup, handy_sys::HdyPreferencesGroupClass, PreferencesGroupClass>) @extends gtk::Box, gtk::Container, gtk::Widget, @implements gtk::Orientable;
 
     match fn {
         get_type => || handy_sys::hdy_preferences_group_get_type(),

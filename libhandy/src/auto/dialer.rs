@@ -29,6 +29,7 @@ glib_wrapper! {
 }
 
 impl Dialer {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     pub fn new() -> Dialer {
         assert_initialized_main_thread!();
         unsafe {
@@ -37,6 +38,7 @@ impl Dialer {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl Default for Dialer {
     fn default() -> Self {
         Self::new()
@@ -46,18 +48,25 @@ impl Default for Dialer {
 pub const NONE_DIALER: Option<&Dialer> = None;
 
 pub trait DialerExt: 'static {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn clear_number(&self);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_number(&self) -> Option<GString>;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_relief(&self) -> gtk::ReliefStyle;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_show_action_buttons(&self) -> bool;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_number(&self, number: &str);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_relief(&self, relief: gtk::ReliefStyle);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_show_action_buttons(&self, show: bool);
 
     fn get_property_column_spacing(&self) -> u32;

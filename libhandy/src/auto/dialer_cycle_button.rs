@@ -16,7 +16,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct DialerCycleButton(Object<handy_sys::HdyDialerCycleButton, handy_sys::HdyDialerCycleButtonClass, DialerCycleButtonClass>) @extends DialerButton, gtk::Bin, gtk::Container, gtk::Widget;
+    pub struct DialerCycleButton(Object<handy_sys::HdyDialerCycleButton, handy_sys::HdyDialerCycleButtonClass, DialerCycleButtonClass>) @extends DialerButton, gtk::Button, gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || handy_sys::hdy_dialer_cycle_button_get_type(),
@@ -24,6 +24,7 @@ glib_wrapper! {
 }
 
 impl DialerCycleButton {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     pub fn new(symbols: &str) -> DialerCycleButton {
         assert_initialized_main_thread!();
         unsafe {
@@ -35,18 +36,25 @@ impl DialerCycleButton {
 pub const NONE_DIALER_CYCLE_BUTTON: Option<&DialerCycleButton> = None;
 
 pub trait DialerCycleButtonExt: 'static {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_current_symbol(&self) -> char;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_cycle_timeout(&self) -> i32;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn is_cycling(&self) -> bool;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_cycle_timeout(&self, timeout: i32);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn stop_cycle(&self);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn connect_cycle_end<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn connect_cycle_start<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_cycle_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;

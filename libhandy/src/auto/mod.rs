@@ -37,6 +37,8 @@ pub use self::dialer_cycle_button::DialerCycleButtonExt;
 mod dialog;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 pub use self::dialog::{Dialog, DialogClass, NONE_DIALOG};
+#[cfg(any(feature = "v0_0_7", feature = "dox"))]
+pub use self::dialog::DialogExt;
 
 mod expander_row;
 pub use self::expander_row::{ExpanderRow, ExpanderRowClass, NONE_EXPANDER_ROW};
@@ -53,9 +55,20 @@ mod header_group;
 pub use self::header_group::{HeaderGroup, HeaderGroupClass, NONE_HEADER_GROUP};
 pub use self::header_group::HeaderGroupExt;
 
+mod keypad;
+pub use self::keypad::{Keypad, KeypadClass, NONE_KEYPAD};
+pub use self::keypad::KeypadExt;
+
 mod leaflet;
 pub use self::leaflet::{Leaflet, LeafletClass, NONE_LEAFLET};
 pub use self::leaflet::LeafletExt;
+
+#[cfg(any(feature = "v0_0_11", feature = "dox"))]
+mod paginator;
+#[cfg(any(feature = "v0_0_11", feature = "dox"))]
+pub use self::paginator::{Paginator, PaginatorClass, NONE_PAGINATOR};
+#[cfg(any(feature = "v0_0_11", feature = "dox"))]
+pub use self::paginator::PaginatorExt;
 
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
 mod preferences_group;
@@ -94,6 +107,17 @@ mod squeezer;
 pub use self::squeezer::{Squeezer, SqueezerClass, NONE_SQUEEZER};
 pub use self::squeezer::SqueezerExt;
 
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+mod swipe_group;
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+pub use self::swipe_group::{SwipeGroup, SwipeGroupClass, NONE_SWIPE_GROUP};
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+pub use self::swipe_group::SwipeGroupExt;
+
+mod swipeable;
+pub use self::swipeable::{Swipeable, NONE_SWIPEABLE};
+pub use self::swipeable::SwipeableExt;
+
 mod title_bar;
 pub use self::title_bar::{TitleBar, TitleBarClass, NONE_TITLE_BAR};
 pub use self::title_bar::TitleBarExt;
@@ -125,6 +149,9 @@ pub use self::enums::CenteringPolicy;
 pub use self::enums::Fold;
 pub use self::enums::LeafletChildTransitionType;
 pub use self::enums::LeafletModeTransitionType;
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+pub use self::enums::LeafletTransitionType;
+pub use self::enums::PaginatorIndicatorStyle;
 pub use self::enums::SqueezerTransitionType;
 pub use self::enums::ViewSwitcherPolicy;
 
@@ -138,11 +165,16 @@ pub mod traits {
     pub use super::DialerExt;
     pub use super::DialerButtonExt;
     pub use super::DialerCycleButtonExt;
+    #[cfg(any(feature = "v0_0_7", feature = "dox"))]
+    pub use super::DialogExt;
     pub use super::ExpanderRowExt;
     #[cfg(any(feature = "v0_0_10", feature = "dox"))]
     pub use super::HeaderBarExt;
     pub use super::HeaderGroupExt;
+    pub use super::KeypadExt;
     pub use super::LeafletExt;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub use super::PaginatorExt;
     #[cfg(any(feature = "v0_0_10", feature = "dox"))]
     pub use super::PreferencesGroupExt;
     #[cfg(any(feature = "v0_0_10", feature = "dox"))]
@@ -152,6 +184,9 @@ pub mod traits {
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub use super::SearchBarExt;
     pub use super::SqueezerExt;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub use super::SwipeGroupExt;
+    pub use super::SwipeableExt;
     pub use super::TitleBarExt;
     #[cfg(any(feature = "v0_0_8", feature = "dox"))]
     pub use super::ValueObjectExt;

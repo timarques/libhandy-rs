@@ -25,7 +25,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct ViewSwitcher(Object<handy_sys::HdyViewSwitcher, handy_sys::HdyViewSwitcherClass, ViewSwitcherClass>) @extends gtk::Box, gtk::Container, gtk::Widget;
+    pub struct ViewSwitcher(Object<handy_sys::HdyViewSwitcher, handy_sys::HdyViewSwitcherClass, ViewSwitcherClass>) @extends gtk::Box, gtk::Container, gtk::Widget, @implements gtk::Orientable;
 
     match fn {
         get_type => || handy_sys::hdy_view_switcher_get_type(),

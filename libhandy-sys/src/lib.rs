@@ -47,6 +47,17 @@ pub type HdyLeafletModeTransitionType = c_int;
 pub const HDY_LEAFLET_MODE_TRANSITION_TYPE_NONE: HdyLeafletModeTransitionType = 0;
 pub const HDY_LEAFLET_MODE_TRANSITION_TYPE_SLIDE: HdyLeafletModeTransitionType = 1;
 
+pub type HdyLeafletTransitionType = c_int;
+pub const HDY_LEAFLET_TRANSITION_TYPE_NONE: HdyLeafletTransitionType = 0;
+pub const HDY_LEAFLET_TRANSITION_TYPE_SLIDE: HdyLeafletTransitionType = 1;
+pub const HDY_LEAFLET_TRANSITION_TYPE_OVER: HdyLeafletTransitionType = 2;
+pub const HDY_LEAFLET_TRANSITION_TYPE_UNDER: HdyLeafletTransitionType = 3;
+
+pub type HdyPaginatorIndicatorStyle = c_int;
+pub const HDY_PAGINATOR_INDICATOR_STYLE_NONE: HdyPaginatorIndicatorStyle = 0;
+pub const HDY_PAGINATOR_INDICATOR_STYLE_DOTS: HdyPaginatorIndicatorStyle = 1;
+pub const HDY_PAGINATOR_INDICATOR_STYLE_LINES: HdyPaginatorIndicatorStyle = 2;
+
 pub type HdySqueezerTransitionType = c_int;
 pub const HDY_SQUEEZER_TRANSITION_TYPE_NONE: HdySqueezerTransitionType = 0;
 pub const HDY_SQUEEZER_TRANSITION_TYPE_CROSSFADE: HdySqueezerTransitionType = 1;
@@ -239,6 +250,20 @@ impl ::std::fmt::Debug for HdyHeaderGroupClass {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct HdyKeypadClass {
+    pub parent_class: gtk::GtkGridClass,
+}
+
+impl ::std::fmt::Debug for HdyKeypadClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyKeypadClass @ {:?}", self as *const _))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct HdyLeafletClass {
     pub parent_class: gtk::GtkContainerClass,
     pub todo: Option<unsafe extern "C" fn(*mut HdyLeaflet)>,
@@ -249,6 +274,20 @@ impl ::std::fmt::Debug for HdyLeafletClass {
         f.debug_struct(&format!("HdyLeafletClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
          .field("todo", &self.todo)
+         .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct HdyPaginatorClass {
+    pub parent_class: gtk::GtkEventBoxClass,
+}
+
+impl ::std::fmt::Debug for HdyPaginatorClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyPaginatorClass @ {:?}", self as *const _))
+         .field("parent_class", &self.parent_class)
          .finish()
     }
 }
@@ -333,6 +372,42 @@ impl ::std::fmt::Debug for HdySqueezerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HdySqueezerClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct HdySwipeGroupClass {
+    pub parent_class: gobject::GObjectClass,
+}
+
+impl ::std::fmt::Debug for HdySwipeGroupClass {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdySwipeGroupClass @ {:?}", self as *const _))
+         .field("parent_class", &self.parent_class)
+         .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct HdySwipeableInterface {
+    pub parent: gobject::GTypeInterface,
+    pub switch_child: Option<unsafe extern "C" fn(*mut HdySwipeable, c_uint, i64)>,
+    pub begin_swipe: Option<unsafe extern "C" fn(*mut HdySwipeable, c_int, gboolean)>,
+    pub update_swipe: Option<unsafe extern "C" fn(*mut HdySwipeable, c_double)>,
+    pub end_swipe: Option<unsafe extern "C" fn(*mut HdySwipeable, i64, c_double)>,
+}
+
+impl ::std::fmt::Debug for HdySwipeableInterface {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdySwipeableInterface @ {:?}", self as *const _))
+         .field("parent", &self.parent)
+         .field("switch_child", &self.switch_child)
+         .field("begin_swipe", &self.begin_swipe)
+         .field("update_swipe", &self.update_swipe)
+         .field("end_swipe", &self.end_swipe)
          .finish()
     }
 }
@@ -556,6 +631,20 @@ impl ::std::fmt::Debug for HdyHeaderGroup {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct HdyKeypad {
+    pub parent_instance: gtk::GtkGrid,
+}
+
+impl ::std::fmt::Debug for HdyKeypad {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyKeypad @ {:?}", self as *const _))
+         .field("parent_instance", &self.parent_instance)
+         .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct HdyLeaflet {
     pub parent_instance: gtk::GtkContainer,
 }
@@ -564,6 +653,16 @@ impl ::std::fmt::Debug for HdyLeaflet {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HdyLeaflet @ {:?}", self as *const _))
          .field("parent_instance", &self.parent_instance)
+         .finish()
+    }
+}
+
+#[repr(C)]
+pub struct HdyPaginator(c_void);
+
+impl ::std::fmt::Debug for HdyPaginator {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdyPaginator @ {:?}", self as *const _))
          .finish()
     }
 }
@@ -653,6 +752,16 @@ impl ::std::fmt::Debug for HdySqueezer {
 }
 
 #[repr(C)]
+pub struct HdySwipeGroup(c_void);
+
+impl ::std::fmt::Debug for HdySwipeGroup {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HdySwipeGroup @ {:?}", self as *const _))
+         .finish()
+    }
+}
+
+#[repr(C)]
 pub struct HdyTitleBar(c_void);
 
 impl ::std::fmt::Debug for HdyTitleBar {
@@ -700,6 +809,17 @@ impl ::std::fmt::Debug for HdyViewSwitcherBar {
     }
 }
 
+// Interfaces
+#[repr(C)]
+pub struct HdySwipeable(c_void);
+
+impl ::std::fmt::Debug for HdySwipeable {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        write!(f, "HdySwipeable @ {:?}", self as *const _)
+    }
+}
+
+
 extern "C" {
 
     //=========================================================================
@@ -726,6 +846,16 @@ extern "C" {
     // HdyLeafletModeTransitionType
     //=========================================================================
     pub fn hdy_leaflet_mode_transition_type_get_type() -> GType;
+
+    //=========================================================================
+    // HdyLeafletTransitionType
+    //=========================================================================
+    pub fn hdy_leaflet_transition_type_get_type() -> GType;
+
+    //=========================================================================
+    // HdyPaginatorIndicatorStyle
+    //=========================================================================
+    pub fn hdy_paginator_indicator_style_get_type() -> GType;
 
     //=========================================================================
     // HdySqueezerTransitionType
@@ -855,6 +985,8 @@ extern "C" {
     pub fn hdy_dialog_get_type() -> GType;
     #[cfg(any(feature = "v0_0_7", feature = "dox"))]
     pub fn hdy_dialog_new(parent: *mut gtk::GtkWindow) -> *mut gtk::GtkWidget;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_dialog_get_narrow(self_: *mut HdyDialog) -> gboolean;
 
     //=========================================================================
     // HdyEnumValueObject
@@ -943,10 +1075,25 @@ extern "C" {
     pub fn hdy_header_group_set_focus(self_: *mut HdyHeaderGroup, header_bar: *mut gtk::GtkHeaderBar);
 
     //=========================================================================
+    // HdyKeypad
+    //=========================================================================
+    pub fn hdy_keypad_get_type() -> GType;
+    pub fn hdy_keypad_new(only_digits: gboolean, show_symbols: gboolean) -> *mut gtk::GtkWidget;
+    pub fn hdy_keypad_get_entry(self_: *mut HdyKeypad) -> *mut gtk::GtkWidget;
+    pub fn hdy_keypad_set_entry(self_: *mut HdyKeypad, entry: *mut gtk::GtkEntry);
+    pub fn hdy_keypad_set_left_action(self_: *mut HdyKeypad, widget: *mut gtk::GtkWidget);
+    pub fn hdy_keypad_set_right_action(self_: *mut HdyKeypad, widget: *mut gtk::GtkWidget);
+    pub fn hdy_keypad_show_symbols(self_: *mut HdyKeypad, visible: gboolean);
+
+    //=========================================================================
     // HdyLeaflet
     //=========================================================================
     pub fn hdy_leaflet_get_type() -> GType;
     pub fn hdy_leaflet_new() -> *mut gtk::GtkWidget;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_leaflet_get_can_swipe_back(self_: *mut HdyLeaflet) -> gboolean;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_leaflet_get_can_swipe_forward(self_: *mut HdyLeaflet) -> gboolean;
     pub fn hdy_leaflet_get_child_transition_duration(self_: *mut HdyLeaflet) -> c_uint;
     pub fn hdy_leaflet_get_child_transition_running(self_: *mut HdyLeaflet) -> gboolean;
     pub fn hdy_leaflet_get_child_transition_type(self_: *mut HdyLeaflet) -> HdyLeafletChildTransitionType;
@@ -955,16 +1102,73 @@ extern "C" {
     pub fn hdy_leaflet_get_interpolate_size(self_: *mut HdyLeaflet) -> gboolean;
     pub fn hdy_leaflet_get_mode_transition_duration(self_: *mut HdyLeaflet) -> c_uint;
     pub fn hdy_leaflet_get_mode_transition_type(self_: *mut HdyLeaflet) -> HdyLeafletModeTransitionType;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_leaflet_get_transition_type(self_: *mut HdyLeaflet) -> HdyLeafletTransitionType;
     pub fn hdy_leaflet_get_visible_child(self_: *mut HdyLeaflet) -> *mut gtk::GtkWidget;
     pub fn hdy_leaflet_get_visible_child_name(self_: *mut HdyLeaflet) -> *const c_char;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_leaflet_set_can_swipe_back(self_: *mut HdyLeaflet, can_swipe_back: gboolean);
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_leaflet_set_can_swipe_forward(self_: *mut HdyLeaflet, can_swipe_forward: gboolean);
     pub fn hdy_leaflet_set_child_transition_duration(self_: *mut HdyLeaflet, duration: c_uint);
     pub fn hdy_leaflet_set_child_transition_type(self_: *mut HdyLeaflet, transition: HdyLeafletChildTransitionType);
     pub fn hdy_leaflet_set_homogeneous(self_: *mut HdyLeaflet, fold: HdyFold, orientation: gtk::GtkOrientation, homogeneous: gboolean);
     pub fn hdy_leaflet_set_interpolate_size(self_: *mut HdyLeaflet, interpolate_size: gboolean);
     pub fn hdy_leaflet_set_mode_transition_duration(self_: *mut HdyLeaflet, duration: c_uint);
     pub fn hdy_leaflet_set_mode_transition_type(self_: *mut HdyLeaflet, transition: HdyLeafletModeTransitionType);
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_leaflet_set_transition_type(self_: *mut HdyLeaflet, transition: HdyLeafletTransitionType);
     pub fn hdy_leaflet_set_visible_child(self_: *mut HdyLeaflet, visible_child: *mut gtk::GtkWidget);
     pub fn hdy_leaflet_set_visible_child_name(self_: *mut HdyLeaflet, name: *const c_char);
+
+    //=========================================================================
+    // HdyPaginator
+    //=========================================================================
+    pub fn hdy_paginator_get_type() -> GType;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_new() -> *mut HdyPaginator;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_paginator_get_allow_mouse_drag(self_: *mut HdyPaginator) -> gboolean;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_animation_duration(self_: *mut HdyPaginator) -> c_uint;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_center_content(self_: *mut HdyPaginator) -> gboolean;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_indicator_spacing(self_: *mut HdyPaginator) -> c_uint;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_indicator_style(self_: *mut HdyPaginator) -> HdyPaginatorIndicatorStyle;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_interactive(self_: *mut HdyPaginator) -> gboolean;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_n_pages(self_: *mut HdyPaginator) -> c_uint;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_position(self_: *mut HdyPaginator) -> c_double;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_get_spacing(self_: *mut HdyPaginator) -> c_uint;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_insert(self_: *mut HdyPaginator, child: *mut gtk::GtkWidget, position: c_int);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_prepend(self_: *mut HdyPaginator, child: *mut gtk::GtkWidget);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_reorder(self_: *mut HdyPaginator, child: *mut gtk::GtkWidget, position: c_int);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_scroll_to(self_: *mut HdyPaginator, widget: *mut gtk::GtkWidget);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_scroll_to_full(self_: *mut HdyPaginator, widget: *mut gtk::GtkWidget, duration: i64);
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_paginator_set_allow_mouse_drag(self_: *mut HdyPaginator, allow_mouse_drag: gboolean);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_set_animation_duration(self_: *mut HdyPaginator, duration: c_uint);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_set_center_content(self_: *mut HdyPaginator, center_content: gboolean);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_set_indicator_spacing(self_: *mut HdyPaginator, spacing: c_uint);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_set_indicator_style(self_: *mut HdyPaginator, style: HdyPaginatorIndicatorStyle);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_set_interactive(self_: *mut HdyPaginator, interactive: gboolean);
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_paginator_set_spacing(self_: *mut HdyPaginator, spacing: c_uint);
 
     //=========================================================================
     // HdyPreferencesGroup
@@ -1060,6 +1264,19 @@ extern "C" {
     pub fn hdy_squeezer_set_transition_type(self_: *mut HdySqueezer, transition: HdySqueezerTransitionType);
 
     //=========================================================================
+    // HdySwipeGroup
+    //=========================================================================
+    pub fn hdy_swipe_group_get_type() -> GType;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_swipe_group_new() -> *mut HdySwipeGroup;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_swipe_group_add_swipeable(self_: *mut HdySwipeGroup, swipeable: *mut HdySwipeable);
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_swipe_group_get_swipeables(self_: *mut HdySwipeGroup) -> *mut glib::GSList;
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    pub fn hdy_swipe_group_remove_swipeable(self_: *mut HdySwipeGroup, swipeable: *mut HdySwipeable);
+
+    //=========================================================================
     // HdyTitleBar
     //=========================================================================
     pub fn hdy_title_bar_get_type() -> GType;
@@ -1135,10 +1352,19 @@ extern "C" {
     pub fn hdy_view_switcher_bar_set_stack(self_: *mut HdyViewSwitcherBar, stack: *mut gtk::GtkStack);
 
     //=========================================================================
+    // HdySwipeable
+    //=========================================================================
+    pub fn hdy_swipeable_get_type() -> GType;
+
+    //=========================================================================
     // Other functions
     //=========================================================================
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_ease_out_cubic(t: c_double) -> c_double;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_enum_value_row_name(value: *mut HdyEnumValueObject, user_data: gpointer) -> *mut c_char;
+    #[cfg(any(feature = "v0_0_11", feature = "dox"))]
+    pub fn hdy_get_enable_animations(widget: *mut gtk::GtkWidget) -> gboolean;
     pub fn hdy_init(argc: *mut c_int, argv: *mut *mut *mut c_char) -> gboolean;
     #[cfg(any(feature = "v0_0_6", feature = "dox"))]
     pub fn hdy_list_box_separator_header(row: *mut gtk::GtkListBoxRow, before: *mut gtk::GtkListBoxRow, unused_user_data: gpointer);

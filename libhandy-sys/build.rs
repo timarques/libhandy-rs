@@ -20,7 +20,11 @@ fn main() {
 fn find() -> Result<(), Error> {
     let package_name = "libhandy-0.0";
     let shared_libs = ["handy-0.0"];
-    let version = if cfg!(feature = "v0_0_10") {
+    let version = if cfg!(feature = "v0_0_12") {
+        "0.0.12"
+    } else if cfg!(feature = "v0_0_11") {
+        "0.0.11"
+    } else if cfg!(feature = "v0_0_10") {
         "0.0.10"
     } else if cfg!(feature = "v0_0_8") {
         "0.0.8"

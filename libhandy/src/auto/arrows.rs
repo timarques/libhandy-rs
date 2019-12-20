@@ -16,7 +16,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Arrows(Object<handy_sys::HdyArrows, handy_sys::HdyArrowsClass, ArrowsClass>) @extends gtk::Widget;
+    pub struct Arrows(Object<handy_sys::HdyArrows, handy_sys::HdyArrowsClass, ArrowsClass>) @extends gtk::DrawingArea, gtk::Widget;
 
     match fn {
         get_type => || handy_sys::hdy_arrows_get_type(),
@@ -24,6 +24,7 @@ glib_wrapper! {
 }
 
 impl Arrows {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     pub fn new() -> Arrows {
         assert_initialized_main_thread!();
         unsafe {
@@ -32,6 +33,7 @@ impl Arrows {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl Default for Arrows {
     fn default() -> Self {
         Self::new()
@@ -41,18 +43,25 @@ impl Default for Arrows {
 pub const NONE_ARROWS: Option<&Arrows> = None;
 
 pub trait ArrowsExt: 'static {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn animate(&self);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_count(&self) -> u32;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_direction(&self) -> ArrowsDirection;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_duration(&self) -> u32;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_count(&self, count: u32);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_direction(&self, direction: ArrowsDirection);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_duration(&self, duration: u32);
 
     fn connect_property_count_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;

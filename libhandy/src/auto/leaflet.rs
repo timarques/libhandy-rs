@@ -5,6 +5,9 @@
 use Fold;
 use LeafletChildTransitionType;
 use LeafletModeTransitionType;
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+use LeafletTransitionType;
+use Swipeable;
 use glib::GString;
 use glib::StaticType;
 use glib::Value;
@@ -22,7 +25,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Leaflet(Object<handy_sys::HdyLeaflet, handy_sys::HdyLeafletClass, LeafletClass>) @extends gtk::Container, gtk::Widget;
+    pub struct Leaflet(Object<handy_sys::HdyLeaflet, handy_sys::HdyLeafletClass, LeafletClass>) @extends gtk::Container, gtk::Widget, @implements gtk::Orientable, Swipeable;
 
     match fn {
         get_type => || handy_sys::hdy_leaflet_get_type(),
@@ -47,10 +50,17 @@ impl Default for Leaflet {
 pub const NONE_LEAFLET: Option<&Leaflet> = None;
 
 pub trait LeafletExt: 'static {
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn get_can_swipe_back(&self) -> bool;
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn get_can_swipe_forward(&self) -> bool;
+
     fn get_child_transition_duration(&self) -> u32;
 
     fn get_child_transition_running(&self) -> bool;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_child_transition_type(&self) -> LeafletChildTransitionType;
 
     fn get_fold(&self) -> Fold;
@@ -61,14 +71,25 @@ pub trait LeafletExt: 'static {
 
     fn get_mode_transition_duration(&self) -> u32;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_mode_transition_type(&self) -> LeafletModeTransitionType;
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn get_transition_type(&self) -> LeafletTransitionType;
 
     fn get_visible_child(&self) -> Option<gtk::Widget>;
 
     fn get_visible_child_name(&self) -> Option<GString>;
 
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn set_can_swipe_back(&self, can_swipe_back: bool);
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn set_can_swipe_forward(&self, can_swipe_forward: bool);
+
     fn set_child_transition_duration(&self, duration: u32);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_child_transition_type(&self, transition: LeafletChildTransitionType);
 
     fn set_homogeneous(&self, fold: Fold, orientation: gtk::Orientation, homogeneous: bool);
@@ -77,7 +98,11 @@ pub trait LeafletExt: 'static {
 
     fn set_mode_transition_duration(&self, duration: u32);
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn set_mode_transition_type(&self, transition: LeafletModeTransitionType);
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn set_transition_type(&self, transition: LeafletTransitionType);
 
     fn set_visible_child<P: IsA<gtk::Widget>>(&self, visible_child: &P);
 
@@ -121,10 +146,17 @@ pub trait LeafletExt: 'static {
 
     fn set_child_title<T: IsA<gtk::Widget>>(&self, item: &T, title: Option<&str>);
 
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn connect_property_can_swipe_back_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn connect_property_can_swipe_forward_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
     fn connect_property_child_transition_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_child_transition_running_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn connect_property_child_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_fold_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -139,7 +171,11 @@ pub trait LeafletExt: 'static {
 
     fn connect_property_mode_transition_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn connect_property_mode_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn connect_property_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_vhomogeneous_folded_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -151,6 +187,20 @@ pub trait LeafletExt: 'static {
 }
 
 impl<O: IsA<Leaflet>> LeafletExt for O {
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn get_can_swipe_back(&self) -> bool {
+        unsafe {
+            from_glib(handy_sys::hdy_leaflet_get_can_swipe_back(self.as_ref().to_glib_none().0))
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn get_can_swipe_forward(&self) -> bool {
+        unsafe {
+            from_glib(handy_sys::hdy_leaflet_get_can_swipe_forward(self.as_ref().to_glib_none().0))
+        }
+    }
+
     fn get_child_transition_duration(&self) -> u32 {
         unsafe {
             handy_sys::hdy_leaflet_get_child_transition_duration(self.as_ref().to_glib_none().0)
@@ -199,6 +249,13 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn get_transition_type(&self) -> LeafletTransitionType {
+        unsafe {
+            from_glib(handy_sys::hdy_leaflet_get_transition_type(self.as_ref().to_glib_none().0))
+        }
+    }
+
     fn get_visible_child(&self) -> Option<gtk::Widget> {
         unsafe {
             from_glib_none(handy_sys::hdy_leaflet_get_visible_child(self.as_ref().to_glib_none().0))
@@ -208,6 +265,20 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     fn get_visible_child_name(&self) -> Option<GString> {
         unsafe {
             from_glib_none(handy_sys::hdy_leaflet_get_visible_child_name(self.as_ref().to_glib_none().0))
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn set_can_swipe_back(&self, can_swipe_back: bool) {
+        unsafe {
+            handy_sys::hdy_leaflet_set_can_swipe_back(self.as_ref().to_glib_none().0, can_swipe_back.to_glib());
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn set_can_swipe_forward(&self, can_swipe_forward: bool) {
+        unsafe {
+            handy_sys::hdy_leaflet_set_can_swipe_forward(self.as_ref().to_glib_none().0, can_swipe_forward.to_glib());
         }
     }
 
@@ -244,6 +315,13 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
     fn set_mode_transition_type(&self, transition: LeafletModeTransitionType) {
         unsafe {
             handy_sys::hdy_leaflet_set_mode_transition_type(self.as_ref().to_glib_none().0, transition.to_glib());
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn set_transition_type(&self, transition: LeafletTransitionType) {
+        unsafe {
+            handy_sys::hdy_leaflet_set_transition_type(self.as_ref().to_glib_none().0, transition.to_glib());
         }
     }
 
@@ -393,6 +471,36 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
         }
     }
 
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn connect_property_can_swipe_back_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_can_swipe_back_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::can-swipe-back\0".as_ptr() as *const _,
+                Some(transmute(notify_can_swipe_back_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn connect_property_can_swipe_forward_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_can_swipe_forward_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::can-swipe-forward\0".as_ptr() as *const _,
+                Some(transmute(notify_can_swipe_forward_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+        }
+    }
+
     fn connect_property_child_transition_duration_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_child_transition_duration_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
             where P: IsA<Leaflet>
@@ -530,6 +638,21 @@ impl<O: IsA<Leaflet>> LeafletExt for O {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::mode-transition-type\0".as_ptr() as *const _,
                 Some(transmute(notify_mode_transition_type_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+        }
+    }
+
+    #[cfg(any(feature = "v0_0_12", feature = "dox"))]
+    fn connect_property_transition_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_transition_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut handy_sys::HdyLeaflet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<Leaflet>
+        {
+            let f: &F = &*(f as *const F);
+            f(&Leaflet::from_glib_borrow(this).unsafe_cast())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::transition-type\0".as_ptr() as *const _,
+                Some(transmute(notify_transition_type_trampoline::<Self, F> as usize)), Box_::into_raw(f))
         }
     }
 

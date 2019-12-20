@@ -225,6 +225,7 @@ impl SetValue for Fold {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 pub enum LeafletChildTransitionType {
@@ -237,6 +238,7 @@ pub enum LeafletChildTransitionType {
     __Unknown(i32),
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl fmt::Display for LeafletChildTransitionType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "LeafletChildTransitionType::{}", match *self {
@@ -250,6 +252,7 @@ impl fmt::Display for LeafletChildTransitionType {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 #[doc(hidden)]
 impl ToGlib for LeafletChildTransitionType {
     type GlibType = handy_sys::HdyLeafletChildTransitionType;
@@ -266,6 +269,7 @@ impl ToGlib for LeafletChildTransitionType {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 #[doc(hidden)]
 impl FromGlib<handy_sys::HdyLeafletChildTransitionType> for LeafletChildTransitionType {
     fn from_glib(value: handy_sys::HdyLeafletChildTransitionType) -> Self {
@@ -281,30 +285,35 @@ impl FromGlib<handy_sys::HdyLeafletChildTransitionType> for LeafletChildTransiti
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl StaticType for LeafletChildTransitionType {
     fn static_type() -> Type {
         unsafe { from_glib(handy_sys::hdy_leaflet_child_transition_type_get_type()) }
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl<'a> FromValueOptional<'a> for LeafletChildTransitionType {
     unsafe fn from_value_optional(value: &Value) -> Option<Self> {
         Some(FromValue::from_value(value))
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl<'a> FromValue<'a> for LeafletChildTransitionType {
     unsafe fn from_value(value: &Value) -> Self {
         from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl SetValue for LeafletChildTransitionType {
     unsafe fn set_value(value: &mut Value, this: &Self) {
         gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 pub enum LeafletModeTransitionType {
@@ -314,6 +323,7 @@ pub enum LeafletModeTransitionType {
     __Unknown(i32),
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl fmt::Display for LeafletModeTransitionType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "LeafletModeTransitionType::{}", match *self {
@@ -324,6 +334,7 @@ impl fmt::Display for LeafletModeTransitionType {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 #[doc(hidden)]
 impl ToGlib for LeafletModeTransitionType {
     type GlibType = handy_sys::HdyLeafletModeTransitionType;
@@ -337,6 +348,7 @@ impl ToGlib for LeafletModeTransitionType {
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 #[doc(hidden)]
 impl FromGlib<handy_sys::HdyLeafletModeTransitionType> for LeafletModeTransitionType {
     fn from_glib(value: handy_sys::HdyLeafletModeTransitionType) -> Self {
@@ -349,25 +361,185 @@ impl FromGlib<handy_sys::HdyLeafletModeTransitionType> for LeafletModeTransition
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl StaticType for LeafletModeTransitionType {
     fn static_type() -> Type {
         unsafe { from_glib(handy_sys::hdy_leaflet_mode_transition_type_get_type()) }
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl<'a> FromValueOptional<'a> for LeafletModeTransitionType {
     unsafe fn from_value_optional(value: &Value) -> Option<Self> {
         Some(FromValue::from_value(value))
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl<'a> FromValue<'a> for LeafletModeTransitionType {
     unsafe fn from_value(value: &Value) -> Self {
         from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
+#[cfg_attr(feature = "v0_0_12", deprecated)]
 impl SetValue for LeafletModeTransitionType {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+pub enum LeafletTransitionType {
+    None,
+    Slide,
+    Over,
+    Under,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+impl fmt::Display for LeafletTransitionType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "LeafletTransitionType::{}", match *self {
+            LeafletTransitionType::None => "None",
+            LeafletTransitionType::Slide => "Slide",
+            LeafletTransitionType::Over => "Over",
+            LeafletTransitionType::Under => "Under",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+#[doc(hidden)]
+impl ToGlib for LeafletTransitionType {
+    type GlibType = handy_sys::HdyLeafletTransitionType;
+
+    fn to_glib(&self) -> handy_sys::HdyLeafletTransitionType {
+        match *self {
+            LeafletTransitionType::None => handy_sys::HDY_LEAFLET_TRANSITION_TYPE_NONE,
+            LeafletTransitionType::Slide => handy_sys::HDY_LEAFLET_TRANSITION_TYPE_SLIDE,
+            LeafletTransitionType::Over => handy_sys::HDY_LEAFLET_TRANSITION_TYPE_OVER,
+            LeafletTransitionType::Under => handy_sys::HDY_LEAFLET_TRANSITION_TYPE_UNDER,
+            LeafletTransitionType::__Unknown(value) => value
+        }
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+#[doc(hidden)]
+impl FromGlib<handy_sys::HdyLeafletTransitionType> for LeafletTransitionType {
+    fn from_glib(value: handy_sys::HdyLeafletTransitionType) -> Self {
+        skip_assert_initialized!();
+        match value {
+            0 => LeafletTransitionType::None,
+            1 => LeafletTransitionType::Slide,
+            2 => LeafletTransitionType::Over,
+            3 => LeafletTransitionType::Under,
+            value => LeafletTransitionType::__Unknown(value),
+        }
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+impl StaticType for LeafletTransitionType {
+    fn static_type() -> Type {
+        unsafe { from_glib(handy_sys::hdy_leaflet_transition_type_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+impl<'a> FromValueOptional<'a> for LeafletTransitionType {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+impl<'a> FromValue<'a> for LeafletTransitionType {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+impl SetValue for LeafletTransitionType {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+pub enum PaginatorIndicatorStyle {
+    None,
+    Dots,
+    Lines,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for PaginatorIndicatorStyle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "PaginatorIndicatorStyle::{}", match *self {
+            PaginatorIndicatorStyle::None => "None",
+            PaginatorIndicatorStyle::Dots => "Dots",
+            PaginatorIndicatorStyle::Lines => "Lines",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for PaginatorIndicatorStyle {
+    type GlibType = handy_sys::HdyPaginatorIndicatorStyle;
+
+    fn to_glib(&self) -> handy_sys::HdyPaginatorIndicatorStyle {
+        match *self {
+            PaginatorIndicatorStyle::None => handy_sys::HDY_PAGINATOR_INDICATOR_STYLE_NONE,
+            PaginatorIndicatorStyle::Dots => handy_sys::HDY_PAGINATOR_INDICATOR_STYLE_DOTS,
+            PaginatorIndicatorStyle::Lines => handy_sys::HDY_PAGINATOR_INDICATOR_STYLE_LINES,
+            PaginatorIndicatorStyle::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<handy_sys::HdyPaginatorIndicatorStyle> for PaginatorIndicatorStyle {
+    fn from_glib(value: handy_sys::HdyPaginatorIndicatorStyle) -> Self {
+        skip_assert_initialized!();
+        match value {
+            0 => PaginatorIndicatorStyle::None,
+            1 => PaginatorIndicatorStyle::Dots,
+            2 => PaginatorIndicatorStyle::Lines,
+            value => PaginatorIndicatorStyle::__Unknown(value),
+        }
+    }
+}
+
+impl StaticType for PaginatorIndicatorStyle {
+    fn static_type() -> Type {
+        unsafe { from_glib(handy_sys::hdy_paginator_indicator_style_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for PaginatorIndicatorStyle {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for PaginatorIndicatorStyle {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for PaginatorIndicatorStyle {
     unsafe fn set_value(value: &mut Value, this: &Self) {
         gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }

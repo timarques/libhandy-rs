@@ -18,7 +18,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct DialerButton(Object<handy_sys::HdyDialerButton, handy_sys::HdyDialerButtonClass, DialerButtonClass>) @extends gtk::Bin, gtk::Container, gtk::Widget;
+    pub struct DialerButton(Object<handy_sys::HdyDialerButton, handy_sys::HdyDialerButtonClass, DialerButtonClass>) @extends gtk::Button, gtk::Bin, gtk::Container, gtk::Widget;
 
     match fn {
         get_type => || handy_sys::hdy_dialer_button_get_type(),
@@ -26,6 +26,7 @@ glib_wrapper! {
 }
 
 impl DialerButton {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     pub fn new(symbols: Option<&str>) -> DialerButton {
         assert_initialized_main_thread!();
         unsafe {
@@ -37,8 +38,10 @@ impl DialerButton {
 pub const NONE_DIALER_BUTTON: Option<&DialerButton> = None;
 
 pub trait DialerButtonExt: 'static {
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_digit(&self) -> i32;
 
+    #[cfg_attr(feature = "v0_0_12", deprecated)]
     fn get_symbols(&self) -> Option<GString>;
 
     fn set_property_symbols(&self, symbols: Option<&str>);
