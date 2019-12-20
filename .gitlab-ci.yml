@@ -1,16 +1,25 @@
-variables:
-  FEDORA_DEPS: rust cargo git meson ninja-build
+image: 'registry.fedoraproject.org/fedora:31'
+
+before_script:
+  - dnf update -y
+  - dnf install -y rust cargo git meson ninja-build glib2-devel gtk3-devel gobject-introspection-devel xorg-x11-server-Xvfb
+  - meson _build --prefix=/usr -Dlibhandy:vapi=false
+  - ninja -C _build install
+  - git submodule update --init
+
+stages:
+  - test
+  - deploy
+
+build:
+  stage: test
+  script:
+    - cargo build --all-features
+    - xvfb-run -a -s "-screen 0 1024x768x24" cargo test
 
 pages:
-  image: 'registry.fedoraproject.org/fedora:31'
   stage: deploy
-  before_script:
-    - dnf update -y
-    - dnf install -y $FEDORA_DEPS
-    - meson --prefix=/usr _build
-    - ninja -C _build install
   script:
-    - git submodule update --init
     - cargo doc -p libhandy --features=['dox', 'v0_0_12']
     - mv target/doc/ public
   artifacts:
