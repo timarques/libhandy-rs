@@ -1,5 +1,5 @@
 variables:
-  FEDORA_DEPS: rust cargo git libhandy-devel
+  FEDORA_DEPS: rust cargo git meson ninja-build
 
 pages:
   image: 'registry.fedoraproject.org/fedora:31'
@@ -7,9 +7,11 @@ pages:
   before_script:
     - dnf update -y
     - dnf install -y $FEDORA_DEPS
+    - meson --prefix=/usr _build
+    - ninja -C _build install
   script:
     - git submodule update --init
-    - cargo doc -p libhandy
+    - cargo doc -p libhandy --features=['dox', 'v0_0_12']
     - mv target/doc/ public
   artifacts:
     paths:

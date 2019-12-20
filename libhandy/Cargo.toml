@@ -11,6 +11,7 @@ version = '0.4.0'
 description = 'Rust bindings for libhandy'
 license = 'GPL-3.0-or-later'
 repository = 'https://gitlab.gnome.org/World/Rust/libhandy-rs'
+documentation = "https://world.pages.gitlab.gnome.org/Rust/libhandy-rs/libhandy/"
 exclude = [
     'gir-files/*',
     'gir/',
