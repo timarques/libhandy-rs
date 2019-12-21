@@ -3,7 +3,7 @@ image: 'registry.fedoraproject.org/fedora:31'
 before_script:
   - dnf update -y
   - dnf install -y rust cargo git meson ninja-build glib2-devel gtk3-devel gobject-introspection-devel xorg-x11-server-Xvfb
-  - meson _build --prefix=/usr -Dlibhandy:vapi=false
+  - meson _build --prefix=/usr -Dtests=false -Dexamples=false -Dlibhandy:vapi=false
   - ninja -C _build install
   - git submodule update --init
 
@@ -20,7 +20,7 @@ build:
 pages:
   stage: deploy
   script:
-    - cargo doc -p libhandy --features=['dox', 'v0_0_12']
+    - cargo doc -p libhandy --all-features
     - mv target/doc/ public
   artifacts:
     paths:
