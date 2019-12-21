@@ -7,7 +7,7 @@ keywords = [
     'gtk-rs',
     'gnome',
 ]
-version = '0.4.0'
+version = '0.5.0'
 description = 'Rust bindings for libhandy'
 license = 'GPL-3.0-or-later'
 repository = 'https://gitlab.gnome.org/World/Rust/libhandy-rs'
@@ -36,7 +36,7 @@ version = '0.8'
 features = ['v3_24']
 
 [dependencies.libhandy-sys]
-version = '0.3.0'
+version = '0.5.0'
 path = '../libhandy-sys'
 
 [features]
