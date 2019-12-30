@@ -3,14 +3,12 @@
 // DO NOT EDIT
 
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
-use ViewSwitcherPolicy;
-#[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
-use glib::signal::SignalHandlerId;
-#[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_0_10", feature = "dox"))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use glib_sys;
@@ -23,6 +21,8 @@ use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use std::mem::transmute;
+#[cfg(any(feature = "v0_0_10", feature = "dox"))]
+use ViewSwitcherPolicy;
 
 glib_wrapper! {
     pub struct ViewSwitcher(Object<handy_sys::HdyViewSwitcher, handy_sys::HdyViewSwitcherClass, ViewSwitcherClass>) @extends gtk::Box, gtk::Container, gtk::Widget, @implements gtk::Orientable;

@@ -3,15 +3,12 @@
 // DO NOT EDIT
 
 #[cfg(any(feature = "v0_0_11", feature = "dox"))]
-use PaginatorIndicatorStyle;
-use Swipeable;
-#[cfg(any(feature = "v0_0_11", feature = "dox"))]
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v0_0_11", feature = "dox"))]
-use glib::signal::SignalHandlerId;
-#[cfg(any(feature = "v0_0_11", feature = "dox"))]
 use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_0_11", feature = "dox"))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
 #[cfg(any(feature = "v0_0_11", feature = "dox"))]
 use glib_sys;
@@ -24,6 +21,9 @@ use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v0_0_11", feature = "dox"))]
 use std::mem::transmute;
+#[cfg(any(feature = "v0_0_11", feature = "dox"))]
+use PaginatorIndicatorStyle;
+use Swipeable;
 
 glib_wrapper! {
     pub struct Paginator(Object<handy_sys::HdyPaginator, handy_sys::HdyPaginatorClass, PaginatorClass>) @extends gtk::EventBox, gtk::Bin, gtk::Container, gtk::Widget, @implements gtk::Orientable, Swipeable;

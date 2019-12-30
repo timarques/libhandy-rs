@@ -2,12 +2,12 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-#[cfg(any(feature = "v0_0_12", feature = "dox"))]
-use Swipeable;
 use glib::object::IsA;
 use glib::translate::*;
 use handy_sys;
 use std::fmt;
+#[cfg(any(feature = "v0_0_12", feature = "dox"))]
+use Swipeable;
 
 glib_wrapper! {
     pub struct SwipeGroup(Object<handy_sys::HdySwipeGroup, handy_sys::HdySwipeGroupClass, SwipeGroupClass>);

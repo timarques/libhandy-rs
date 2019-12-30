@@ -2,15 +2,15 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use CenteringPolicy;
+use glib::object::Cast;
+use glib::object::IsA;
+use glib::signal::connect_raw;
+use glib::signal::SignalHandlerId;
+use glib::translate::*;
+use glib::value::SetValueOptional;
 use glib::GString;
 use glib::StaticType;
 use glib::Value;
-use glib::object::Cast;
-use glib::object::IsA;
-use glib::signal::SignalHandlerId;
-use glib::signal::connect_raw;
-use glib::translate::*;
 use glib_sys;
 use gobject_sys;
 use gtk;
@@ -18,6 +18,7 @@ use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
+use CenteringPolicy;
 
 glib_wrapper! {
     pub struct HeaderBar(Object<handy_sys::HdyHeaderBar, handy_sys::HdyHeaderBarClass, HeaderBarClass>) @extends gtk::Container, gtk::Widget;
@@ -116,7 +117,7 @@ pub trait HeaderBarExt: 'static {
 
     fn get_property_custom_title(&self) -> Option<gtk::Widget>;
 
-    fn set_property_custom_title(&self, custom_title: Option<&gtk::Widget>);
+    fn set_property_custom_title<P: IsA<gtk::Widget> + SetValueOptional>(&self, custom_title: Option<&P>);
 
     #[cfg(any(feature = "v0_0_10", feature = "dox"))]
     fn get_property_decoration_layout_set(&self) -> bool;
@@ -345,7 +346,7 @@ impl<O: IsA<HeaderBar>> HeaderBarExt for O {
         }
     }
 
-    fn set_property_custom_title(&self, custom_title: Option<&gtk::Widget>) {
+    fn set_property_custom_title<P: IsA<gtk::Widget> + SetValueOptional>(&self, custom_title: Option<&P>) {
         unsafe {
             gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"custom-title\0".as_ptr() as *const _, Value::from(custom_title).to_glib_none().0);
         }

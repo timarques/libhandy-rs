@@ -4,10 +4,10 @@
 
 #[cfg(any(feature = "v0_0_8", feature = "dox"))]
 use glib;
-#[cfg(any(feature = "v0_0_8", feature = "dox"))]
-use glib::GString;
 use glib::object::IsA;
 use glib::translate::*;
+#[cfg(any(feature = "v0_0_8", feature = "dox"))]
+use glib::GString;
 use handy_sys;
 use std::fmt;
 

@@ -2,11 +2,10 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ArrowsDirection;
 use glib::object::Cast;
 use glib::object::IsA;
-use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib_sys;
 use gtk;
@@ -14,6 +13,7 @@ use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
+use ArrowsDirection;
 
 glib_wrapper! {
     pub struct Arrows(Object<handy_sys::HdyArrows, handy_sys::HdyArrowsClass, ArrowsClass>) @extends gtk::DrawingArea, gtk::Widget;

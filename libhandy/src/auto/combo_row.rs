@@ -2,17 +2,15 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use ActionRow;
-use PreferencesRow;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use gio;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
-use glib::signal::SignalHandlerId;
-#[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_0_7", feature = "dox"))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use glib_sys;
@@ -23,6 +21,8 @@ use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v0_0_7", feature = "dox"))]
 use std::mem::transmute;
+use ActionRow;
+use PreferencesRow;
 
 glib_wrapper! {
     pub struct ComboRow(Object<handy_sys::HdyComboRow, handy_sys::HdyComboRowClass, ComboRowClass>) @extends ActionRow, PreferencesRow, gtk::ListBoxRow, gtk::Bin, gtk::Container, gtk::Widget;

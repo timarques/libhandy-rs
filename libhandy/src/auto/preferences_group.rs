@@ -3,15 +3,15 @@
 // DO NOT EDIT
 
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
-use glib::GString;
-#[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
-use glib::signal::SignalHandlerId;
-#[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_0_10", feature = "dox"))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
+#[cfg(any(feature = "v0_0_10", feature = "dox"))]
+use glib::GString;
 #[cfg(any(feature = "v0_0_10", feature = "dox"))]
 use glib_sys;
 use gtk;

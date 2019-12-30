@@ -2,14 +2,13 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use SqueezerTransitionType;
-use glib::StaticType;
-use glib::Value;
 use glib::object::Cast;
 use glib::object::IsA;
-use glib::signal::SignalHandlerId;
 use glib::signal::connect_raw;
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
+use glib::StaticType;
+use glib::Value;
 use glib_sys;
 use gobject_sys;
 use gtk;
@@ -17,6 +16,7 @@ use handy_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
+use SqueezerTransitionType;
 
 glib_wrapper! {
     pub struct Squeezer(Object<handy_sys::HdySqueezer, handy_sys::HdySqueezerClass, SqueezerClass>) @extends gtk::Container, gtk::Widget, @implements gtk::Orientable;
@@ -174,7 +174,7 @@ impl<O: IsA<Squeezer>> SqueezerExt for O {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"homogeneous\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `homogenous` getter").unwrap()
+            value.get().expect("Return Value for property `homogeneous` getter").unwrap()
         }
     }
 

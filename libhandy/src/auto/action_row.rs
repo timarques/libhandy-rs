@@ -2,17 +2,16 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use PreferencesRow;
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
-use glib::GString;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
-use glib::signal::SignalHandlerId;
-#[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib::signal::connect_raw;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
+#[cfg(any(feature = "v0_0_6", feature = "dox"))]
+use glib::GString;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use glib_sys;
 use gtk;
@@ -22,6 +21,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v0_0_6", feature = "dox"))]
 use std::mem::transmute;
+use PreferencesRow;
 
 glib_wrapper! {
     pub struct ActionRow(Object<handy_sys::HdyActionRow, handy_sys::HdyActionRowClass, ActionRowClass>) @extends PreferencesRow, gtk::ListBoxRow, gtk::Bin, gtk::Container, gtk::Widget;

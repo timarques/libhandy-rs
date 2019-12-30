@@ -14,7 +14,7 @@ libc = "0.2"
 
 [dev-dependencies]
 shell-words = "0.1.0"
-tempdir = "0.3"
+tempfile = "3"
 
 [features]
 v0_0_9 = ["v0_0_8"]
@@ -39,3 +39,5 @@ links = "handy"
 name = "libhandy-sys"
 repository = "https://gitlab.gnome.org/World/Rust/libhandy-rs"
 version = "0.5.0"
+[package.metadata.docs.rs]
+features = ["dox"]
